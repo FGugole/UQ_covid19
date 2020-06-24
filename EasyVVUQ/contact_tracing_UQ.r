@@ -86,6 +86,19 @@ for (i in 1:L){
 }
 contact_tracing_data[, "IC_prev_avg"] <- IC_prev_avg
 
+###########################################################
+# Compute the number of IC patients exceeding IC capacity #
+###########################################################
+IC_excess <- vector(mode="numeric", length=L)
+IC_capacity <- 108
+
+IC_excess[1] <- 0 # at the beginning of the simulation there are no IC patients in excess
+for (i in 2:L){
+  IC_excess[i] <- IC_excess[i-1] + max(0, contact_tracing_data$IC_prev[i]-IC_capacity)
+}
+
+contact_tracing_data[, "IC_ex"] <- IC_excess
+
 #############################
 # Write results to csv file #
 #############################

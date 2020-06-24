@@ -28,9 +28,11 @@ param_default <- within(param_sim, {
 ###############################################################
 json_data <- fromJSON(file="corona_in.json")
 
-int_1 <- unname(sapply(json_data$intervention_1, as.numeric))
+int_1 <- unname(sapply(json_data$intervention_effect_1, as.numeric))
 
-int_2 <- unname(sapply(json_data$intervention_2, as.numeric))
+int_2 <- unname(sapply(json_data$intervention_effect_2, as.numeric))
+
+int_freq <- unname(sapply(json_data$intervention_interval, as.integer))
 
 uptake <- unname(sapply(json_data$uptake, as.numeric))
 
@@ -41,7 +43,7 @@ output_filename <- json_data$outfile
 #######################################################################################
 # Running an individual simulation for the Flattening the Curve strategy using virsim #
 #######################################################################################
-intervention_t = cumsum(c(0, 10, 7, 53, 60, 365, 365, 120))
+intervention_t = cumsum(c(0, 10, 7, 53, 60, int_freq, int_freq, 120))
 intervention_effect = c(1, .3, .15, .25, int_1, int_2, .9, 1)
 intervention_uptake = rep(uptake, length(intervention_t))
 

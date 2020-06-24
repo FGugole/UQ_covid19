@@ -13,7 +13,6 @@ import os
 import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 20})
 plt.rcParams['figure.figsize'] = 8,6
-from scipy import stats
 
 """
 *****************
@@ -43,8 +42,8 @@ data = my_campaign.get_collation_result()
 # Post-processing analysis
 sc_analysis = uq.analysis.SCAnalysis(sampler=my_sampler, qoi_cols=output_columns)
 my_campaign.apply_analysis(sc_analysis)
+
 results = my_campaign.get_last_analysis()
-#print(results['sobols'])
 
 """
 ****************
@@ -144,8 +143,9 @@ f.savefig('IC.png')
 #first order Sobol indices and parameter names
 sobols = results['sobols_first']
 params = list(my_sampler.vary.get_keys())
-#the first part of the intervention history is common to all strategy -> not interesting
+
 time = np.arange(0, 4*365+1, 1)
+#the first part of the intervention history is common to all strategy -> not interesting
 skip = 130
 
 fig = plt.figure('Sobol_SEIR', figsize=[24, 6])

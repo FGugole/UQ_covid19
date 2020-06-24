@@ -16,16 +16,21 @@ my_campaign = uq.Campaign(name='corona', work_dir='/tmp')
 
 # Define parameter space
 params = {
-    "intervention_1": {
+    "intervention_effect_1": {
         "type": "float",
-        "min": .3,
-        "max": .4,
+        "min": .25,
+        "max": .45,
         "default": .35},
-    "intervention_2": {
+    "intervention_effect_2": {
         "type": "float",
-        "min": .5,
-        "max": .6,
+        "min": .45,
+        "max": .65,
         "default": .55},
+    "intervention_interval": {
+        "type": "float",
+        "min": 200,
+        "max": 400,
+        "default": 365},
     "trace_prob_E": {
         "type": "float",
         "min": 0.0,
@@ -76,8 +81,9 @@ my_campaign.add_app(name="sc",
 
 # Create the sampler
 vary = {
-    "intervention_1": cp.Uniform(.3, .4),
-    "intervention_2": cp.Uniform(.5, .6)
+    "intervention_effect_1": cp.Uniform(.3, .4),
+#    "intervention_effect_2": cp.Uniform(.5, .6),
+    "intervention_interval": cp.DiscreteUniform(240, 365)
 #    "trace_rate_I": cp.Uniform(.3, .6),
 #    "trace_prob_E": cp.Uniform(.4, .8),
 #    "trace_contact_reduction": cp.Uniform(.5, .8)
@@ -86,6 +92,7 @@ vary = {
 }
 
 my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=2)
+
 # Associate the sampler with the campaign
 my_campaign.set_sampler(my_sampler)
 

@@ -1,7 +1,7 @@
 """
-Author: Federica Gugole
+@author: Federica Gugole
 
-__licence__ = "LGPL"
+__license__ = "LGPL"
 """
 
 import chaospy as cp
@@ -56,7 +56,7 @@ params = {
         "default": "output.csv"}}
     
 output_filename = params["out_file"]["default"]
-output_columns = ["S","E","I","R","IC_inc","IC_prev","IC_prev_avg"]
+output_columns = ["S","E","I","R","IC_inc","IC_prev","IC_prev_avg","IC_ex"]
 
 encoder = uq.encoders.GenericEncoder(
     template_fname= HOME + '/corona.template',
@@ -76,11 +76,11 @@ my_campaign.add_app(name="sc",
 
 # Create the sampler
 vary = {
-#    "intervention_1": cp.Uniform(.3, .4),
-#    "intervention_2": cp.Uniform(.5, .6)
+    "intervention_1": cp.Uniform(.3, .4),
+    "intervention_2": cp.Uniform(.5, .6)
 #    "trace_rate_I": cp.Uniform(.3, .6),
-    "trace_prob_E": cp.Uniform(.4, .8),
-    "trace_contact_reduction": cp.Uniform(.5, .8)
+#    "trace_prob_E": cp.Uniform(.4, .8),
+#    "trace_contact_reduction": cp.Uniform(.5, .8)
 #    "efoi": cp.Uniform(0.0, .1)
 #    "uptake": cp.Uniform(0.7, 1)
 }
@@ -95,8 +95,8 @@ my_campaign.draw_samples()
 my_campaign.populate_runs_dir()
 
 #Run execution sequentially 
-#my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
-my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ.r corona_in.json', interpret='Rscript'))
+my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
+#my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ.r corona_in.json', interpret='Rscript'))
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 #cwd = os.getcwd()

@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 @author: Federica Gugole
 
@@ -68,11 +66,11 @@ std_R = results['statistical_moments']['R']['std']
 mu_IC_inc = results['statistical_moments']['IC_inc']['mean']
 std_IC_inc = results['statistical_moments']['IC_inc']['std']
 
-mu_IC_prev = results['statistical_moments']['IC_prev']['mean']
-std_IC_prev = results['statistical_moments']['IC_prev']['std']
-
 mu_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['mean']
 std_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['std']
+
+mu_IC_ex = results['statistical_moments']['IC_ex']['mean']
+std_IC_ex = results['statistical_moments']['IC_ex']['std']
 
 f, axes = plt.subplots(1,4,figsize=(24,6))
 ax_S = axes[0]
@@ -120,18 +118,18 @@ ax0.set_xlabel('time')
 ax0.legend(loc='best')
 #
 ax1 = axes[1]
-ax1.plot(mu_IC_prev,'b',linewidth=2,label='mean')
-ax1.plot(mu_IC_prev+std_IC_prev,'--r',linewidth=2,label='+/- std')
-ax1.plot(mu_IC_prev-std_IC_prev,'--r',linewidth=2)
-ax1.set_title('IC_prev')
+ax1.plot(mu_IC_prev_avg,'b',linewidth=2,label='mean')
+ax1.plot(mu_IC_prev_avg+std_IC_prev_avg,'--r',linewidth=2,label='+/- std')
+ax1.plot(mu_IC_prev_avg-std_IC_prev_avg,'--r',linewidth=2)
+ax1.set_title('IC_prev_avg')
 ax1.set_xlabel('time')
 ax1.legend(loc='best')
 #
 ax2 = axes[2]
-ax2.plot(mu_IC_prev_avg,'b',linewidth=2,label='mean')
-ax2.plot(mu_IC_prev_avg+std_IC_prev_avg,'--r',linewidth=2,label='+/- std')
-ax2.plot(mu_IC_prev_avg-std_IC_prev_avg,'--r',linewidth=2)
-ax2.set_title('IC_prev_avg')
+ax2.plot(mu_IC_ex,'b',linewidth=2,label='mean')
+ax2.plot(mu_IC_ex+std_IC_ex,'--r',linewidth=2,label='+/- std')
+ax2.plot(mu_IC_ex-std_IC_ex,'--r',linewidth=2)
+ax2.set_title('IC_ex')
 ax2.set_xlabel('time')
 ax2.legend(loc='best')
 #
@@ -146,40 +144,46 @@ f.savefig('IC.png')
 #first order Sobol indices and parameter names
 sobols = results['sobols_first']
 params = list(my_sampler.vary.get_keys())
-print(params)
-#there is very litte variation in the first points (D = approx 0), leads
-#to unstable results, do not plot these points
+#the first part of the intervention history is common to all strategy -> not interesting
 time = np.arange(0, 4*365+1, 1)
 skip = 130
 
-fig = plt.figure('Sobols', figsize=[16, 8])
-ax_S = fig.add_subplot(231, xlabel='time', title = 'S')
+fig = plt.figure('Sobol_SEIR', figsize=[24, 6])
+ax_S = fig.add_subplot(141, xlabel='time', title = 'S')
 ax_S.set_ylim([0, 1])
 
-ax_E = fig.add_subplot(232, xlabel='time', title = 'E')
+ax_E = fig.add_subplot(142, xlabel='time', title = 'E')
 ax_E.set_ylim([0, 1])
 
-ax_I = fig.add_subplot(233, xlabel='time', title = 'I')
+ax_I = fig.add_subplot(143, xlabel='time', title = 'I')
 ax_I.set_ylim([0, 1])
 
-ax_R = fig.add_subplot(234, xlabel='time', title = 'R')
+ax_R = fig.add_subplot(144, xlabel='time', title = 'R')
 ax_R.set_ylim([0, 1])
 
-ax_ICi = fig.add_subplot(235, xlabel='time', title = 'IC_inc')
+f = plt.figure('Sobol_IC', figsize=[18, 6])
+ax_ICi = f.add_subplot(131, xlabel='time', title = 'IC_inc')
 ax_ICi.set_ylim([0, 1])
 
-ax_ICp = fig.add_subplot(236, xlabel='time', title = 'IC_prev_avg')
+ax_ICp = f.add_subplot(132, xlabel='time', title = 'IC_prev_avg')
 ax_ICp.set_ylim([0, 1])
+
+ax_ICe = f.add_subplot(133, xlabel='time', title = 'IC_ex')
+ax_ICe.set_ylim([0, 1])
 
 for param in params: 
     ax_S.plot(time[skip:], sobols['S'][param][skip:])
     ax_E.plot(time[skip:], sobols['E'][param][skip:], label=param)
     ax_I.plot(time[skip:], sobols['I'][param][skip:])
     ax_R.plot(time[skip:], sobols['R'][param][skip:])
-    ax_ICi.plot(time[skip:], sobols['IC_inc'][param][skip:])
+    #
+    ax_ICi.plot(time[skip:], sobols['IC_inc'][param][skip:], label=param)
     ax_ICp.plot(time[skip:], sobols['IC_prev_avg'][param][skip:])
+    ax_ICe.plot(time[skip:], sobols['IC_ex'][param][skip:])
 
 ax_E.legend(loc='best')
+ax_ICi.legend(loc='best')
 #
 plt.tight_layout()
-fig.savefig('Sobols.png')
+fig.savefig('Sobol_SEIR.png')
+f.savefig('Sobol_IC.png')

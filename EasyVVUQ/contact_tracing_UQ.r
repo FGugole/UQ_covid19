@@ -53,8 +53,13 @@ trace_prob_E = c(rep(0, 4), trace_E)
 trace_rate_I = c(rep(0, 4), trace_I)
 trace_contact_reduction = c(rep(0, 4), contact_red)
 
-# Running a single simulation
-set.seed(12345+4)
+# Select a random seed per each realization (using the system time)
+initial_seed <- as.integer(Sys.time())
+# take the last 5 digits of the initial seed
+the_seed <- initial_seed %% 1e5
+# set the seed
+set.seed(the_seed)
+
 contact_tracing <- do.call(what = virsim,
                            args = c(param_default,
                                     list(intervention_t = intervention_t,

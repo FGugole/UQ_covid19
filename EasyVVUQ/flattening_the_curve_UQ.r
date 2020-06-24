@@ -45,7 +45,13 @@ intervention_t = cumsum(c(0, 10, 7, 53, 60, 365, 365, 120))
 intervention_effect = c(1, .3, .15, .25, int_1, int_2, .9, 1)
 intervention_uptake = rep(uptake, length(intervention_t))
 
-set.seed(12345)
+# Select a random seed per each realization (using the system time)
+initial_seed <- as.integer(Sys.time())
+# take the last 5 digits of the initial seed
+the_seed <- initial_seed %% 1e5
+# set the seed
+set.seed(the_seed)
+
 flat_curve <- do.call(what = virsim,
                       args = c(param_default,
                                list(intervention_t = intervention_t,

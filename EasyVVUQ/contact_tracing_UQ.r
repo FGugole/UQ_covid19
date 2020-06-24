@@ -80,9 +80,9 @@ contact_tracing_data[, c("IC_inc", "IC_prev") :=
 L <- length(contact_tracing_data$IC_prev)
 IC_prev_avg <- vector(mode="numeric", length=L)
 
-interval = 30
+avg_window = 30
 for (i in 1:L){
-  IC_prev_avg[i] <- mean(contact_tracing_data$IC_prev[i:min(i+interval-1,L)])
+  IC_prev_avg[i] <- mean(contact_tracing_data$IC_prev[i:min(i+avg_window-1,L)])
 }
 contact_tracing_data[, "IC_prev_avg"] <- IC_prev_avg
 

@@ -78,6 +78,11 @@ my_campaign.add_app(name="sc",
                     encoder=encoder,
                     decoder=decoder,
                     collater=collater) 
+#my_campaign.add_app(name="pce",
+#                    params=params,
+#                    encoder=encoder,
+#                    decoder=decoder,
+#                    collater=collater) 
 
 # Create the sampler
 vary = {
@@ -93,6 +98,7 @@ vary = {
 
 my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=2, 
                                    quadrature_rule='C', sparse=True)
+#my_sampler = uq.sampling.PCESampler(vary=vary, polynomial_order=2)
 
 # Associate the sampler with the campaign
 my_campaign.set_sampler(my_sampler)

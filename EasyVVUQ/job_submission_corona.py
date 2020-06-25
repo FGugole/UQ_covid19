@@ -28,7 +28,7 @@ params = {
         "default": .55},
     "intervention_interval": {
         "type": "float",
-        "min": 200,
+        "min": 20,
         "max": 400,
         "default": 365},
     "trace_prob_E": {
@@ -81,17 +81,18 @@ my_campaign.add_app(name="sc",
 
 # Create the sampler
 vary = {
-    "intervention_effect_1": cp.Uniform(.3, .4),
+#    "intervention_effect_1": cp.Uniform(.3, .4),
 #    "intervention_effect_2": cp.Uniform(.5, .6),
-    "intervention_interval": cp.DiscreteUniform(240, 365)
-#    "trace_rate_I": cp.Uniform(.3, .6),
-#    "trace_prob_E": cp.Uniform(.4, .8),
-#    "trace_contact_reduction": cp.Uniform(.5, .8)
+    "intervention_interval": cp.DiscreteUniform(30, 90),
+    "trace_prob_E": cp.Uniform(.4, .8),
+    "trace_rate_I": cp.Uniform(.3, .6),
+    "trace_contact_reduction": cp.Uniform(.6, .8),
 #    "efoi": cp.Uniform(0.0, .1)
-#    "uptake": cp.Uniform(0.7, 1)
+    "uptake": cp.Uniform(0.8, 1)
 }
 
-my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=2)
+my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=2, 
+                                   quadrature_rule='C', sparse=True)
 
 # Associate the sampler with the campaign
 my_campaign.set_sampler(my_sampler)
@@ -102,8 +103,8 @@ my_campaign.draw_samples()
 my_campaign.populate_runs_dir()
 
 #Run execution sequentially 
-my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
-#my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ.r corona_in.json', interpret='Rscript'))
+#my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
+my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ.r corona_in.json', interpret='Rscript'))
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 #cwd = os.getcwd()

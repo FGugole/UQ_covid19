@@ -15,6 +15,36 @@ plt.rcParams.update({'font.size': 20})
 plt.rcParams['figure.figsize'] = 8,6
 
 """
+***************
+* SUBROUTINES *
+***************
+"""
+
+def plot_runs(myruns):
+    f, axes = plt.subplots(1,3,figsize=(18,6))
+    ax0 = axes[0]
+    ax1 = axes[1]
+    ax2 = axes[2]
+    for run in myruns:
+        IC_inc = data.IC_inc[data.run_id == run]
+        IC_prev_avg = data.IC_prev_avg[data.run_id == run]
+        IC_ex = data.IC_ex[data.run_id == run]
+        #
+        ax0.plot(time,IC_inc,lw=2,label=run)
+        ax1.plot(time,IC_prev_avg,lw=2,label=run)
+        ax2.plot(time,IC_ex,lw=2,label=run)
+        
+    ax0.set_xlabel('time')
+    ax1.set_xlabel('time')
+    ax2.set_xlabel('time')
+    ax0.set_title('IC_inc')
+    ax1.set_title('IC_prev_avg')
+    ax2.set_title('IC_ex')
+    #ax1.legend(loc='best')
+    #ax2.legend(loc='upper left', bbox_to_anchor=(1,1))
+    f.savefig('figures/IC_runs.png')
+
+"""
 *****************
 * VVUQ ANALYSES *
 *****************
@@ -45,6 +75,8 @@ my_campaign.apply_analysis(sc_analysis)
 
 results = my_campaign.get_last_analysis()
 
+sc_analysis.plot_grid()
+#print(results)
 """
 ****************
 * PLOT MOMENTS *
@@ -105,7 +137,7 @@ ax_R.set_xlabel('time')
 ax_R.legend(loc='best')
 #
 plt.tight_layout()
-f.savefig('SEIR.png')
+f.savefig('figures/SEIR.png')
 
 f, axes = plt.subplots(1,3,figsize=(18,6))
 ax0 = axes[0]
@@ -133,7 +165,7 @@ ax2.set_xlabel('time')
 ax2.legend(loc='best')
 #
 plt.tight_layout()
-f.savefig('IC.png')
+f.savefig('figures/IC.png')
 
 """
 *****************
@@ -185,5 +217,21 @@ ax_E.legend(loc='best')
 ax_ICi.legend(loc='best')
 #
 plt.tight_layout()
-fig.savefig('Sobol_SEIR.png')
-f.savefig('Sobol_IC.png')
+fig.savefig('figures/Sobol_SEIR.png')
+f.savefig('figures/Sobol_IC.png')
+
+"""
+************************
+* PLOT INDIVIDUAL RUNS *
+************************
+"""
+
+# Remember: if I used polynomial_order=p in the sampler, then it created p+1 runs
+Runlist = ['Run_1','Run_2','Run_3','Run_4','Run_5','Run_6','Run_7','Run_8','Run_9','Run_10',\
+'Run_11','Run_12','Run_13','Run_14','Run_15','Run_16']
+Rundic = {'Run_1':0,'Run_2':1,'Run_3':2,'Run_4':3,'Run_5':4,'Run_6':5,'Run_7':6,'Run_8':7,\
+'Run_9':8,'Run_10':9,'Run_11':10,'Run_12':11,'Run_13':12,'Run_14':13,'Run_15':14,'Run_16':15}
+
+plot_runs(Runlist)
+
+### END OF CODE ###

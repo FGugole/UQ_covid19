@@ -61,7 +61,7 @@ params = {
         "default": "output.csv"}}
     
 output_filename = params["out_file"]["default"]
-output_columns = ["S","E","I","R","IC_inc","IC_prev","IC_prev_avg","IC_ex"]
+output_columns = ["S","E","I","R","IC_inc","IC_prev","IC_prev_avg","IC_prev_avg_max","IC_ex","IC_ex_max"]
 
 encoder = uq.encoders.GenericEncoder(
     template_fname= HOME + '/corona.template',

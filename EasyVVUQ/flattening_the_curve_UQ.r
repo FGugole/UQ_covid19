@@ -76,6 +76,7 @@ for (i in 1:L){
   IC_prev_avg[i] <- mean(flat_curve_data$IC_prev[i:min(i+avg_window-1,L)])
 }
 flat_curve_data[, "IC_prev_avg"] <- IC_prev_avg
+flat_curve_data[, "IC_prev_avg_max"] <- max(IC_prev_avg)
 
 ###########################################################
 # Compute the number of IC patients exceeding IC capacity #
@@ -89,6 +90,7 @@ for (i in 2:L){
 }
 
 flat_curve_data[, "IC_ex"] <- IC_excess
+flat_curve_data[, "IC_ex_max"] <- max(IC_excess)
 
 #############################
 # Write results to csv file #

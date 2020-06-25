@@ -87,6 +87,7 @@ for (i in 1:L){
   IC_prev_avg[i] <- mean(contact_tracing_data$IC_prev[i:min(i+avg_window-1,L)])
 }
 contact_tracing_data[, "IC_prev_avg"] <- IC_prev_avg
+contact_tracing_data[, "IC_prev_avg_max"] <- max(IC_prev_avg)
 
 ###########################################################
 # Compute the number of IC patients exceeding IC capacity #
@@ -100,6 +101,7 @@ for (i in 2:L){
 }
 
 contact_tracing_data[, "IC_ex"] <- IC_excess
+contact_tracing_data[, "IC_ex_max"] <- max(IC_excess)
 
 #############################
 # Write results to csv file #

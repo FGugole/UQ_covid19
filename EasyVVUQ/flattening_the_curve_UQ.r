@@ -44,6 +44,7 @@ param_main <- within(param_sim, {
   aggregate <- "population"
   output_quick <- TRUE
   output_steps <- 1
+  verbose <- FALSE # turn off printing of progress to console
 })
 
 ###############################################################
@@ -82,7 +83,7 @@ flat_curve <- do.call(what = virsim,
                                list(intervention_t = intervention_t,
                                     intervention_uptake = intervention_uptake,
                                     intervention_effect = intervention_effect,
-                                    efoi = external_forcing/param_default$n_agent)))
+                                    efoi = external_forcing/param_main$n_agent)))
 
 flat_curve_data = aggregate_output(flat_curve$monitor)
 flat_curve_data[, c("IC_inc", "IC_prev") :=

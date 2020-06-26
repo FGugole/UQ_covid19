@@ -44,6 +44,7 @@ param_main <- within(param_sim, {
   aggregate <- "population"
   output_quick <- TRUE
   output_steps <- 1
+  verbose <- FALSE # turn off printing of progress to console
 })
 
 ###############################################################
@@ -93,7 +94,7 @@ contact_tracing <- do.call(what = virsim,
                                          trace_prob_E = trace_prob_E,
                                          trace_rate_I = trace_rate_I,
                                          trace_contact_reduction = trace_contact_reduction,
-                                         efoi = external_forcing/param_default$n_agent)))
+                                         efoi = external_forcing/param_main$n_agent)))
 
 contact_tracing_data = aggregate_output(contact_tracing$monitor)
 contact_tracing_data[, c("IC_inc", "IC_prev") :=

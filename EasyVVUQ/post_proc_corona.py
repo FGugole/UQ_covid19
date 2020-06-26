@@ -76,7 +76,8 @@ my_campaign.apply_analysis(sc_analysis)
 results = my_campaign.get_last_analysis()
 
 #sc_analysis.plot_grid()
-#print(results['sobols'])
+print(results['sobols_first']['IC_ex_max'])
+print(results['sobols_first']['IC_prev_avg_max'])
 """
 ****************
 * PLOT MOMENTS *
@@ -193,7 +194,7 @@ ax_I.set_ylim([-.1, 1.1])
 ax_R = fig.add_subplot(144, xlabel='time', title = 'R')
 ax_R.set_ylim([-.1, 1.1])
 
-f = plt.figure('Sobol_IC', figsize=[18, 6])
+f = plt.figure('Sobol_IC', figsize=[18, 12])
 ax_ICi = f.add_subplot(231, xlabel='time', title = 'IC_inc')
 ax_ICi.set_ylim([-.1, 1.1])
 
@@ -204,10 +205,10 @@ ax_ICe = f.add_subplot(233, xlabel='time', title = 'IC_ex')
 ax_ICe.set_ylim([-.1, 1.1])
 
 ax_ICp_max = f.add_subplot(235, xlabel='time', title = 'IC_prev_avg_max')
-ax_ICp_max.set_ylim([-.1, 1.1])
+ax_ICp_max.set_ylim([-.4, 1.1])
 
 ax_ICe_max = f.add_subplot(236, xlabel='time', title = 'IC_ex_max')
-ax_ICe_max.set_ylim([-.1, 1.1])
+ax_ICe_max.set_ylim([-.4, 1.1])
 
 for param in params: 
     ax_S.plot(time[skip:], sobols['S'][param][skip:])

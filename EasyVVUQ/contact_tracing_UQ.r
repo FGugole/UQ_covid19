@@ -11,16 +11,39 @@ library(rjson)
 work_dir <- getwd()  
 setwd(work_dir)
 
-param_default <- within(param_sim, {
-  output_quick <- TRUE  # adjust default values
-  temp_storage <- "RAM"
-  verbose <- FALSE  # turn off printing of progress to console
-  aggregate <- "population"
+size_multiplier <- 1
+param_main <- within(param_sim, {
+  runtime <- 4 * 365
+  
+  n_agent <- 1e6 * size_multiplier
+  n_cluster <- 1e3 * size_multiplier
   n_supercluster <- 20
-  n_cluster <- 1e3
-  n_agent <- 1e6
-  runtime <- 4*365
-  inc_cum_cond <- 9500
+  
+  cluster_size_sd <- 0.95
+  supercluster_size_sd <- 0
+  
+  efoi <- 0
+  infection_init <- 50 * size_multiplier
+  seed_supercluster <- c(rep(9, 2), rep(2, 6), rep(1, 6), rep(0, 6))
+  inc_cum_cond <- 9500 * size_multiplier
+  
+  contact_rate <- 0.5
+  contact_shape <- 3.4
+  contact_assort <- 0.26
+  population_mixing <- .05
+  supercluster_mixing <- .05
+  
+  exposed_time <- list(name = "weibull",
+                       shape = 20,
+                       scale = exp(log(4.6) - lgamma(1 + 1 / 20)))
+  infected_time <- list(name = "weibull",
+                        shape = 1,
+                        scale = exp(log(5) - lgamma(1 + 1 / 1)))
+  
+  temp_storage <- "RAM"
+  aggregate <- "population"
+  output_quick <- TRUE
+  output_steps <- 1
 })
 
 ###############################################################
@@ -63,7 +86,7 @@ the_seed <- initial_seed %% 1e5
 set.seed(the_seed)
 
 contact_tracing <- do.call(what = virsim,
-                           args = c(param_default,
+                           args = c(param_main,
                                     list(intervention_t = intervention_t,
                                          intervention_uptake = intervention_uptake,
                                          intervention_effect = intervention_effect,

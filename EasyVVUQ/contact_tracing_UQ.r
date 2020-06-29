@@ -94,7 +94,7 @@ contact_tracing <- do.call(what = virsim,
                                          trace_prob_E = trace_prob_E,
                                          trace_rate_I = trace_rate_I,
                                          trace_contact_reduction = trace_contact_reduction,
-                                         efoi = external_forcing/param_main$n_agent)))
+                                         efoi = external_forcing / 365 / param_main$n_agent)))
 
 contact_tracing_data = aggregate_output(contact_tracing$monitor)
 contact_tracing_data[, c("IC_inc", "IC_prev") :=

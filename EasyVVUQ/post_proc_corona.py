@@ -54,7 +54,7 @@ def plot_runs(myruns):
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_CT_trace_po2.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -104,11 +104,33 @@ std_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['std']
 mu_IC_ex = results['statistical_moments']['IC_ex']['mean']
 std_IC_ex = results['statistical_moments']['IC_ex']['std']
 
+######################################################################
+# Define the difference between the mean and the std such that it is non-negative
+muS_stdS = np.zeros(len(mu_S))
+muE_stdE = np.zeros(len(mu_E))
+muI_stdI = np.zeros(len(mu_I))
+muR_stdR = np.zeros(len(mu_R))
+#
+muICi_stdICi = np.zeros(len(mu_IC_inc))
+muICp_stdICp = np.zeros(len(mu_IC_prev_avg))
+muICe_stdICe = np.zeros(len(mu_IC_ex))
+#
+for i in range(len(mu_S)):
+    muS_stdS[i] = max(mu_S[i]-std_S[i],0)
+    muE_stdE[i] = max(mu_E[i]-std_E[i],0)
+    muI_stdI[i] = max(mu_I[i]-std_I[i],0)
+    muR_stdR[i] = max(mu_R[i]-std_R[i],0)
+    #
+    muICi_stdICi[i] = max(mu_IC_inc[i]-std_IC_inc[i],0)
+    muICp_stdICp[i] = max(mu_IC_prev_avg[i]-std_IC_prev_avg[i],0)
+    muICe_stdICe[i] = max(mu_IC_ex[i]-std_IC_ex[i],0)
+
+######################################################################
 f, axes = plt.subplots(1,4,figsize=(24,6))
 ax_S = axes[0]
 ax_S.plot(mu_S,'b',linewidth=2,label='mean')
 ax_S.plot(mu_S+std_S,'--r',linewidth=2,label='+/- std')
-ax_S.plot(mu_S-std_S,'--r',linewidth=2)
+ax_S.plot(muS_stdS,'--r',linewidth=2)
 ax_S.set_title('S')
 ax_S.set_xlabel('time')
 ax_S.legend(loc='best')
@@ -116,7 +138,7 @@ ax_S.legend(loc='best')
 ax_E = axes[1]
 ax_E.plot(mu_E,'b',linewidth=2,label='mean')
 ax_E.plot(mu_E+std_E,'--r',linewidth=2,label='+/- std')
-ax_E.plot(mu_E-std_E,'--r',linewidth=2)
+ax_E.plot(muE_stdE,'--r',linewidth=2)
 ax_E.set_title('E')
 ax_E.set_xlabel('time')
 ax_E.legend(loc='best')
@@ -124,7 +146,7 @@ ax_E.legend(loc='best')
 ax_I = axes[2]
 ax_I.plot(mu_I,'b',linewidth=2,label='mean')
 ax_I.plot(mu_I+std_I,'--r',linewidth=2,label='+/- std')
-ax_I.plot(mu_I-std_I,'--r',linewidth=2)
+ax_I.plot(muI_stdI,'--r',linewidth=2)
 ax_I.set_title('I')
 ax_I.set_xlabel('time')
 ax_I.legend(loc='best')
@@ -132,7 +154,7 @@ ax_I.legend(loc='best')
 ax_R = axes[3]
 ax_R.plot(mu_R,'b',linewidth=2,label='mean')
 ax_R.plot(mu_R+std_R,'--r',linewidth=2,label='+/- std')
-ax_R.plot(mu_R-std_R,'--r',linewidth=2)
+ax_R.plot(muR_stdR,'--r',linewidth=2)
 ax_R.set_title('R')
 ax_R.set_xlabel('time')
 ax_R.legend(loc='best')
@@ -140,11 +162,12 @@ ax_R.legend(loc='best')
 plt.tight_layout()
 f.savefig('figures/SEIR.png')
 
+######################################################################
 f, axes = plt.subplots(1,3,figsize=(18,6))
 ax0 = axes[0]
 ax0.plot(mu_IC_inc,'b',linewidth=2,label='mean')
 ax0.plot(mu_IC_inc+std_IC_inc,'--r',linewidth=2,label='+/- std')
-ax0.plot(mu_IC_inc-std_IC_inc,'--r',linewidth=2)
+ax0.plot(muICi_stdICi,'--r',linewidth=2)
 ax0.set_title('IC_inc')
 ax0.set_xlabel('time')
 ax0.legend(loc='best')
@@ -152,7 +175,7 @@ ax0.legend(loc='best')
 ax1 = axes[1]
 ax1.plot(mu_IC_prev_avg,'b',linewidth=2,label='mean')
 ax1.plot(mu_IC_prev_avg+std_IC_prev_avg,'--r',linewidth=2,label='+/- std')
-ax1.plot(mu_IC_prev_avg-std_IC_prev_avg,'--r',linewidth=2)
+ax1.plot(muICp_stdICp,'--r',linewidth=2)
 ax1.set_title('IC_prev_avg')
 ax1.set_xlabel('time')
 ax1.legend(loc='best')
@@ -160,7 +183,7 @@ ax1.legend(loc='best')
 ax2 = axes[2]
 ax2.plot(mu_IC_ex,'b',linewidth=2,label='mean')
 ax2.plot(mu_IC_ex+std_IC_ex,'--r',linewidth=2,label='+/- std')
-ax2.plot(mu_IC_ex-std_IC_ex,'--r',linewidth=2)
+ax2.plot(muICe_stdICe,'--r',linewidth=2)
 ax2.set_title('IC_ex')
 ax2.set_xlabel('time')
 ax2.legend(loc='best')
@@ -194,20 +217,23 @@ ax_I.set_ylim([-.1, 1.1])
 ax_R = fig.add_subplot(144, xlabel='time', title = 'R')
 ax_R.set_ylim([-.1, 1.1])
 
-f = plt.figure('Sobol_IC', figsize=[18, 12])
-ax_ICi = f.add_subplot(231, xlabel='time', title = 'IC_inc')
+######################################################################
+f = plt.figure('Sobol_IC', figsize=[18, 6])
+ax_ICi = f.add_subplot(131, xlabel='time', title = 'IC_inc')
 ax_ICi.set_ylim([-.1, 1.1])
 
-ax_ICp = f.add_subplot(232, xlabel='time', title = 'IC_prev_avg')
+ax_ICp = f.add_subplot(132, xlabel='time', title = 'IC_prev_avg')
 ax_ICp.set_ylim([-.1, 1.1])
 
-ax_ICe = f.add_subplot(233, xlabel='time', title = 'IC_ex')
+ax_ICe = f.add_subplot(133, xlabel='time', title = 'IC_ex')
 ax_ICe.set_ylim([-.1, 1.1])
 
-ax_ICp_max = f.add_subplot(235, xlabel='time', title = 'IC_prev_avg_max')
+######################################################################
+ff = plt.figure('Sobol_IC_max', figsize=[12, 6])
+ax_ICp_max = ff.add_subplot(121, xlabel='time', title = 'IC_prev_avg_max')
 ax_ICp_max.set_ylim([-.1, 1.1])
 
-ax_ICe_max = f.add_subplot(236, xlabel='time', title = 'IC_ex_max')
+ax_ICe_max = ff.add_subplot(122, xlabel='time', title = 'IC_ex_max')
 ax_ICe_max.set_ylim([-.1, 1.1])
 
 for param in params: 
@@ -219,15 +245,18 @@ for param in params:
     ax_ICi.plot(time[skip:], sobols['IC_inc'][param][skip:], label=param)
     ax_ICp.plot(time[skip:], sobols['IC_prev_avg'][param][skip:])
     ax_ICe.plot(time[skip:], sobols['IC_ex'][param][skip:])
-    ax_ICp_max.plot(time[skip:], sobols['IC_prev_avg_max'][param][skip:])
+    #
+    ax_ICp_max.plot(time[skip:], sobols['IC_prev_avg_max'][param][skip:], label=param)
     ax_ICe_max.plot(time[skip:], sobols['IC_ex_max'][param][skip:])
 
 ax_E.legend(loc='best')
 ax_ICi.legend(loc='best')
+ax_ICp_max.legend(loc='best')
 #
 plt.tight_layout()
 fig.savefig('figures/Sobol_SEIR.png')
 f.savefig('figures/Sobol_IC.png')
+ff.savefig('figures/Sobol_IC_max.png')
 
 """
 ************************

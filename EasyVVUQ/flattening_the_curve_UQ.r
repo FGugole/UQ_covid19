@@ -56,6 +56,8 @@ int_1 <- unname(sapply(json_data$intervention_effect_1, as.numeric))
 
 int_2 <- unname(sapply(json_data$intervention_effect_2, as.numeric))
 
+int_3 <- unname(sapply(json_data$intervention_effect_3, as.numeric))
+
 int_interval <- unname(sapply(json_data$intervention_interval, as.integer))
 
 uptake <- unname(sapply(json_data$uptake, as.numeric))
@@ -67,8 +69,8 @@ output_filename <- json_data$outfile
 #######################################################################################
 # Running an individual simulation for the Flattening the Curve strategy using virsim #
 #######################################################################################
-intervention_t = cumsum(c(0, 10, 7, 53, 60, int_interval, int_interval, 120))
-intervention_effect = c(1, .3, .15, .25, int_1, int_2, .9, 1)
+intervention_t = cumsum(c(0, 10, 7, 53, 30, int_interval, int_interval, int_interval))
+intervention_effect = c(1, .3, .15, .25, int_1, int_2, int_3, 1)
 intervention_uptake = rep(uptake, length(intervention_t))
 
 # Select a random seed per each realization (using the system time)
@@ -83,7 +85,7 @@ flat_curve <- do.call(what = virsim,
                                list(intervention_t = intervention_t,
                                     intervention_uptake = intervention_uptake,
                                     intervention_effect = intervention_effect,
-                                    efoi = external_forcing/param_main$n_agent)))
+                                    efoi = external_forcing / 365 / param_main$n_agent)))
 
 flat_curve_data = aggregate_output(flat_curve$monitor)
 flat_curve_data[, c("IC_inc", "IC_prev") :=

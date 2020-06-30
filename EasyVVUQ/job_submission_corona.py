@@ -124,7 +124,7 @@ my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ.r
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 #cwd = os.getcwd()
-#pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 4 'cd {{}} ; Rscript {cwd}/contact_tracing_UQ.r corona_in.json > output.txt ; cd .. '"
+#pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/contact_tracing_UQ.r corona_in.json > output.txt ; cd .. '"
 #print('Parallel run command: ',pcmd)
 #subprocess.call(pcmd,shell=True)
 

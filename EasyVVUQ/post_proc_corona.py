@@ -54,7 +54,7 @@ def plot_runs(myruns):
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_CT_trace_po2.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_CT_po2.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -75,9 +75,13 @@ my_campaign.apply_analysis(sc_analysis)
 
 results = my_campaign.get_last_analysis()
 
+sobols_all = sc_analysis.get_sobol_indices(qoi='IC_ex',typ='all')
+sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
+#print(sobols_all_IC_ex_max)
+
 #sc_analysis.plot_grid()
-print(results['sobols_first']['IC_ex_max'])
-print(results['sobols_first']['IC_prev_avg_max'])
+#print(results['sobols_first']['IC_ex_max'])
+#print(results['sobols_first']['IC_prev_avg_max'])
 """
 ****************
 * PLOT MOMENTS *
@@ -192,13 +196,14 @@ plt.tight_layout()
 f.savefig('figures/IC.png')
 
 """
-*****************
-* SOBOL INDECES *
-*****************
+***************************
+* SOBOL 1st ORDER INDECES *
+***************************
 """
 #first order Sobol indices and parameter names
 sobols = results['sobols_first']
 params = list(my_sampler.vary.get_keys())
+#print(params)
 
 time = np.arange(0, 4*365+1, 1)
 #the first part of the intervention history is common to all strategy -> not interesting
@@ -237,8 +242,8 @@ ax_ICe_max = ff.add_subplot(122, xlabel='time', title = 'IC_ex_max')
 ax_ICe_max.set_ylim([-.1, 1.1])
 
 for param in params: 
-    ax_S.plot(time[skip:], sobols['S'][param][skip:])
-    ax_E.plot(time[skip:], sobols['E'][param][skip:], label=param)
+    ax_S.plot(time[skip:], sobols['S'][param][skip:], label=param)
+    ax_E.plot(time[skip:], sobols['E'][param][skip:])
     ax_I.plot(time[skip:], sobols['I'][param][skip:])
     ax_R.plot(time[skip:], sobols['R'][param][skip:])
     #
@@ -246,18 +251,44 @@ for param in params:
     ax_ICp.plot(time[skip:], sobols['IC_prev_avg'][param][skip:])
     ax_ICe.plot(time[skip:], sobols['IC_ex'][param][skip:])
     #
-    ax_ICp_max.plot(time[skip:], sobols['IC_prev_avg_max'][param][skip:], label=param)
-    ax_ICe_max.plot(time[skip:], sobols['IC_ex_max'][param][skip:])
+    ax_ICp_max.plot(time[skip:], sobols['IC_prev_avg_max'][param][skip:])
+    ax_ICe_max.plot(time[skip:], sobols['IC_ex_max'][param][skip:], label=param)
 
-ax_E.legend(loc='best')
+ax_S.legend(loc='best')
 ax_ICi.legend(loc='best')
-ax_ICp_max.legend(loc='best')
+ax_ICe_max.legend(loc='best')
 #
 plt.tight_layout()
 fig.savefig('figures/Sobol_SEIR.png')
 f.savefig('figures/Sobol_IC.png')
 ff.savefig('figures/Sobol_IC_max.png')
 
+"""
+******************************
+* SOBOL HIGHER ORDER INDECES *
+******************************
+"""
+f = plt.figure('Sobol_higher_order',figsize=[18,6])
+ax2 = f.add_subplot(131, xlabel='time', title='2nd order')
+ax3 = f.add_subplot(132, xlabel='time', title='3rd order')
+ax4 = f.add_subplot(133, xlabel='time', title='4th order')
+
+ax2.plot(time[skip:],sobols_all[(0, 1)][skip:],label='1')
+ax2.plot(time[skip:],sobols_all[(0, 2)][skip:],label='2')
+ax2.plot(time[skip:],sobols_all[(0, 3)][skip:],label='3')
+ax2.plot(time[skip:],sobols_all[(1, 2)][skip:],label='4')
+ax2.plot(time[skip:],sobols_all[(1, 3)][skip:],label='5')
+ax2.plot(time[skip:],sobols_all[(2, 3)][skip:],label='6')
+#ax2.legend(loc='best')
+#
+ax3.plot(time[skip:],sobols_all[(0, 1, 2)][skip:])
+ax3.plot(time[skip:],sobols_all[(0, 1, 3)][skip:])
+ax3.plot(time[skip:],sobols_all[(0, 2, 3)][skip:])
+ax3.plot(time[skip:],sobols_all[(1, 2, 3)][skip:])
+#
+ax4.plot(time[skip:],sobols_all[(0, 1, 2, 3)][skip:])
+
+f.savefig('figures/Sobol_higher_order.png')
 """
 ************************
 * PLOT INDIVIDUAL RUNS *

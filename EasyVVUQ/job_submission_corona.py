@@ -31,11 +31,16 @@ params = {
         "min": .7,
         "max": .9,
         "default": .9},
-    "intervention_interval": {
+    "start_intervention": {
         "type": "float",
         "min": 20,
-        "max": 400,
+        "max": 120,
         "default": 30},
+    "intervention_interval": {
+        "type": "float",
+        "min": 120,
+        "max": 400,
+        "default": 365},
     "trace_prob_E": {
         "type": "float",
         "min": 0.0,
@@ -93,7 +98,7 @@ my_campaign.add_app(name="sc",
 vary = {
 #    "intervention_effect_1": cp.Uniform(.3, .4),
 #    "intervention_effect_2": cp.Uniform(.5, .6),
-#    "intervention_interval": cp.DiscreteUniform(30, 90),
+#    "start_intervention": cp.DiscreteUniform(30, 90),
     "trace_prob_E": cp.Uniform(.4, .8),
     "trace_rate_I": cp.Uniform(.3, .6),
     "trace_contact_reduction": cp.Uniform(.6, .8),

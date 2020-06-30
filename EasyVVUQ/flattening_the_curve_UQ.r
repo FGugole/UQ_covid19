@@ -58,6 +58,8 @@ int_2 <- unname(sapply(json_data$intervention_effect_2, as.numeric))
 
 int_3 <- unname(sapply(json_data$intervention_effect_3, as.numeric))
 
+start_int <- unname(sapply(json_data$start_intervention, as.integer))
+
 int_interval <- unname(sapply(json_data$intervention_interval, as.integer))
 
 uptake <- unname(sapply(json_data$uptake, as.numeric))
@@ -69,7 +71,7 @@ output_filename <- json_data$outfile
 #######################################################################################
 # Running an individual simulation for the Flattening the Curve strategy using virsim #
 #######################################################################################
-intervention_t = cumsum(c(0, 10, 7, 53, 30, int_interval, int_interval, int_interval))
+intervention_t = cumsum(c(0, 10, 7, 53, start_int, int_interval, int_interval, int_interval))
 intervention_effect = c(1, .3, .15, .25, int_1, int_2, int_3, 1)
 intervention_uptake = rep(uptake, length(intervention_t))
 

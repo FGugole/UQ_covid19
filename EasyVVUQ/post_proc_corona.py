@@ -75,13 +75,7 @@ my_campaign.apply_analysis(sc_analysis)
 
 results = my_campaign.get_last_analysis()
 
-sobols_all = sc_analysis.get_sobol_indices(qoi='IC_ex',typ='all')
-sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
-#print(sobols_all_IC_ex_max)
-
 #sc_analysis.plot_grid()
-#print(results['sobols_first']['IC_ex_max'])
-#print(results['sobols_first']['IC_prev_avg_max'])
 """
 ****************
 * PLOT MOMENTS *
@@ -140,28 +134,25 @@ ax_S.set_xlabel('time')
 ax_S.legend(loc='best')
 #
 ax_E = axes[1]
-ax_E.plot(mu_E,'b',linewidth=2)#,label='mean')
-ax_E.plot(mu_E+std_E,'--r',linewidth=2)#,label='+/- std')
+ax_E.plot(mu_E,'b',linewidth=2)
+ax_E.plot(mu_E+std_E,'--r',linewidth=2)
 ax_E.plot(muE_stdE,'--r',linewidth=2)
 ax_E.set_title('E')
 ax_E.set_xlabel('time')
-#ax_E.legend(loc='best')
 #
 ax_I = axes[2]
-ax_I.plot(mu_I,'b',linewidth=2)#,label='mean')
-ax_I.plot(mu_I+std_I,'--r',linewidth=2)#,label='+/- std')
+ax_I.plot(mu_I,'b',linewidth=2)
+ax_I.plot(mu_I+std_I,'--r',linewidth=2)
 ax_I.plot(muI_stdI,'--r',linewidth=2)
 ax_I.set_title('I')
 ax_I.set_xlabel('time')
-#ax_I.legend(loc='best')
 #
 ax_R = axes[3]
-ax_R.plot(mu_R,'b',linewidth=2)#,label='mean')
-ax_R.plot(mu_R+std_R,'--r',linewidth=2)#,label='+/- std')
+ax_R.plot(mu_R,'b',linewidth=2)
+ax_R.plot(mu_R+std_R,'--r',linewidth=2)
 ax_R.plot(muR_stdR,'--r',linewidth=2)
 ax_R.set_title('R')
 ax_R.set_xlabel('time')
-#ax_R.legend(loc='best')
 #
 plt.tight_layout()
 f.savefig('figures/SEIR.png')
@@ -177,20 +168,18 @@ ax0.set_xlabel('time')
 ax0.legend(loc='best')
 #
 ax1 = axes[1]
-ax1.plot(mu_IC_prev_avg,'b')#,linewidth=2,label='mean')
-ax1.plot(mu_IC_prev_avg+std_IC_prev_avg,'--r',linewidth=2)#,label='+/- std')
+ax1.plot(mu_IC_prev_avg,'b')
+ax1.plot(mu_IC_prev_avg+std_IC_prev_avg,'--r',linewidth=2)
 ax1.plot(muICp_stdICp,'--r',linewidth=2)
 ax1.set_title('IC_prev_avg')
 ax1.set_xlabel('time')
-#ax1.legend(loc='best')
 #
 ax2 = axes[2]
-ax2.plot(mu_IC_ex,'b',linewidth=2)#,label='mean')
-ax2.plot(mu_IC_ex+std_IC_ex,'--r',linewidth=2)#,label='+/- std')
+ax2.plot(mu_IC_ex,'b',linewidth=2)
+ax2.plot(mu_IC_ex+std_IC_ex,'--r',linewidth=2)
 ax2.plot(muICe_stdICe,'--r',linewidth=2)
 ax2.set_title('IC_ex')
 ax2.set_xlabel('time')
-#ax2.legend(loc='best')
 #
 plt.tight_layout()
 f.savefig('figures/IC.png')
@@ -274,6 +263,10 @@ ff.savefig('figures/Sobol_IC_max.png')
 * SOBOL HIGHER ORDER INDECES *
 ******************************
 """
+sobols_all = sc_analysis.get_sobol_indices(qoi='IC_prev_avg',typ='all')
+sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
+#print(sobols_all_IC_ex_max)
+
 f = plt.figure('Sobol_higher_order',figsize=[12,6])
 ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
 ax3 = f.add_subplot(122, xlabel='time', title='3rd order')

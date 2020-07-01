@@ -257,8 +257,8 @@ for param in params:
     ax_ICe_max.plot(x_idx[idx], sobols['IC_ex_max'][param][skip], marker='o', label=param)
     idx += 1
 
-ax_ICp_max.set_xticklabels(params)
-ax_ICe_max.set_xticklabels(params)
+ax_ICp_max.set_xticklabels(x_idx, params, rotation=45)
+ax_ICe_max.set_xticklabels(x_idx, params, rotation=45)
 #
 ax_S.legend(loc='best')
 ax_ICi.legend(loc='best')

@@ -58,8 +58,6 @@ trace_I <- unname(sapply(json_data$trace_rate_I, as.numeric))
 
 contact_red <- unname(sapply(json_data$trace_contact_reduction, as.numeric))
 
-start_int <- unname(sapply(json_data$start_intervention, as.integer))
-
 uptake <- unname(sapply(json_data$uptake, as.numeric))
 
 external_forcing <- unname(sapply(json_data$efoi, as.numeric))
@@ -71,7 +69,7 @@ output_filename <- json_data$outfile
 ##################################################################################
 
 # Define the parameters
-intervention_t = cumsum(c(0, 10, 7, 53, start_int))
+intervention_t = cumsum(c(0, 10, 7, 53, 30))
 intervention_effect = c(1, .3, .15, .25, 1)
 intervention_uptake = rep(uptake, 5)
 

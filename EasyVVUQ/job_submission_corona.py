@@ -21,21 +21,6 @@ params = {
         "min": .25,
         "max": .45,
         "default": .35},
-    "intervention_effect_2": {
-        "type": "float",
-        "min": .45,
-        "max": .65,
-        "default": .55},
-    "intervention_effect_3": {
-        "type": "float",
-        "min": .7,
-        "max": .9,
-        "default": .9},
-    "start_intervention": {
-        "type": "float",
-        "min": 20,
-        "max": 120,
-        "default": 30},
     "intervention_interval": {
         "type": "float",
         "min": 120,
@@ -49,7 +34,7 @@ params = {
     "trace_rate_I": {
         "type": "float",
         "min": 0.0,
-        "max": 1.0,
+        "max": 100.0,
         "default": .5},
     "trace_contact_reduction": {
         "type": "float",
@@ -88,27 +73,19 @@ my_campaign.add_app(name="sc",
                     encoder=encoder,
                     decoder=decoder,
                     collater=collater) 
-#my_campaign.add_app(name="pce",
-#                    params=params,
-#                    encoder=encoder,
-#                    decoder=decoder,
-#                    collater=collater) 
 
 # Create the sampler
 vary = {
 #    "intervention_effect_1": cp.Uniform(.3, .4),
-#    "intervention_effect_2": cp.Uniform(.5, .6),
-#    "start_intervention": cp.DiscreteUniform(30, 90),
-    "trace_prob_E": cp.Uniform(.4, .8),
-    "trace_rate_I": cp.Uniform(.3, .6),
-    "trace_contact_reduction": cp.Uniform(.6, .8),
+    "trace_prob_E": cp.Beta(3, 2),
+    "trace_rate_I": cp.Gamma(.3, .6),
+    "trace_contact_reduction": cp.Beta(6, 2),
 #    "efoi": cp.DiscreteUniform(20, 100)
-    "uptake": cp.Uniform(0.8, 1)
+#    "uptake": cp.Uniform(0.8, 1)
 }
 
 my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=2, 
                                    quadrature_rule='G', sparse=False)
-#my_sampler = uq.sampling.PCESampler(vary=vary, polynomial_order=2)
 
 # Associate the sampler with the campaign
 my_campaign.set_sampler(my_sampler)

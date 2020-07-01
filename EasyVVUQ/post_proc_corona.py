@@ -235,10 +235,10 @@ ax_ICe.set_ylim([-.1, 1.1])
 
 ######################################################################
 ff = plt.figure('Sobol_IC_max', figsize=[12, 6])
-ax_ICp_max = ff.add_subplot(121, xlabel='time', title = 'IC_prev_avg_max')
+ax_ICp_max = ff.add_subplot(121, title = 'IC_prev_avg_max')
 ax_ICp_max.set_ylim([-.1, 1.1])
 
-ax_ICe_max = ff.add_subplot(122, xlabel='time', title = 'IC_ex_max')
+ax_ICe_max = ff.add_subplot(122, title = 'IC_ex_max')
 ax_ICe_max.set_ylim([-.1, 1.1])
 
 idx = 0
@@ -257,8 +257,8 @@ for param in params:
     ax_ICe_max.plot(x_idx[idx], sobols['IC_ex_max'][param][skip], marker='o', label=param)
     idx += 1
 
-ax_ICp_max.xticks(x_idx, params)
-ax_ICe_max.xticks(x_idx, params)
+ax_ICp_max.set_xticklabels(params)
+ax_ICe_max.set_xticklabels(params)
 #
 ax_S.legend(loc='best')
 ax_ICi.legend(loc='best')

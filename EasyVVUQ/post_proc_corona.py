@@ -272,9 +272,9 @@ f = plt.figure('Sobol_higher_order',figsize=[12,6])
 ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
 ax3 = f.add_subplot(122, xlabel='time', title='3rd order')
 
-ax2.plot(time[skip:],sobols_all[(0, 1)][skip:],label='1')
-ax2.plot(time[skip:],sobols_all[(0, 2)][skip:],label='2')
-ax2.plot(time[skip:],sobols_all[(1, 2)][skip:],label='3')
+ax2.plot(time[skip:],sobols_all[(0, 1)][skip:],label='(0, 1)')
+ax2.plot(time[skip:],sobols_all[(0, 2)][skip:],label='(0, 2)')
+ax2.plot(time[skip:],sobols_all[(1, 2)][skip:],label='(1, 2)')
 ax2.legend(loc='best')
 #
 ax3.plot(time[skip:],sobols_all[(0, 1, 2)][skip:])

@@ -253,7 +253,7 @@ for param in params:
     ax_ICe.plot(time[skip:], sobols['IC_ex'][param][skip:], lw=2)
     #
     ax_ICp_max.plot(idx, sobols['IC_prev_avg_max'][param][skip], marker='o')
-    ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][skip], marker='o', label=param)
+    ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][skip], marker='o')
     idx += 1
 
 ax_ICp_max.set_xticks(np.arange(0, len(params), 1))
@@ -263,7 +263,6 @@ ax_ICe_max.set_xticklabels(params, rotation=45)
 #
 ax_S.legend(loc='best')
 ax_ICi.legend(loc='best')
-ax_ICe_max.legend(loc='best')
 #
 plt.tight_layout()
 fig.savefig('figures/Sobol_SEIR.png')

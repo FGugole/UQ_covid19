@@ -241,19 +241,25 @@ ax_ICp_max.set_ylim([-.1, 1.1])
 ax_ICe_max = ff.add_subplot(122, xlabel='time', title = 'IC_ex_max')
 ax_ICe_max.set_ylim([-.1, 1.1])
 
+idx = 0
+x_idx = np.arange(0, len(params), 1)
 for param in params: 
-    ax_S.plot(time[skip:], sobols['S'][param][skip:], label=param)
-    ax_E.plot(time[skip:], sobols['E'][param][skip:])
-    ax_I.plot(time[skip:], sobols['I'][param][skip:])
-    ax_R.plot(time[skip:], sobols['R'][param][skip:])
+    ax_S.plot(time[skip:], sobols['S'][param][skip:], lw=2, label=param)
+    ax_E.plot(time[skip:], sobols['E'][param][skip:], lw=2)
+    ax_I.plot(time[skip:], sobols['I'][param][skip:], lw=2)
+    ax_R.plot(time[skip:], sobols['R'][param][skip:], lw=2)
     #
-    ax_ICi.plot(time[skip:], sobols['IC_inc'][param][skip:], label=param)
-    ax_ICp.plot(time[skip:], sobols['IC_prev_avg'][param][skip:])
-    ax_ICe.plot(time[skip:], sobols['IC_ex'][param][skip:])
+    ax_ICi.plot(time[skip:], sobols['IC_inc'][param][skip:], lw=2, label=param)
+    ax_ICp.plot(time[skip:], sobols['IC_prev_avg'][param][skip:], lw=2)
+    ax_ICe.plot(time[skip:], sobols['IC_ex'][param][skip:], lw=2)
     #
-    ax_ICp_max.plot(time[skip:], sobols['IC_prev_avg_max'][param][skip:])
-    ax_ICe_max.plot(time[skip:], sobols['IC_ex_max'][param][skip:], label=param)
+    ax_ICp_max.plot(x_idx[idx], sobols['IC_prev_avg_max'][param][skip], marker='o')
+    ax_ICe_max.plot(x_idx[idx], sobols['IC_ex_max'][param][skip], marker='o', label=param)
+    idx += 1
 
+ax_ICp_max.xticks(x_idx, params)
+ax_ICe_max.xticks(x_idx, params)
+#
 ax_S.legend(loc='best')
 ax_ICi.legend(loc='best')
 ax_ICe_max.legend(loc='best')
@@ -272,12 +278,12 @@ f = plt.figure('Sobol_higher_order',figsize=[12,6])
 ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
 ax3 = f.add_subplot(122, xlabel='time', title='3rd order')
 
-ax2.plot(time[skip:],sobols_all[(0, 1)][skip:],label='(0, 1)')
-ax2.plot(time[skip:],sobols_all[(0, 2)][skip:],label='(0, 2)')
-ax2.plot(time[skip:],sobols_all[(1, 2)][skip:],label='(1, 2)')
+ax2.plot(time[skip:],sobols_all[(0, 1)][skip:],lw=2, label='(0, 1)')
+ax2.plot(time[skip:],sobols_all[(0, 2)][skip:],lw=2, label='(0, 2)')
+ax2.plot(time[skip:],sobols_all[(1, 2)][skip:],lw=2, label='(1, 2)')
 ax2.legend(loc='best')
 #
-ax3.plot(time[skip:],sobols_all[(0, 1, 2)][skip:])
+ax3.plot(time[skip:],sobols_all[(0, 1, 2)][skip:], lw=2)
 
 f.savefig('figures/Sobol_higher_order.png')
 """

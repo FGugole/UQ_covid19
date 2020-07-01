@@ -242,7 +242,6 @@ ax_ICe_max = ff.add_subplot(122, title = 'IC_ex_max')
 ax_ICe_max.set_ylim([-.1, 1.1])
 
 idx = 0
-x_idx = np.arange(0, len(params), 1)
 for param in params: 
     ax_S.plot(time[skip:], sobols['S'][param][skip:], lw=2, label=param)
     ax_E.plot(time[skip:], sobols['E'][param][skip:], lw=2)
@@ -253,12 +252,14 @@ for param in params:
     ax_ICp.plot(time[skip:], sobols['IC_prev_avg'][param][skip:], lw=2)
     ax_ICe.plot(time[skip:], sobols['IC_ex'][param][skip:], lw=2)
     #
-    ax_ICp_max.plot(x_idx[idx], sobols['IC_prev_avg_max'][param][skip], marker='o')
-    ax_ICe_max.plot(x_idx[idx], sobols['IC_ex_max'][param][skip], marker='o', label=param)
+    ax_ICp_max.plot(idx, sobols['IC_prev_avg_max'][param][skip], marker='o')
+    ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][skip], marker='o', label=param)
     idx += 1
 
-ax_ICp_max.set_xticklabels(x_idx, params, rotation=45)
-ax_ICe_max.set_xticklabels(x_idx, params, rotation=45)
+ax_ICp_max.set_xticks(np.arange(0, len(params), 1))
+ax_ICp_max.set_xticklabels(params, rotation=45)
+ax_ICe_max.set_xticks(np.arange(0, len(params), 1))
+ax_ICe_max.set_xticklabels(params, rotation=45)
 #
 ax_S.legend(loc='best')
 ax_ICi.legend(loc='best')

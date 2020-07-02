@@ -304,4 +304,7 @@ for run in Runlist:
 	print('value of trace_rate_I in ',run,' = ',data['trace_rate_I'][Rundic[run]*N])
 	print('value of trace_contact_reduction in ',run,' = ',data['trace_contact_reduction'][Rundic[run]*N])
 
+for param in params:
+    print('Unique values of ',param,' are: ',data[param].unique)
+
 ### END OF CODE ###

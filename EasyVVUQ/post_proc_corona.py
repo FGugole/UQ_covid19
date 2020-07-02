@@ -290,21 +290,16 @@ f.savefig('figures/Sobol_higher_order.png')
 
 # Remember: if I used polynomial_order=p in the sampler, then it created p+1 runs
 Runlist = ['Run_1','Run_2','Run_3','Run_4','Run_5','Run_6','Run_7','Run_8','Run_9','Run_10',\
-'Run_11','Run_12','Run_13','Run_14','Run_15','Run_16','Run_17','Run_33','Run_49']
+'Run_11','Run_12','Run_13','Run_14','Run_15','Run_16']
 Rundic = {'Run_1':0,'Run_2':1,'Run_3':2,'Run_4':3,'Run_5':4,'Run_6':5,'Run_7':6,'Run_8':7,\
-'Run_9':8,'Run_10':9,'Run_11':10,'Run_12':11,'Run_13':12,'Run_14':13,'Run_15':14,'Run_16':15,\
-'Run_17':16,'Run_33':32,'Run_49':48}
+'Run_9':8,'Run_10':9,'Run_11':10,'Run_12':11,'Run_13':12,'Run_14':13,'Run_15':14,'Run_16':15}
 
 plot_runs(Runlist)
 
-#N = len(mu_IC_prev_avg)
 # Print parameters values used in the simulations
-#for run in Runlist:
-#	print('value of trace_prob_E in ',run,' = ',data['trace_prob_E'][Rundic[run]*N])
-#	print('value of trace_rate_I in ',run,' = ',data['trace_rate_I'][Rundic[run]*N])
-#	print('value of trace_contact_reduction in ',run,' = ',data['trace_contact_reduction'][Rundic[run]*N])
-
 for param in params:
     print('Unique values of ',param,' are: ',data[param].unique())
+
+plt.show()
 
 ### END OF CODE ###

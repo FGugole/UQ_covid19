@@ -78,7 +78,7 @@ my_campaign.add_app(name="sc",
 vary = {
 #    "intervention_effect_1": cp.Uniform(.3, .4),
     "trace_prob_E": cp.Beta(alpha=3, beta=2, lower=.4),
-    "trace_rate_I": cp.Gamma(shape=2, scale=.3),
+    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
     "trace_contact_reduction": cp.Beta(alpha=6, beta=2, lower=.4),
 #    "efoi": cp.DiscreteUniform(20, 100)
 #    "uptake": cp.Uniform(0.8, 1)

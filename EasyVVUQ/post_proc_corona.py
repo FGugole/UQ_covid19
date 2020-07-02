@@ -281,6 +281,8 @@ ax2.legend(loc='best')
 #
 ax3.plot(time[skip:],sobols_all[(0, 1, 2)][skip:], lw=2)
 
+plt.tight_layout()
+
 f.savefig('figures/Sobol_higher_order.png')
 """
 ************************

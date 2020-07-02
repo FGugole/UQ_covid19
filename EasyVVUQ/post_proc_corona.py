@@ -196,7 +196,7 @@ params = list(my_sampler.vary.get_keys())
 
 time = np.arange(0, 4*365+1, 1)
 #the first part of the intervention history is common to all strategy -> not interesting
-skip = 130
+skip = 0
 
 fig = plt.figure('Sobol_SEIR', figsize=[24, 6])
 ax_S = fig.add_subplot(141, xlabel='time', title = 'S')
@@ -241,8 +241,8 @@ for param in params:
     ax_ICp.plot(time[skip:], sobols['IC_prev_avg'][param][skip:], lw=2)
     ax_ICe.plot(time[skip:], sobols['IC_ex'][param][skip:], lw=2)
     #
-    ax_ICp_max.plot(idx, sobols['IC_prev_avg_max'][param][skip], marker='o')
-    ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][skip], marker='o')
+    ax_ICp_max.plot(idx, sobols['IC_prev_avg_max'][param][100], marker='o')
+    ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][100], marker='o')
     idx += 1
 
 ax_ICp_max.set_xticks(np.arange(0, len(params), 1))
@@ -269,7 +269,10 @@ sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
 
 f = plt.figure('Sobol_higher_order',figsize=[12,6])
 ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
+ax2.set_ylim([-.1, 1.1])
+
 ax3 = f.add_subplot(122, xlabel='time', title='3rd order')
+ax3.set_ylim([-.1, 1.1])
 
 ax2.plot(time[skip:],sobols_all[(0, 1)][skip:],lw=2, label='(0, 1)')
 ax2.plot(time[skip:],sobols_all[(0, 2)][skip:],lw=2, label='(0, 2)')
@@ -292,5 +295,12 @@ Rundic = {'Run_1':0,'Run_2':1,'Run_3':2,'Run_4':3,'Run_5':4,'Run_6':5,'Run_7':6,
 'Run_9':8,'Run_10':9,'Run_11':10,'Run_12':11,'Run_13':12,'Run_14':13,'Run_15':14,'Run_16':15}
 
 plot_runs(Runlist)
+
+N = len(mu_IC_prev_avg)
+# Print parameters values used in the simulations
+for run in Runlist:
+	print('value of trace_prob_E in ',run,' = ',data['trace_prob_E'][Rundic[run]*N])
+	print('value of trace_rate_I in ',run,' = ',data['trace_rate_I'][Rundic[run]*N])
+	print('value of trace_contact_reduction in ',run,' = ',data['trace_contact_reduction'][Rundic[run]*N])
 
 ### END OF CODE ###

@@ -297,14 +297,14 @@ Rundic = {'Run_1':0,'Run_2':1,'Run_3':2,'Run_4':3,'Run_5':4,'Run_6':5,'Run_7':6,
 
 plot_runs(Runlist)
 
-N = len(mu_IC_prev_avg)
+#N = len(mu_IC_prev_avg)
 # Print parameters values used in the simulations
-for run in Runlist:
-	print('value of trace_prob_E in ',run,' = ',data['trace_prob_E'][Rundic[run]*N])
-	print('value of trace_rate_I in ',run,' = ',data['trace_rate_I'][Rundic[run]*N])
-	print('value of trace_contact_reduction in ',run,' = ',data['trace_contact_reduction'][Rundic[run]*N])
+#for run in Runlist:
+#	print('value of trace_prob_E in ',run,' = ',data['trace_prob_E'][Rundic[run]*N])
+#	print('value of trace_rate_I in ',run,' = ',data['trace_rate_I'][Rundic[run]*N])
+#	print('value of trace_contact_reduction in ',run,' = ',data['trace_contact_reduction'][Rundic[run]*N])
 
 for param in params:
-    print('Unique values of ',param,' are: ',data[param].unique)
+    print('Unique values of ',param,' are: ',data[param].unique())
 
 ### END OF CODE ###

@@ -1,1 +1,1 @@
-{"outfile": "$out_file", "intervention_effect_1": "$intervention_effect_1", "intervention_interval": "$intervention_interval", "trace_prob_E": "$trace_prob_E", "trace_rate_I": "$trace_rate_I", "trace_contact_reduction": "$trace_contact_reduction", "uptake": "$uptake", "efoi": "$efoi"}
+{"outfile": "$out_file", "intervention_effect": "$intervention_effect", "intervention_interval": "$intervention_interval", "trace_prob_E": "$trace_prob_E", "trace_rate_I": "$trace_rate_I", "trace_contact_reduction": "$trace_contact_reduction", "uptake": "$uptake", "efoi": "$efoi"}

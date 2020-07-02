@@ -54,7 +54,7 @@ def plot_runs(myruns):
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_CT_po3.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_FC_po3.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')

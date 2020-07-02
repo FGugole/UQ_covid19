@@ -52,7 +52,7 @@ param_main <- within(param_sim, {
 ###############################################################
 json_data <- fromJSON(file="corona_in.json")
 
-int_1 <- unname(sapply(json_data$intervention_effect_1, as.numeric))
+int_effect <- unname(sapply(json_data$intervention_effect, as.numeric))
 
 int_interval <- unname(sapply(json_data$intervention_interval, as.integer))
 
@@ -66,7 +66,7 @@ output_filename <- json_data$outfile
 # Running an individual simulation for the Flattening the Curve strategy using virsim #
 #######################################################################################
 intervention_t = cumsum(c(0, 10, 7, 53, 30, int_interval, int_interval, int_interval))
-intervention_effect = c(1, .3, .15, .25, int_1, .55, .9, 1)
+intervention_effect = c(1, .3, .15, .25, int_effect, .55, .9, 1)
 intervention_uptake = rep(uptake, length(intervention_t))
 
 # Select a random seed per each realization (using the system time)

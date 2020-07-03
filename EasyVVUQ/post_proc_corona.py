@@ -54,7 +54,7 @@ def plot_runs(myruns):
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_FC_po3.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_FC_po3_moreuptake.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -263,27 +263,75 @@ ff.savefig('figures/Sobol_IC_max.png')
 * SOBOL HIGHER ORDER INDECES *
 ******************************
 """
-sobols_all = sc_analysis.get_sobol_indices(qoi='IC_prev_avg',typ='all')
-sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
-#print(sobols_all_IC_ex_max)
+sobols_all_IC_ex = sc_analysis.get_sobol_indices(qoi='IC_ex',typ='all')
+sobols_all_IC_prev_avg = sc_analysis.get_sobol_indices(qoi='IC_prev_avg',typ='all')
+#
 
-f = plt.figure('Sobol_higher_order',figsize=[12,6])
+f = plt.figure('Sobol_higher_order_IC_ex',figsize=[12,6])
 ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
 ax2.set_ylim([-.1, 1.1])
 
 ax3 = f.add_subplot(122, xlabel='time', title='3rd order')
 ax3.set_ylim([-.1, 1.1])
 
-ax2.plot(time[skip:],sobols_all[(0, 1)][skip:],lw=2, label='(0, 1)')
-ax2.plot(time[skip:],sobols_all[(0, 2)][skip:],lw=2, label='(0, 2)')
-ax2.plot(time[skip:],sobols_all[(1, 2)][skip:],lw=2, label='(1, 2)')
+ax2.plot(time[skip:],sobols_all_IC_ex[(0, 1)][skip:],lw=2, label='(0, 1)')
+ax2.plot(time[skip:],sobols_all_IC_ex[(0, 2)][skip:],lw=2, label='(0, 2)')
+ax2.plot(time[skip:],sobols_all_IC_ex[(1, 2)][skip:],lw=2, label='(1, 2)')
 ax2.legend(loc='best')
 #
-ax3.plot(time[skip:],sobols_all[(0, 1, 2)][skip:], lw=2)
+ax3.plot(time[skip:],sobols_all_IC_ex[(0, 1, 2)][skip:], lw=2)
 
 plt.tight_layout()
+f.savefig('figures/Sobol_higher_order_IC_ex.png')
 
-f.savefig('figures/Sobol_higher_order.png')
+
+f = plt.figure('Sobol_higher_order_IC_prev_avg',figsize=[12,6])
+ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
+ax2.set_ylim([-.1, 1.1])
+
+ax3 = f.add_subplot(122, xlabel='time', title='3rd order')
+ax3.set_ylim([-.1, 1.1])
+
+ax2.plot(time[skip:],sobols_all_IC_prev_avg[(0, 1)][skip:],lw=2, label='(0, 1)')
+ax2.plot(time[skip:],sobols_all_IC_prev_avg[(0, 2)][skip:],lw=2, label='(0, 2)')
+ax2.plot(time[skip:],sobols_all_IC_prev_avg[(1, 2)][skip:],lw=2, label='(1, 2)')
+ax2.legend(loc='best')
+#
+ax3.plot(time[skip:],sobols_all_IC_prev_avg[(0, 1, 2)][skip:], lw=2)
+
+plt.tight_layout()
+f.savefig('figures/Sobol_higher_order_IC_prev_avg.png')
+
+
+sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
+sobols_all_IC_prev_avg_max = sc_analysis.get_sobol_indices(qoi='IC_prev_avg_max',typ='all')
+
+ff = plt.figure('Sobol_higher_order_IC_max', figsize=[12, 6])
+ax_ICp_max = ff.add_subplot(121, title = 'IC_prev_avg_max')
+ax_ICp_max.set_ylim([-.1, 1.1])
+
+ax_ICe_max = ff.add_subplot(122, title = 'IC_ex_max')
+ax_ICe_max.set_ylim([-.1, 1.1])
+
+ax_ICp_max.plot(0, sobols['IC_prev_avg_max'][(0, 1)][100], marker='o')
+ax_ICp_max.plot(1, sobols['IC_prev_avg_max'][(0, 2)][100], marker='o')
+ax_ICp_max.plot(2, sobols['IC_prev_avg_max'][(0, 3)][100], marker='o')
+ax_ICp_max.plot(3, sobols['IC_prev_avg_max'][(0, 1, 2)][100], marker='o')
+#
+ax_ICe_max.plot(0, sobols['IC_ex_max'][(0, 1)][100], marker='o')
+ax_ICe_max.plot(1, sobols['IC_ex_max'][(0, 2)][100], marker='o')
+ax_ICe_max.plot(2, sobols['IC_ex_max'][(0, 3)][100], marker='o')
+ax_ICe_max.plot(3, sobols['IC_ex_max'][(0, 1, 2)][100], marker='o')
+
+x_label = ['(0, 1)','(0, 2)','(1, 2)', '(0, 1, 2)']
+ax_ICp_max.set_xticks(np.arange(0, 4, 1))
+ax_ICp_max.set_xticklabels(x_label, rotation=45)
+ax_ICe_max.set_xticks(np.arange(0, 4, 1))
+ax_ICe_max.set_xticklabels(x_label, rotation=45)
+
+plt.tight_layout()
+f.savefig('figures/Sobol_higher_order_IC_max.png')
+
 """
 ************************
 * PLOT INDIVIDUAL RUNS *

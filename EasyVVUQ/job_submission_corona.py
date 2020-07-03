@@ -80,7 +80,7 @@ vary = {
 #    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
 #    "trace_contact_reduction": cp.Beta(alpha=6, beta=2, lower=.4),
     "intervention_effect": cp.Beta(alpha=2, beta=2, lower=.3, upper=.4),
-    "intervention_interval": cp.DiscreteUniform(300, 420),
+    "intervention_interval": cp.DiscreteUniform(240, 365),
     "uptake": cp.Beta(alpha=2, beta=2, lower=.75)
 }
 

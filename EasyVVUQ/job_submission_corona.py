@@ -16,20 +16,15 @@ my_campaign = uq.Campaign(name='corona', work_dir='/tmp')
 
 # Define parameter space
 params = {
-    "intervention_effect_1": {
+    "intervention_effect": {
         "type": "float",
         "min": .25,
         "max": .45,
         "default": .35},
-    "intervention_effect_2": {
-        "type": "float",
-        "min": .45,
-        "max": .65,
-        "default": .55},
     "intervention_interval": {
         "type": "float",
-        "min": 200,
-        "max": 400,
+        "min": 240,
+        "max": 450,
         "default": 365},
     "trace_prob_E": {
         "type": "float",
@@ -39,7 +34,7 @@ params = {
     "trace_rate_I": {
         "type": "float",
         "min": 0.0,
-        "max": 1.0,
+        "max": 100.0,
         "default": .5},
     "trace_contact_reduction": {
         "type": "float",
@@ -54,14 +49,14 @@ params = {
     "efoi": {
         "type": "float",
         "min": 0.0,
-        "max": .1,
-        "default": .05},
+        "max": 200.0,
+        "default": 50.0},
     "out_file": {
         "type": "string",
         "default": "output.csv"}}
     
 output_filename = params["out_file"]["default"]
-output_columns = ["S","E","I","R","IC_inc","IC_prev","IC_prev_avg","IC_ex"]
+output_columns = ["S","E","I","R","IC_inc","IC_prev","IC_prev_avg","IC_prev_avg_max","IC_ex","IC_ex_max"]
 
 encoder = uq.encoders.GenericEncoder(
     template_fname= HOME + '/corona.template',
@@ -81,17 +76,16 @@ my_campaign.add_app(name="sc",
 
 # Create the sampler
 vary = {
-    "intervention_effect_1": cp.Uniform(.3, .4),
-#    "intervention_effect_2": cp.Uniform(.5, .6),
-    "intervention_interval": cp.DiscreteUniform(240, 365)
-#    "trace_rate_I": cp.Uniform(.3, .6),
-#    "trace_prob_E": cp.Uniform(.4, .8),
-#    "trace_contact_reduction": cp.Uniform(.5, .8)
-#    "efoi": cp.Uniform(0.0, .1)
-#    "uptake": cp.Uniform(0.7, 1)
+#    "trace_prob_E": cp.Beta(alpha=3, beta=2, lower=.4),
+#    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
+#    "trace_contact_reduction": cp.Beta(alpha=6, beta=2, lower=.4),
+    "intervention_effect": cp.Beta(alpha=2, beta=2, lower=.3, upper=.4),
+    "intervention_interval": cp.DiscreteUniform(300, 420),
+    "uptake": cp.Beta(alpha=2, beta=2, lower=.75)
 }
 
-my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=2)
+my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 
+                                   quadrature_rule='G', sparse=False)
 
 # Associate the sampler with the campaign
 my_campaign.set_sampler(my_sampler)
@@ -102,14 +96,14 @@ my_campaign.draw_samples()
 my_campaign.populate_runs_dir()
 
 #Run execution sequentially 
-my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
+#my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
 #my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ.r corona_in.json', interpret='Rscript'))
 
 # Run execution in parallel without Fabsim (using gnu parallel)
-#cwd = os.getcwd()
-#pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 4 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ.r corona_in.json > output.txt ; cd .. '"
-#print('Parallel run command: ',pcmd)
-#subprocess.call(pcmd,shell=True)
+cwd = os.getcwd()
+pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ.r corona_in.json > output.txt ; cd .. '"
+print('Parallel run command: ',pcmd)
+subprocess.call(pcmd,shell=True)
 
 #Save the Campaign
 my_campaign.save_state("campaign_state.json")

@@ -53,8 +53,8 @@ contact_tracing_data[, c("IC_inc", "IC_prev") :=
 # Plot
 qplot(data = contact_tracing_data,
       x = time,
-      #y = IC_prev,
-      y = R / (S + E + I + R) * 100,
+      y = IC_prev,
+      #y = R / (S + E + I + R) * 100,
       geom = "line")
 
 #################################################################################

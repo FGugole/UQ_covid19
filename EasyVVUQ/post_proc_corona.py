@@ -304,33 +304,9 @@ f.savefig('figures/Sobol_higher_order_IC_prev_avg.png')
 
 
 sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
+print('Higher order Sobol indices for IC_ex_max:',sobols_all_IC_ex_max)
 sobols_all_IC_prev_avg_max = sc_analysis.get_sobol_indices(qoi='IC_prev_avg_max',typ='all')
-
-f = plt.figure('Sobol_higher_order_IC_max', figsize=[12, 6])
-ax_ICp_max = ff.add_subplot(121, title = 'IC_prev_avg_max')
-ax_ICp_max.set_ylim([-.1, 1.1])
-
-ax_ICe_max = ff.add_subplot(122, title = 'IC_ex_max')
-ax_ICe_max.set_ylim([-.1, 1.1])
-
-ax_ICp_max.plot(0, sobols_all_IC_prev_avg_max[(0, 1)][100], marker='o')
-ax_ICp_max.plot(1, sobols_all_IC_prev_avg_max[(0, 2)][100], marker='o')
-ax_ICp_max.plot(2, sobols_all_IC_prev_avg_max[(1, 2)][100], marker='o')
-ax_ICp_max.plot(3, sobols_all_IC_prev_avg_max[(0, 1, 2)][100], marker='o')
-#
-ax_ICe_max.plot(0, sobols_all_IC_ex_max[(0, 1)][100], marker='o')
-ax_ICe_max.plot(1, sobols_all_IC_ex_max[(0, 2)][100], marker='o')
-ax_ICe_max.plot(2, sobols_all_IC_ex_max[(1, 2)][100], marker='o')
-ax_ICe_max.plot(3, sobols_all_IC_ex_max[(0, 1, 2)][100], marker='o')
-
-x_label = ['(0, 1)','(0, 2)','(1, 2)', '(0, 1, 2)']
-ax_ICp_max.set_xticks(np.arange(0, 4, 1))
-ax_ICp_max.set_xticklabels(x_label, rotation=45)
-ax_ICe_max.set_xticks(np.arange(0, 4, 1))
-ax_ICe_max.set_xticklabels(x_label, rotation=45)
-
-plt.tight_layout()
-f.savefig('figures/Sobol_higher_order_IC_max.png')
+print('Higher order Sobol indices for IC_prev_avg_max:',sobols_all_IC_prev_avg_max)
 
 """
 ************************

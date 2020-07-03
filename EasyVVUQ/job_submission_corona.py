@@ -79,9 +79,9 @@ vary = {
 #    "trace_prob_E": cp.Beta(alpha=3, beta=2, lower=.4),
 #    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
 #    "trace_contact_reduction": cp.Beta(alpha=6, beta=2, lower=.4),
-    "intervention_effect": cp.Beta(alpha=3, beta=2, lower=.3, upper=.4),
+    "intervention_effect": cp.Beta(alpha=2, beta=2, lower=.3, upper=.4),
     "intervention_interval": cp.DiscreteUniform(300, 420),
-    "uptake": cp.Beta(alpha=3, beta=2, lower=.5)
+    "uptake": cp.Beta(alpha=2, beta=2, lower=.75)
 }
 
 my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 

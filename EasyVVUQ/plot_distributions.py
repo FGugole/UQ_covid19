@@ -31,12 +31,12 @@ leg.set_draggable(True)
 plt.tight_layout()
 
 # Flattening the curve
-beta_int1 = cp.Beta(alpha=3, beta=2, lower=.3, upper=.4)
-beta_up = cp.Beta(alpha=3, beta=2, lower=.5)
+beta_int1 = cp.Beta(alpha=2, beta=2, lower=.3, upper=.4)
+beta_up = cp.Beta(alpha=2, beta=2, lower=.75)
 
 x_FT = np.linspace(0, 1, 101)
 
-f = plt.figure('distributions_FT')
+f = plt.figure('distributions_FC')
 ax = f.add_subplot(111, xlabel='x')
 ax.plot(x_FT,beta_int1.pdf(x_FT),lw=2,label='intervention_effect')
 ax.plot(x_FT,beta_up.pdf(x_FT),lw=2,label='uptake')

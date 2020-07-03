@@ -306,7 +306,7 @@ f.savefig('figures/Sobol_higher_order_IC_prev_avg.png')
 sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
 sobols_all_IC_prev_avg_max = sc_analysis.get_sobol_indices(qoi='IC_prev_avg_max',typ='all')
 
-ff = plt.figure('Sobol_higher_order_IC_max', figsize=[12, 6])
+f = plt.figure('Sobol_higher_order_IC_max', figsize=[12, 6])
 ax_ICp_max = ff.add_subplot(121, title = 'IC_prev_avg_max')
 ax_ICp_max.set_ylim([-.1, 1.1])
 

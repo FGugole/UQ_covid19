@@ -313,15 +313,15 @@ ax_ICp_max.set_ylim([-.1, 1.1])
 ax_ICe_max = ff.add_subplot(122, title = 'IC_ex_max')
 ax_ICe_max.set_ylim([-.1, 1.1])
 
-ax_ICp_max.plot(0, sobols['IC_prev_avg_max'][(0, 1)][100], marker='o')
-ax_ICp_max.plot(1, sobols['IC_prev_avg_max'][(0, 2)][100], marker='o')
-ax_ICp_max.plot(2, sobols['IC_prev_avg_max'][(0, 3)][100], marker='o')
-ax_ICp_max.plot(3, sobols['IC_prev_avg_max'][(0, 1, 2)][100], marker='o')
+ax_ICp_max.plot(0, sobols_all_IC_prev_avg_max[(0, 1)][100], marker='o')
+ax_ICp_max.plot(1, sobols_all_IC_prev_avg_max[(0, 2)][100], marker='o')
+ax_ICp_max.plot(2, sobols_all_IC_prev_avg_max[(0, 3)][100], marker='o')
+ax_ICp_max.plot(3, sobols_all_IC_prev_avg_max[(0, 1, 2)][100], marker='o')
 #
-ax_ICe_max.plot(0, sobols['IC_ex_max'][(0, 1)][100], marker='o')
-ax_ICe_max.plot(1, sobols['IC_ex_max'][(0, 2)][100], marker='o')
-ax_ICe_max.plot(2, sobols['IC_ex_max'][(0, 3)][100], marker='o')
-ax_ICe_max.plot(3, sobols['IC_ex_max'][(0, 1, 2)][100], marker='o')
+ax_ICe_max.plot(0, sobols_all_IC_ex_max[(0, 1)][100], marker='o')
+ax_ICe_max.plot(1, sobols_all_IC_ex_max[(0, 2)][100], marker='o')
+ax_ICe_max.plot(2, sobols_all_IC_ex_max[(0, 3)][100], marker='o')
+ax_ICe_max.plot(3, sobols_all_IC_ex_max[(0, 1, 2)][100], marker='o')
 
 x_label = ['(0, 1)','(0, 2)','(1, 2)', '(0, 1, 2)']
 ax_ICp_max.set_xticks(np.arange(0, 4, 1))

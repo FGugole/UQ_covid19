@@ -44,3 +44,26 @@ sc_analysis = uq.analysis.SCAnalysis(sampler=my_sampler, qoi_cols=output_columns
 my_campaign.apply_analysis(sc_analysis)
 
 results = my_campaign.get_last_analysis()
+
+"""
+*************************
+* Empirical CDF of QoIs *
+*************************
+"""
+mu_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['mean']
+L = len(mu_IC_prev_avg)
+
+N_runs = 4**3
+
+IC_prev_avg_max = np.zeros(N_runs,dtype='float')
+IC_ex_max = np.zeros(N_runs,dtype='float')
+
+for i in range(N_runs):
+	IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
+	IC_ex_max[i] = data.IC_ex_max[i*L]
+
+IC_prev_avg_max.sort()
+IC_ex_max.sort()
+
+print(IC_prev_avg_max)
+print(IC_ex_max)

@@ -13,7 +13,7 @@ setwd(work_dir)
 
 size_multiplier <- 1
 param_main <- within(param_sim, {
-  runtime <- 4 * 365
+  runtime <- 540
   
   n_agent <- 1e6 * size_multiplier
   n_cluster <- 1e3 * size_multiplier
@@ -22,7 +22,7 @@ param_main <- within(param_sim, {
   cluster_size_sd <- 0.95
   supercluster_size_sd <- 0
   
-  efoi <- 0
+  efoi <- 50 / 365 / param_main$n_agent
   infection_init <- 50 * size_multiplier
   seed_supercluster <- c(rep(9, 2), rep(2, 6), rep(1, 6), rep(0, 6))
   inc_cum_cond <- 9500 * size_multiplier
@@ -52,15 +52,13 @@ param_main <- within(param_sim, {
 ###############################################################
 json_data <- fromJSON(file="corona_in.json")
 
+rnd_seed <- unname(sapply(json_data$seed, as.integer))
+
 trace_E <- unname(sapply(json_data$trace_prob_E, as.numeric))
 
 trace_I <- unname(sapply(json_data$trace_rate_I, as.numeric))
 
 contact_red <- unname(sapply(json_data$trace_contact_reduction, as.numeric))
-
-uptake <- unname(sapply(json_data$uptake, as.numeric))
-
-external_forcing <- unname(sapply(json_data$efoi, as.numeric))
 
 output_filename <- json_data$outfile
 
@@ -71,18 +69,18 @@ output_filename <- json_data$outfile
 # Define the parameters
 intervention_t = cumsum(c(0, 10, 7, 53, 30))
 intervention_effect = c(1, .3, .15, .25, 1)
-intervention_uptake = rep(uptake, 5)
+intervention_uptake = rep(1, 5)
 
 trace_prob_E = c(rep(0, 4), trace_E)
 trace_rate_I = c(rep(0, 4), trace_I)
 trace_contact_reduction = c(rep(0, 4), contact_red)
 
 # Select a random seed per each realization (using the system time)
-initial_seed <- as.integer(Sys.time())
+#initial_seed <- as.integer(Sys.time())
 # take the last 5 digits of the initial seed
-the_seed <- initial_seed %% 1e5
+#the_seed <- initial_seed %% 1e5
 # set the seed
-set.seed(the_seed)
+set.seed(rnd_seed)
 
 contact_tracing <- do.call(what = virsim,
                            args = c(param_main,
@@ -91,8 +89,7 @@ contact_tracing <- do.call(what = virsim,
                                          intervention_effect = intervention_effect,
                                          trace_prob_E = trace_prob_E,
                                          trace_rate_I = trace_rate_I,
-                                         trace_contact_reduction = trace_contact_reduction,
-                                         efoi = external_forcing / 365 / param_main$n_agent)))
+                                         trace_contact_reduction = trace_contact_reduction)))
 
 contact_tracing_data = aggregate_output(contact_tracing$monitor)
 contact_tracing_data[, c("IC_inc", "IC_prev") :=

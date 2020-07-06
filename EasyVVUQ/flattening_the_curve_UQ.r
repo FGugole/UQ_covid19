@@ -13,7 +13,7 @@ setwd(work_dir)
 
 size_multiplier <- 1
 param_main <- within(param_sim, {
-  runtime <- 4 * 365
+  runtime <- 540
   
   n_agent <- 1e6 * size_multiplier
   n_cluster <- 1e3 * size_multiplier
@@ -22,7 +22,7 @@ param_main <- within(param_sim, {
   cluster_size_sd <- 0.95
   supercluster_size_sd <- 0
   
-  efoi <- 0
+  efoi <- 50 / 365 / param_main$n_agent
   infection_init <- 50 * size_multiplier
   seed_supercluster <- c(rep(9, 2), rep(2, 6), rep(1, 6), rep(0, 6))
   inc_cum_cond <- 9500 * size_multiplier
@@ -52,36 +52,33 @@ param_main <- within(param_sim, {
 ###############################################################
 json_data <- fromJSON(file="corona_in.json")
 
+rnd_seed <- unname(sapply(json_data$seed, as.integer))
+
 int_effect <- unname(sapply(json_data$intervention_effect, as.numeric))
 
-int_interval <- unname(sapply(json_data$intervention_interval, as.integer))
-
 uptake <- unname(sapply(json_data$uptake, as.numeric))
-
-external_forcing <- unname(sapply(json_data$efoi, as.numeric))
 
 output_filename <- json_data$outfile
 
 #######################################################################################
 # Running an individual simulation for the Flattening the Curve strategy using virsim #
 #######################################################################################
-intervention_t = cumsum(c(0, 10, 7, 53, 30, int_interval, int_interval, int_interval))
-intervention_effect = c(1, .3, .15, .25, int_effect, .55, .9, 1)
+intervention_t = cumsum(c(0, 10, 7, 53, 30))
+intervention_effect = c(1, .3, .15, .25, int_effect)
 intervention_uptake = rep(uptake, length(intervention_t))
 
 # Select a random seed per each realization (using the system time)
-initial_seed <- as.integer(Sys.time())
+#initial_seed <- as.integer(Sys.time())
 # take the last 5 digits of the initial seed
-the_seed <- initial_seed %% 1e5
+#the_seed <- initial_seed %% 1e5
 # set the seed
-set.seed(the_seed)
+set.seed(rnd_seed)
 
 flat_curve <- do.call(what = virsim,
                       args = c(param_main,
                                list(intervention_t = intervention_t,
                                     intervention_uptake = intervention_uptake,
-                                    intervention_effect = intervention_effect,
-                                    efoi = external_forcing / 365 / param_main$n_agent)))
+                                    intervention_effect = intervention_effect)))
 
 flat_curve_data = aggregate_output(flat_curve$monitor)
 flat_curve_data[, c("IC_inc", "IC_prev") :=

@@ -13,13 +13,17 @@ function Y = read_virsim_qoi(outputfile)
 T = readtable(outputfile);
 
 % select a QoI:
-% moving mean of IC_prev, 30 days
-MM_I = movmean(T.IC_prev, 30);
+% moving mean of IC_prev, e.g. 30 days
+avg_window = 30;
+MM_I       = movmean(T.IC_prev, avg_window);
 % take maximum:
-Y    = max(MM_I);
+Y(:,1)     = max(MM_I);
 
 % alternative QoI: number of person days, where IC capacity is exceeded (in
 % excess of 108 per million)
+% IC_capacity = 108;
+% IC_excess   = cumsum(max(0,T.IC_prev - IC_capacity));
+% Y(:,2)      = max(IC_excess);
 
 end
 

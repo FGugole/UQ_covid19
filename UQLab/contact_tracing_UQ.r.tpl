@@ -12,7 +12,7 @@ setwd(work_dir)
 
 size_multiplier <- 1
 param_main <- within(param_sim, {
-  runtime <- 365 # in days
+  runtime <- 550 # in days
   
   n_agent <- 1e6 * size_multiplier
   n_cluster <- 1e3 * size_multiplier
@@ -21,7 +21,7 @@ param_main <- within(param_sim, {
   cluster_size_sd <- 0.95
   supercluster_size_sd <- 0
   
-  efoi <- 0
+  efoi <- 0 
   infection_init <- 50 * size_multiplier
   seed_supercluster <- c(rep(9, 2), rep(2, 6), rep(1, 6), rep(0, 6))
   inc_cum_cond <- 9500 * size_multiplier
@@ -52,12 +52,9 @@ param_main <- within(param_sim, {
 ##################################################################################
 
 # Define the parameters
-uptake = 1.0
-external_forcing = 50.0
-
 intervention_t = cumsum(c(0, 10, 7, 53, 30))
 intervention_effect = c(1, .3, .15, .25, 1)
-intervention_uptake = rep(uptake, 5)
+intervention_uptake = rep(1, 5)
 
 trace_prob_E = <X0001> 
 trace_rate_I = <X0002> 
@@ -75,7 +72,7 @@ contact_tracing <- do.call(what = virsim,
                                          trace_prob_E = trace_prob_E,
                                          trace_rate_I = trace_rate_I,
                                          trace_contact_reduction = trace_contact_reduction,
-                                         efoi = external_forcing / 365 / param_main$n_agent)))
+                                         efoi = 50 / 365 / param_main$n_agent)))
 
 contact_tracing_data = aggregate_output(contact_tracing$monitor)
 contact_tracing_data[, c("IC_inc", "IC_prev") :=

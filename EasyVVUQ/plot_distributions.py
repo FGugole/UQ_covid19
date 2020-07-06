@@ -13,8 +13,8 @@ plt.rcParams.update({'font.size': 20})
 plt.rcParams['figure.figsize'] = 8,6
 
 # Contact tracing
-beta_tpE = cp.Beta(alpha=3, beta=2, lower=.4)
-beta_tcr = cp.Beta(alpha=6, beta=2, lower=.4)
+beta_tpE = cp.Beta(alpha=6, beta=4)
+beta_tcr = cp.Beta(alpha=10, beta=2)
 gamma_trI = cp.Gamma(shape=2, scale=.4)
 
 x_CT = np.linspace(0, 1.5, 151)
@@ -31,8 +31,8 @@ leg.set_draggable(True)
 plt.tight_layout()
 
 # Flattening the curve
-beta_int1 = cp.Beta(alpha=2, beta=2, lower=.3, upper=.4)
-beta_up = cp.Beta(alpha=2, beta=2, lower=.75)
+beta_int1 = cp.Beta(alpha=38, beta=70)
+beta_up = cp.Beta(alpha=16, beta=2)
 
 x_FT = np.linspace(0, 1, 101)
 

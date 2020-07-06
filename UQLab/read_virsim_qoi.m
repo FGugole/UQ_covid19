@@ -1,6 +1,6 @@
-function Y = read_virsim(outputfile)
-%READ_VIRSIM Summary of this function goes here
-%   Detailed explanation goes here
+function Y = read_virsim_qoi(outputfile)
+%READ_VIRSIM read only qoi
+%as a function of time
 % row_start = 1;
 % col_start = 0;
 %  Y: [day S E I R INC]
@@ -13,8 +13,8 @@ function Y = read_virsim(outputfile)
 T = readtable(outputfile);
 
 % select a QoI:
-% moving mean of I, 20 days
-MM_I = movmean(T.I, 20);
+% moving mean of IC_prev, 30 days
+MM_I = movmean(T.IC_prev, 30);
 % take maximum:
 Y    = max(MM_I);
 

@@ -10,6 +10,7 @@ set(0,'defaultlinelinewidth',linewidth)
 
 %%
 % get PDF of output
+PCE = false;
 
 % need a PCE surrogate to sample from:
 if (any(strcmp(methods,'PCE_Quad')))

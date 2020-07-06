@@ -37,7 +37,7 @@ output_columns = my_campaign._active_app_decoder.output_columns
 my_campaign.collate()
 # get full dataset of data
 data = my_campaign.get_collation_result()
-print(data)
+#print(data)
 
 # Post-processing analysis
 sc_analysis = uq.analysis.SCAnalysis(sampler=my_sampler, qoi_cols=output_columns)
@@ -65,5 +65,19 @@ for i in range(N_runs):
 IC_prev_avg_max.sort()
 IC_ex_max.sort()
 
-print(IC_prev_avg_max)
-print(IC_ex_max)
+#print(IC_prev_avg_max)
+#print(IC_ex_max)
+
+p = np.arange(start=1,stop=N_runs,step=1)/N_runs
+
+f = plt.figure('cdfs')
+ax_p = f.add_subplot(121, xlabel='IC_prev_avg_max', ylabel='cdf')
+ax_p.plot(IC_prev_avg_max,p,lw=2)
+
+ax_e = f.add_subplot(122, xlabel='IC_ex_max', ylabel='cdf')
+ax_e.plot(IC_ex_max,p,lw=2)
+
+plt.tight_layout()
+f.savefig('figures/empirical_cdfs.png')
+
+plt.show()

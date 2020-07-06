@@ -16,16 +16,11 @@ my_campaign = uq.Campaign(name='corona', work_dir='/tmp')
 
 # Define parameter space
 params = {
-    "intervention_effect": {
+    "seed": {
         "type": "float",
-        "min": .25,
-        "max": .45,
-        "default": .35},
-    "intervention_interval": {
-        "type": "float",
-        "min": 240,
-        "max": 450,
-        "default": 365},
+        "min": 0,
+        "max": 2**31,
+        "default": 12345},
     "trace_prob_E": {
         "type": "float",
         "min": 0.0,
@@ -41,16 +36,16 @@ params = {
         "min": 0.0,
         "max": 1.0,
         "default": .6},
+    "intervention_effect": {
+        "type": "float",
+        "min": .25,
+        "max": .45,
+        "default": .35},
     "uptake": {
         "type": "float",
         "min": 0.0,
         "max": 1.0,
         "default": 1.0},
-    "efoi": {
-        "type": "float",
-        "min": 0.0,
-        "max": 200.0,
-        "default": 50.0},
     "out_file": {
         "type": "string",
         "default": "output.csv"}}
@@ -76,12 +71,12 @@ my_campaign.add_app(name="sc",
 
 # Create the sampler
 vary = {
-#    "trace_prob_E": cp.Beta(alpha=3, beta=2, lower=.4),
+    "seed": cp.DiscreteUniform(2**14, 2**16),
+#    "trace_prob_E": cp.Beta(alpha=6, beta=4),
 #    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
-#    "trace_contact_reduction": cp.Beta(alpha=6, beta=2, lower=.4),
-    "intervention_effect": cp.Beta(alpha=2, beta=2, lower=.3, upper=.4),
-    "intervention_interval": cp.DiscreteUniform(240, 365),
-    "uptake": cp.Beta(alpha=2, beta=2, lower=.75)
+#    "trace_contact_reduction": cp.Beta(alpha=10, beta=2),
+    "intervention_effect": cp.Beta(alpha=38, beta=70),
+    "uptake": cp.Beta(alpha=16, beta=2)
 }
 
 my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 

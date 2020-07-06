@@ -13,7 +13,7 @@ setwd(work_dir)
 
 size_multiplier <- 1
 param_main <- within(param_sim, {
-  runtime <- 540
+  runtime <- 550
   
   n_agent <- 1e6 * size_multiplier
   n_cluster <- 1e3 * size_multiplier

@@ -38,8 +38,8 @@ params = {
         "default": .6},
     "intervention_effect": {
         "type": "float",
-        "min": .25,
-        "max": .45,
+        "min": 0.0,
+        "max": 1.0,
         "default": .35},
     "uptake": {
         "type": "float",
@@ -71,8 +71,8 @@ my_campaign.add_app(name="sc",
 
 # Create the sampler
 vary = {
-    "seed": cp.DiscreteUniform(16384.0, 65536.0),
-#    "trace_prob_E": cp.Beta(alpha=6, beta=4),
+    "seed": cp.DiscreteUniform(2**14, 2**16),
+#    "trace_prob_E": cp.Beta(alpha=2, beta=4),
 #    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
 #    "trace_contact_reduction": cp.Beta(alpha=10, beta=2),
     "intervention_effect": cp.Beta(alpha=38, beta=70),

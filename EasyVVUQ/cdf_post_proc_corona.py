@@ -68,7 +68,7 @@ IC_ex_max.sort()
 #print(IC_prev_avg_max)
 #print(IC_ex_max)
 
-p = np.arange(start=1,stop=N_runs,step=1)/N_runs
+p = np.arange(start=1,stop=N_runs+1,step=1)/N_runs
 
 f = plt.figure('cdfs')
 ax_p = f.add_subplot(121, xlabel='IC_prev_avg_max', ylabel='cdf')

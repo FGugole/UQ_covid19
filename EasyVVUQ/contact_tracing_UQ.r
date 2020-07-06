@@ -22,7 +22,7 @@ param_main <- within(param_sim, {
   cluster_size_sd <- 0.95
   supercluster_size_sd <- 0
   
-  efoi <- 50 / 365 / param_main$n_agent
+  efoi <- 0
   infection_init <- 50 * size_multiplier
   seed_supercluster <- c(rep(9, 2), rep(2, 6), rep(1, 6), rep(0, 6))
   inc_cum_cond <- 9500 * size_multiplier
@@ -89,7 +89,8 @@ contact_tracing <- do.call(what = virsim,
                                          intervention_effect = intervention_effect,
                                          trace_prob_E = trace_prob_E,
                                          trace_rate_I = trace_rate_I,
-                                         trace_contact_reduction = trace_contact_reduction)))
+                                         trace_contact_reduction = trace_contact_reduction,
+                                         efoi = 50 / 365 / param_main$n_agent)))
 
 contact_tracing_data = aggregate_output(contact_tracing$monitor)
 contact_tracing_data[, c("IC_inc", "IC_prev") :=

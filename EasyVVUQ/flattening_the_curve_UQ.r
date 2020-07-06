@@ -22,7 +22,7 @@ param_main <- within(param_sim, {
   cluster_size_sd <- 0.95
   supercluster_size_sd <- 0
   
-  efoi <- 50 / 365 / param_main$n_agent
+  efoi <- 0
   infection_init <- 50 * size_multiplier
   seed_supercluster <- c(rep(9, 2), rep(2, 6), rep(1, 6), rep(0, 6))
   inc_cum_cond <- 9500 * size_multiplier
@@ -78,7 +78,8 @@ flat_curve <- do.call(what = virsim,
                       args = c(param_main,
                                list(intervention_t = intervention_t,
                                     intervention_uptake = intervention_uptake,
-                                    intervention_effect = intervention_effect)))
+                                    intervention_effect = intervention_effect,
+                                    efoi = 50 / 365 / param_main$n_agent)))
 
 flat_curve_data = aggregate_output(flat_curve$monitor)
 flat_curve_data[, c("IC_inc", "IC_prev") :=

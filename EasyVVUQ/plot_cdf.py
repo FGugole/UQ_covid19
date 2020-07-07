@@ -18,6 +18,6 @@ ax_e = f.add_subplot(122, xlabel='IC_ex_max', ylabel='cdf')
 ax_e.step(QoI["IC_ex_max"],p,lw=2)
 
 plt.tight_layout()
-f.savefig('figures/empirical_cdfs.png')
+f.savefig('figures/cdfs_QoI_CT.png')
 
 plt.show()

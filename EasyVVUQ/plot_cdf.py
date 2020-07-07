@@ -8,9 +8,6 @@ QoI = pd.read_csv('MC_CT_QoI.csv',delimiter=',')
 
 n_runs = len(QoI["IC_prev_avg_max"])
 
-IC_prev_avg_max = sort(QoI["IC_prev_avg_max"])
-IC_ex_max = sort(QoI["IC_ex_max"])
-
 p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 
 f = plt.figure('cdfs',figsize=[12,6])

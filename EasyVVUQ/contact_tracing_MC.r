@@ -132,27 +132,13 @@ for (j in 1:n_runs){
   cat(sprintf("Run %i\n of %i\n done", j, n_runs))
 }
 
+# re-order QoI in increasing order
+IC_prev_avg_max <- sort(IC_prev_avg_max)
+IC_ex_max <- sort(IC_ex_max)
+
 QoI_values <- data.frame(IC_prev_avg_max, IC_ex_max)
 
 #############################
 # Write results to csv file #
 #############################
 write.csv(x=QoI_values, file='MC_CT_QoI.csv', row.names=FALSE)
-
-#######################
-# Plot empirical cdfs #
-#######################
-IC_prev_avg_max <- sort(IC_prev_avg_max)
-IC_ex_max <- sort(IC_ex_max)
-
-p <- seq(from=1, to=n_runs, by=1)/n_runs
-
-png(file="~/UQ_covid19/cdf_IC_prev_max.png",width=12,height=6,units="cm",res=300)
-plot(step~IC_prev_avg_max,data=p,type="s")
-dev.off()
-
-plot.new()
-
-png(file="~/UQ_covid19/cdf_IC_prev_max.png",width=12,height=6,units="cm",res=300)
-plot(step~IC_ex_max,data=p,type="s")
-dev.off()

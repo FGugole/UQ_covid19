@@ -63,7 +63,7 @@ for i=n_start:n_end
     plot(T.time(ind_avg_max(j)),IC_avg_max(j),'o','Color',cmap(j_mod,:));
     
     figure(102)
-    semilogy(T.time,IC_excess);
+    plot(T.time,IC_excess);
     hold on
 %     plot(T.time(ind_excess_max(j)),IC_excess_max(j),'o');
     
@@ -93,7 +93,8 @@ if ( max(abs(UQdata.uq_ProcessedY - Y(:,1)))>eps)
     error('stored QoI different from postprocessed QoI');
 end
 figure(103)
-histogram(Y(:,1),n_tot,'Normalization','cdf','DisplayStyle','stairs')
+% histogram(Y(:,1),n_tot,'Normalization','cdf','DisplayStyle','stairs')
+ecdf(Y(:,1));
 ylim([0 1])
 grid on
 set(gcf,'Color','w')
@@ -103,7 +104,8 @@ xlabel('max. of moving average')
 ylabel('empirical cdf');
 
 figure(104)
-histogram(Y(:,2),n_tot,'Normalization','cdf','DisplayStyle','stairs')
+% histogram(Y(:,2),n_tot,'Normalization','cdf','DisplayStyle','stairs')
+ecdf(Y(:,2));
 ylim([0 1])
 grid on
 set(gcf,'Color','w')

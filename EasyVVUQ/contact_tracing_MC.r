@@ -129,7 +129,7 @@ for (i in 1:n_runs){
   contact_tracing_data[, "IC_ex"] <- IC_excess
   IC_ex_max[i] <- max(IC_excess)
 
-  cat(sprintf('Run %i ',i,' of %i ',n_runs))
+  cat(sprintf("Run %i of %i", i, n_runs))
 }
 
 QoI_values <- data.frame(IC_prev_avg_max, IC_ex_max)

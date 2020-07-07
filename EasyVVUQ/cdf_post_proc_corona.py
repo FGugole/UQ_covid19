@@ -24,7 +24,7 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_FC_po3_moreuptake.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_CT_MC100.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -40,18 +40,18 @@ data = my_campaign.get_collation_result()
 #print(data)
 
 # Post-processing analysis
-sc_analysis = uq.analysis.SCAnalysis(sampler=my_sampler, qoi_cols=output_columns)
-my_campaign.apply_analysis(sc_analysis)
+#sc_analysis = uq.analysis.SCAnalysis(sampler=my_sampler, qoi_cols=output_columns)
+#my_campaign.apply_analysis(sc_analysis)
 
-results = my_campaign.get_last_analysis()
+#results = my_campaign.get_last_analysis()
 
 """
 *************************
 * Empirical CDF of QoIs *
 *************************
 """
-mu_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['mean']
-L = len(mu_IC_prev_avg)
+#mu_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['mean']
+L = 551 #len(mu_IC_prev_avg)
 
 N_runs = 4**3
 
@@ -78,6 +78,6 @@ ax_e = f.add_subplot(122, xlabel='IC_ex_max', ylabel='cdf')
 ax_e.step(IC_ex_max,p,lw=2)
 
 plt.tight_layout()
-f.savefig('figures/empirical_cdfs.png')
+f.savefig('figures/empirical_cdfs_CT.png')
 
 plt.show()

@@ -81,12 +81,12 @@ intervention_t = cumsum(c(0, 10, 7, 53, 30))
 intervention_effect = c(1, .3, .15, .25, 1)
 intervention_uptake = rep(1, 5)
 
-for (i in 1:n_runs){
+for (j in 1:n_runs){
   
-  trace_prob_E = c(rep(0, 4), trace_E[i])
-  trace_rate_I = c(rep(0, 4), trace_I[i])
-  trace_contact_reduction = c(rep(0, 4), contact_red[i])
-  set.seed(rnd_seed[i])
+  trace_prob_E = c(rep(0, 4), trace_E[j])
+  trace_rate_I = c(rep(0, 4), trace_I[j])
+  trace_contact_reduction = c(rep(0, 4), contact_red[j])
+  set.seed(rnd_seed[j])
   
   contact_tracing <- do.call(what = virsim,
                              args = c(param_main,
@@ -113,7 +113,7 @@ for (i in 1:n_runs){
     IC_prev_avg[i] <- mean(contact_tracing_data$IC_prev[i:min(i+avg_window-1,L)])
   }
   contact_tracing_data[, "IC_prev_avg"] <- IC_prev_avg
-  IC_prev_avg_max[i] <- max(IC_prev_avg)
+  IC_prev_avg_max[j] <- max(IC_prev_avg)
 
   ###########################################################
   # Compute the number of IC patients exceeding IC capacity #
@@ -127,9 +127,9 @@ for (i in 1:n_runs){
   }
 
   contact_tracing_data[, "IC_ex"] <- IC_excess
-  IC_ex_max[i] <- max(IC_excess)
+  IC_ex_max[j] <- max(IC_excess)
 
-  cat(sprintf("Run %i\n of %i\n done", i, n_runs))
+  cat(sprintf("Run %i\n of %i\n done", j, n_runs))
 }
 
 QoI_values <- data.frame(IC_prev_avg_max, IC_ex_max)

@@ -52,7 +52,7 @@ param_main <- within(param_sim, {
 ########################
 # Monte Carlo sampling #
 ########################
-n_runs = 1e3
+n_runs = 1e2
 
 rnd_seed <- rdunif(n_runs,2^14,2^16)
 

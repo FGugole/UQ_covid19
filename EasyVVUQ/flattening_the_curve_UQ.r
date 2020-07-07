@@ -40,6 +40,10 @@ param_main <- within(param_sim, {
                         shape = 1,
                         scale = exp(log(5) - lgamma(1 + 1 / 1)))
   
+  trace_prob_E <- c(rep(0, 5))
+  trace_rate_I <- c(rep(0, 5))
+  trace_contact_reduction <- c(rep(0, 5))
+  
   temp_storage <- "RAM"
   aggregate <- "population"
   output_quick <- TRUE

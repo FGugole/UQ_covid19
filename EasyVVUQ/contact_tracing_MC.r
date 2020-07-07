@@ -8,6 +8,7 @@ library(ggplot2)
 library(data.table)
 library(stats)
 library(plyr)
+library(extraDistr)
 
 work_dir <- getwd()  
 setwd(work_dir)
@@ -126,7 +127,7 @@ for (i in 1:n_runs){
   }
 
   contact_tracing_data[, "IC_ex"] <- IC_excess
-  IC_ex_max[i] <- max(IC_ex)
+  IC_ex_max[i] <- max(IC_excess)
 }
 
 Qoi_values <- data.frame(IC_prev_avg_max, IC_ex_max)

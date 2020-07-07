@@ -43,7 +43,7 @@ virsim_output  = 'output_contact_tracing.csv';
 % run(input_file);
 InputOpts.Marginals(1).Name = 'Trace-prob-E';
 InputOpts.Marginals(1).Type = 'Beta';
-InputOpts.Marginals(1).Parameters = [3 2];
+InputOpts.Marginals(1).Parameters = [6 4];
 
 InputOpts.Marginals(2).Name = 'Trace-rate-I';
 InputOpts.Marginals(2).Type = 'Gamma';
@@ -51,11 +51,11 @@ InputOpts.Marginals(2).Parameters = [2 0.4];
 
 InputOpts.Marginals(3).Name = 'Trace-contact-red';
 InputOpts.Marginals(3).Type = 'Beta';
-InputOpts.Marginals(3).Parameters = [6 2];
+InputOpts.Marginals(3).Parameters = [10 2];
 
 InputOpts.Marginals(4).Name = 'Seed';
 InputOpts.Marginals(4).Type = 'Uniform';
-InputOpts.Marginals(4).Parameters = [1 1e5];
+InputOpts.Marginals(4).Parameters = [2^14 2^16];
 
 
 % dimension of parameter space:

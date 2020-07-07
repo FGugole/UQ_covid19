@@ -67,7 +67,7 @@ param_values <- data.frame(rnd_seed, trace_E, trace_I, contact_red)
 ######################################
 # Write parameter values to csv file #
 ######################################
-write.csv(x=param_values, file='MC_CT_param', row.names=FALSE)
+write.csv(x=param_values, file='MC_CT_param.csv', row.names=FALSE)
 
 ##################################################################################
 # Running an individual simulation for the Contact Tracing strategy using virsim #
@@ -129,7 +129,7 @@ for (i in 1:n_runs){
   contact_tracing_data[, "IC_ex"] <- IC_excess
   IC_ex_max[i] <- max(IC_excess)
 
-  sprintf("Run %i of %i done", i, n_runs)
+  cat(sprintf("Run %i\n of %i\n done", i, n_runs))
 }
 
 QoI_values <- data.frame(IC_prev_avg_max, IC_ex_max)
@@ -137,7 +137,7 @@ QoI_values <- data.frame(IC_prev_avg_max, IC_ex_max)
 #############################
 # Write results to csv file #
 #############################
-write.csv(x=QoI_values, file='MC_CT_QoI', row.names=FALSE)
+write.csv(x=QoI_values, file='MC_CT_QoI.csv', row.names=FALSE)
 
 #######################
 # Plot empirical cdfs #
@@ -145,7 +145,7 @@ write.csv(x=QoI_values, file='MC_CT_QoI', row.names=FALSE)
 IC_prev_avg_max <- sort(IC_prev_avg_max)
 IC_ex_max <- sort(IC_ex_max)
 
-p <- linspace(1, n_runs, n_runs)/n_runs
+p <- seq(from=1, to=n_runs, by=1)/n_runs
 
 png(file="~/UQ_covid19/cdf_IC_prev_max.png",width=12,height=6,units="cm",res=300)
 plot(step~IC_prev_avg_max,data=p,type="s")

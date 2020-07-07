@@ -129,7 +129,7 @@ for (i in 1:n_runs){
   contact_tracing_data[, "IC_ex"] <- IC_excess
   IC_ex_max[i] <- max(IC_excess)
 
-  cat(sprintf("Run %i of %i", i, n_runs))
+  sprintf("Run %i of %i done", i, n_runs)
 }
 
 QoI_values <- data.frame(IC_prev_avg_max, IC_ex_max)
@@ -147,6 +147,12 @@ IC_ex_max <- sort(IC_ex_max)
 
 p <- linspace(1, n_runs, n_runs)/n_runs
 
+png(file="~/UQ_covid19/cdf_IC_prev_max.png",width=12,height=6,units="cm",res=300)
 plot(step~IC_prev_avg_max,data=p,type="s")
+dev.off()
+
 plot.new()
+
+png(file="~/UQ_covid19/cdf_IC_prev_max.png",width=12,height=6,units="cm",res=300)
 plot(step~IC_ex_max,data=p,type="s")
+dev.off()

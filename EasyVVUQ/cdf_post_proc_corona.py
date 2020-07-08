@@ -105,16 +105,16 @@ f.savefig('figures/cdf_FC_IC_ex_percentage')
 #################################
 # Load data from UQLab campaign #
 #################################
-QoI_UQLab = pd.read_csv('../UQLab/runs_FC_MC100/FC_QoI.csv',delimiter=',')
+QoI_UQLab = pd.read_csv('../UQLab/runs_FC_MC100/FC_QoI.csv',delimiter=',',header=None)
 
-IC_prev_avg_max_UQLab = QoI_UQLab[:,0]
-IC_ex_max_UQLab = QoI_UQLab[:,1]
-tot_IC_UQLab = QoI_UQLab[:,2]
+IC_prev_avg_max_UQLab = QoI_UQLab.iloc[:,0]
+IC_ex_max_UQLab = QoI_UQLab.iloc[:,1]
+tot_IC_UQLab = QoI_UQLab.iloc[:,2]
 
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
 ax_p.step(IC_prev_avg_max,p,lw=2)
-ax.p.step(IC_prev_avg_max_UQLab,p,lw=2) 
+ax_p.step(IC_prev_avg_max_UQLab,p,lw=2) 
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='cdf')
 ax_e.step(IC_ex_max,p,lw=2)

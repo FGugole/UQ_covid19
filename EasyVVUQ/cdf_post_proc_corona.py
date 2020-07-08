@@ -53,17 +53,17 @@ data = my_campaign.get_collation_result()
 #mu_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['mean']
 L = 551 #len(mu_IC_prev_avg)
 
-n_runs = 1e2
+n_runs = 100
 
 IC_prev_avg_max = np.zeros(n_runs,dtype='float')
 IC_ex_max = np.zeros(n_runs,dtype='float')
 tot_IC = np.zeros(n_runs,dtype='float')
-IC_ex_percentage = np.zeros(n_runs)
+IC_ex_percentage = np.zeros(n_runs,dtype='float')
 
 for i in range(n_runs):
 	IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
 	IC_ex_max[i] = data.IC_ex_max[i*L]
-	
+
 	tot_IC[i] = sum(data.IC_prev[i*L:(i+1)*L])
 	IC_ex_percentage[i] = IC_ex_max[i]/tot_IC[i]
 

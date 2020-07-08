@@ -3,8 +3,8 @@ clearvars
 close all
 
 %% settings
-folder_name = 'runs_MC100/UQLinkOutput/';
-file_name   = 'output_contact_tracing';%'virsim_results';
+folder_name = 'runs_FC_MC100/UQLinkOutput/';
+file_name   = 'output_flattening_the_curve';
 file_ext    = '.csv';
 n_start  = 1;
 n_end    = 100;
@@ -14,7 +14,7 @@ avg_window  = 30;
 IC_capacity = 108;
 
 % UQLab results synthesis in MAT file
-matfile_name = 'runs_MC100/Virsim_MC100.mat';
+matfile_name = 'runs_FC_MC100/Virsim_FC_MC100.mat';
 
 
 %% get colormap

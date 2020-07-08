@@ -30,7 +30,7 @@ ind_avg_max    = zeros(n_tot,1);
 IC_excess_max  = zeros(n_tot,1);
 ind_excess_max = zeros(n_tot,1);
 
-Y = zeros(n_tot,2); % QoIs
+Y = zeros(n_tot,3); % QoIs
 
 for i=n_start:n_end
     
@@ -48,10 +48,12 @@ for i=n_start:n_end
     % cumulative excess capacity
     IC_excess = cumsum(max(0,T.IC_prev - IC_capacity));
     [IC_excess_max(j), ind_excess_max(j)] = max(IC_excess);
-    
+    % total IC-person days
+    IC_tot = sum(T.IC_prev);
     
     Y(j,1) = IC_avg_max(j);
     Y(j,2) = IC_excess_max(j);
+    Y(j,3) = IC_tot;
     
     figure(101)
     
@@ -114,3 +116,6 @@ set(gca,'FontSize',14)
 
 xlabel('cumulative IC excess')
 ylabel('empirical cdf');
+
+%% write to csv
+csvwrite('FC_QoI.csv',Y);

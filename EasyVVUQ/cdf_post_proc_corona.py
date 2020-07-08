@@ -107,9 +107,9 @@ f.savefig('figures/cdf_FC_IC_ex_percentage')
 #################################
 QoI_UQLab = pd.read_csv('../UQLab/runs_FC_MC100/FC_QoI.csv',delimiter=',',header=None)
 
-IC_prev_avg_max_UQLab = QoI_UQLab.iloc[:,0]
-IC_ex_max_UQLab = QoI_UQLab.iloc[:,1]
-tot_IC_UQLab = QoI_UQLab.iloc[:,2]
+IC_prev_avg_max_UQLab = np.copy(QoI_UQLab.iloc[:,0])
+IC_ex_max_UQLab = np.copy(QoI_UQLab.iloc[:,1])
+tot_IC_UQLab = np.copy(QoI_UQLab.iloc[:,2])
 
 IC_prev_avg_max_UQLab.sort()
 IC_ex_max_UQLab.sort()

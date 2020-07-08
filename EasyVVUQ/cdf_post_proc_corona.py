@@ -61,11 +61,12 @@ tot_IC = np.zeros(n_runs,dtype='float')
 IC_ex_percentage = np.zeros(n_runs,dtype='float')
 
 for i in range(n_runs):
-	IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
-	IC_ex_max[i] = data.IC_ex_max[i*L]
+    IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
+    IC_ex_max[i] = data.IC_ex_max[i*L]
 
-	tot_IC[i] = sum(data.IC_prev[i*L:(i+1)*L])
-	IC_ex_percentage[i] = IC_ex_max[i]/tot_IC[i]
+    tot_IC[i] = sum(data.IC_prev[i*L:(i+1)*L])
+    print(tot_IC[i])
+    IC_ex_percentage[i] = IC_ex_max[i]/tot_IC[i]
 
 IC_prev_avg_max.sort()
 IC_ex_max.sort()

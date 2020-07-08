@@ -86,7 +86,7 @@ for i in range(n_runs-1):
 f = plt.figure('cdfs')
 ax_p = f.add_subplot(111, xlabel='maximum of IC patient', ylabel='cdf')
 ax_p.step(IC_prev_avg_max,p,lw=2)
-ax_p.axvline(x=109,color=2)
+ax_p.axvline(x=109,color='tab:orange')
 
 #ax_e = f.add_subplot(122, xlabel='IC_ex_max', ylabel='cdf')
 #ax_e.step(IC_ex_max,p,lw=2)
@@ -97,7 +97,7 @@ f.savefig('figures/cdf_CT_IC_prev_avg_max.png')
 f = plt.figure('IC_ex_percentage_cdf')
 ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='cdf')
 ax.step(IC_ex_percentage*100,p,lw=2)
-ax.axvline(x=5,color=2)
+ax.axvline(x=5,color='tab:orange')
 
 plt.tight_layout()
 f.savefig('figures/cdf_CT_IC_ex_percentage')

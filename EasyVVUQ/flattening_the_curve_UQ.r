@@ -43,7 +43,7 @@ param_main <- within(param_sim, {
   trace_prob_E <- c(rep(0, 5))
   trace_rate_I <- c(rep(0, 5))
   trace_contact_reduction <- c(rep(0, 5))
-  
+
   temp_storage <- "RAM"
   aggregate <- "population"
   output_quick <- TRUE
@@ -106,7 +106,7 @@ flat_curve_data[, "IC_prev_avg_max"] <- max(IC_prev_avg)
 # Compute the number of IC patients exceeding IC capacity #
 ###########################################################
 IC_excess <- vector(mode="numeric", length=L)
-IC_capacity <- 108
+IC_capacity <- 109
 
 IC_excess[1] <- 0 # at the beginning of the simulation there are no IC patients in excess
 for (i in 2:L){

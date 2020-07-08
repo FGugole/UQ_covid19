@@ -53,14 +53,19 @@ data = my_campaign.get_collation_result()
 #mu_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['mean']
 L = 551 #len(mu_IC_prev_avg)
 
-N_runs = 4**3
+n_runs = 1e2
 
-IC_prev_avg_max = np.zeros(N_runs,dtype='float')
-IC_ex_max = np.zeros(N_runs,dtype='float')
+IC_prev_avg_max = np.zeros(n_runs,dtype='float')
+IC_ex_max = np.zeros(n_runs,dtype='float')
+tot_IC = np.zeros(n_runs,dtype='float')
+IC_ex_percentage = np.zeros(n_runs)
 
-for i in range(N_runs):
+for i in range(n_runs):
 	IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
 	IC_ex_max[i] = data.IC_ex_max[i*L]
+	
+	tot_IC[i] = sum(data.IC_prev[i*L:(i+1)*L])
+	IC_ex_percentage[i] = IC_ex_max[i]/tot_IC[i]
 
 IC_prev_avg_max.sort()
 IC_ex_max.sort()
@@ -68,7 +73,7 @@ IC_ex_max.sort()
 #print(IC_prev_avg_max)
 #print(IC_ex_max)
 
-p = np.arange(start=1,stop=N_runs+1,step=1)/N_runs
+p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='IC_prev_avg_max', ylabel='cdf')
@@ -78,6 +83,13 @@ ax_e = f.add_subplot(122, xlabel='IC_ex_max', ylabel='cdf')
 ax_e.step(IC_ex_max,p,lw=2)
 
 plt.tight_layout()
-f.savefig('figures/empirical_cdfs_CT.png')
+f.savefig('figures/cdfs_CT.png')
+
+f = plt.figure('IC_ex_percentage_cdf')
+ax = f.add_subplot(111, xlabel='\% of IC patient days in excess', ylabel='cdf')
+ax.step(IC_ex_percentage,p,lw=2)
+
+plt.tight_layout()
+f.savefig('figures/cdf_CT_IC_ex_percentage')
 
 plt.show()

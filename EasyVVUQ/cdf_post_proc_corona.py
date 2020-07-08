@@ -65,7 +65,7 @@ for i in range(n_runs):
     IC_ex_max[i] = data.IC_ex_max[i*L]
 
     tot_IC[i] = sum(data.IC_prev[i*L:(i+1)*L])
-    print(IC_ex_max[i], tot_IC[i])
+    #print(IC_ex_max[i], tot_IC[i])
     IC_ex_percentage[i] = IC_ex_max[i]/tot_IC[i]
 
 IC_prev_avg_max.sort()
@@ -83,10 +83,10 @@ for i in range(n_runs-1):
     if (IC_ex_percentage[i]<0.05) & (IC_ex_percentage[i+1]>0.05):
         print('Probability that the percentage of IC patient days is below 5%:',p[i])
 
-f = plt.figure('cdfs',figsize=[12,6])
+f = plt.figure('cdfs')
 ax_p = f.add_subplot(111, xlabel='maximum of IC patient', ylabel='cdf')
 ax_p.step(IC_prev_avg_max,p,lw=2)
-ax_p.axvline(x=109)
+ax_p.axvline(x=109,color=2)
 
 #ax_e = f.add_subplot(122, xlabel='IC_ex_max', ylabel='cdf')
 #ax_e.step(IC_ex_max,p,lw=2)
@@ -97,7 +97,7 @@ f.savefig('figures/cdf_CT_IC_prev_avg_max.png')
 f = plt.figure('IC_ex_percentage_cdf')
 ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='cdf')
 ax.step(IC_ex_percentage*100,p,lw=2)
-ax.axvline(x=5)
+ax.axvline(x=5,color=2)
 
 plt.tight_layout()
 f.savefig('figures/cdf_CT_IC_ex_percentage')

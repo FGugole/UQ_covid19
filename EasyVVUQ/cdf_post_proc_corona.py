@@ -111,14 +111,18 @@ IC_prev_avg_max_UQLab = QoI_UQLab.iloc[:,0]
 IC_ex_max_UQLab = QoI_UQLab.iloc[:,1]
 tot_IC_UQLab = QoI_UQLab.iloc[:,2]
 
+IC_prev_avg_max_UQLab.sort()
+IC_ex_max_UQLab.sort()
+
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
-ax_p.step(IC_prev_avg_max,p,lw=2)
-ax_p.step(IC_prev_avg_max_UQLab,p,lw=2) 
+ax_p.step(IC_prev_avg_max,p,lw=2,color='tab:blue')
+ax_p.step(IC_prev_avg_max_UQLab,p,lw=2,color='tab:orange') 
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='cdf')
-ax_e.step(IC_ex_max,p,lw=2)
-ax_e.step(IC_ex_max_UQLab,p,lw=2)
+ax_e.step(IC_ex_max,p,lw=2,color='tab:blue',label='EasyVVUQ')
+ax_e.step(IC_ex_max_UQLab,p,lw=2,color='tab:orange',label='UQLab')
+ax_e.legend(loc='best')
 
 plt.tight_layout()
 f.savefig('figures/cdf_FC_MC100_comparison.png')

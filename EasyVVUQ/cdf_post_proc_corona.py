@@ -52,6 +52,8 @@ data = my_campaign.get_collation_result()
 """
 #mu_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['mean']
 L = 551 #len(mu_IC_prev_avg)
+IC_capacity = 109
+IC_ex_threshold = 0.05
 
 n_runs = 100
 
@@ -78,15 +80,15 @@ IC_ex_percentage.sort()
 p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 
 for i in range(n_runs-1):
-    if (IC_prev_avg_max[i]<109) & (IC_prev_avg_max[i+1]>109):
+    if (IC_prev_avg_max[i]<IC_capacity) & (IC_prev_avg_max[i+1]>IC_capacity):
         print('Probability that the maximum number of IC patient is below IC capacity:',p[i])
-    if (IC_ex_percentage[i]<0.05) & (IC_ex_percentage[i+1]>0.05):
+    if (IC_ex_percentage[i]<IC_ex_threshold) & (IC_ex_percentage[i+1]>IC_ex_threshold):
         print('Probability that the percentage of IC patient days is below 5%:',p[i])
 
 f = plt.figure('cdfs')
 ax_p = f.add_subplot(111, xlabel='maximum of IC patient', ylabel='cdf')
 ax_p.step(IC_prev_avg_max,p,lw=2)
-ax_p.axvline(x=109,color='tab:orange')
+ax_p.axvline(x=IC_capacity,color='tab:orange')
 
 #ax_e = f.add_subplot(122, xlabel='IC_ex_max', ylabel='cdf')
 #ax_e.step(IC_ex_max,p,lw=2)
@@ -97,7 +99,7 @@ f.savefig('figures/cdf_CT_IC_prev_avg_max.png')
 f = plt.figure('IC_ex_percentage_cdf')
 ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='cdf')
 ax.step(IC_ex_percentage*100,p,lw=2)
-ax.axvline(x=5,color='tab:orange')
+ax.axvline(x=IC_ex_threshold*100,color='tab:orange')
 
 plt.tight_layout()
 f.savefig('figures/cdf_CT_IC_ex_percentage')

@@ -69,6 +69,7 @@ for i in range(n_runs):
 
 IC_prev_avg_max.sort()
 IC_ex_max.sort()
+IC_ex_percentage.sort()
 
 #print(IC_prev_avg_max)
 #print(IC_ex_max)
@@ -86,7 +87,7 @@ plt.tight_layout()
 f.savefig('figures/cdfs_CT.png')
 
 f = plt.figure('IC_ex_percentage_cdf')
-ax = f.add_subplot(111, xlabel='\% of IC patient days in excess', ylabel='cdf')
+ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='cdf')
 ax.step(IC_ex_percentage,p,lw=2)
 
 plt.tight_layout()

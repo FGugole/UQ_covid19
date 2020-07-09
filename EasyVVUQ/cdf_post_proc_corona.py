@@ -22,7 +22,7 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_FC_MC100.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_CT_MC1000.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -53,7 +53,7 @@ L = 551 #len(mu_IC_prev_avg)
 IC_capacity = 109
 IC_ex_threshold = 0.05
 
-n_runs = 100
+n_runs = 1000
 
 IC_prev_avg_max = np.zeros(n_runs,dtype='float')
 IC_ex_max = np.zeros(n_runs,dtype='float')
@@ -77,6 +77,9 @@ IC_ex_percentage.sort()
 
 p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 
+alpha_DKW = 0.05
+eps_DKW = np.sqrt( np.log(2/alpha) / (2*n_runs) )
+
 for i in range(n_runs-1):
     if (IC_prev_avg_max[i]<IC_capacity) & (IC_prev_avg_max[i+1]>IC_capacity):
         print('Probability that the maximum number of IC patient is below IC capacity:',p[i])
@@ -86,13 +89,17 @@ for i in range(n_runs-1):
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
 ax_p.step(IC_prev_avg_max,p,lw=2)
+ax_p.step(IC_prev_avg_max,p+eps_DKW,'--',lw=2,color='tab:red')
+ax_p.step(IC_prev_avg_max,p-eps_DKW,'--',lw=2,color='tab:red')
 #ax_p.axvline(x=IC_capacity,color='tab:orange')
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='cdf')
 ax_e.step(IC_ex_max,p,lw=2)
+ax_p.step(IC_ex_max,p+eps_DKW,'--',lw=2,color='tab:red')
+ax_p.step(IC_ex_max,p-eps_DKW,'--',lw=2,color='tab:red')
 
 plt.tight_layout()
-f.savefig('figures/cdf_FC_IC_prev_avg_max.png')
+f.savefig('figures/cdf_CT_MC1000.png')
 
 f = plt.figure('IC_ex_percentage_cdf')
 ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='cdf')
@@ -100,31 +107,31 @@ ax.step(IC_ex_percentage*100,p,lw=2)
 ax.axvline(x=IC_ex_threshold*100,color='tab:orange')
 
 plt.tight_layout()
-f.savefig('figures/cdf_FC_IC_ex_percentage')
+f.savefig('figures/cdf_CT_IC_ex_percentage')
 
 #################################
 # Load data from UQLab campaign #
 #################################
-QoI_UQLab = pd.read_csv('../UQLab/runs_FC_MC100/FC_QoI.csv',delimiter=',',header=None)
+# QoI_UQLab = pd.read_csv('../UQLab/runs_FC_MC100/FC_QoI.csv',delimiter=',',header=None)
 
-IC_prev_avg_max_UQLab = np.copy(QoI_UQLab.iloc[:,0])
-IC_ex_max_UQLab = np.copy(QoI_UQLab.iloc[:,1])
-tot_IC_UQLab = np.copy(QoI_UQLab.iloc[:,2])
+# IC_prev_avg_max_UQLab = np.copy(QoI_UQLab.iloc[:,0])
+# IC_ex_max_UQLab = np.copy(QoI_UQLab.iloc[:,1])
+# tot_IC_UQLab = np.copy(QoI_UQLab.iloc[:,2])
 
-IC_prev_avg_max_UQLab.sort()
-IC_ex_max_UQLab.sort()
+# IC_prev_avg_max_UQLab.sort()
+# IC_ex_max_UQLab.sort()
 
-f = plt.figure('cdfs',figsize=[12,6])
-ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
-ax_p.step(IC_prev_avg_max,p,lw=2,color='tab:blue')
-ax_p.step(IC_prev_avg_max_UQLab,p,lw=2,color='tab:orange') 
+# f = plt.figure('cdfs',figsize=[12,6])
+# ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
+# ax_p.step(IC_prev_avg_max,p,lw=2,color='tab:blue')
+# ax_p.step(IC_prev_avg_max_UQLab,p,lw=2,color='tab:orange') 
 
-ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='cdf')
-ax_e.step(IC_ex_max,p,lw=2,color='tab:blue',label='EasyVVUQ')
-ax_e.step(IC_ex_max_UQLab,p,lw=2,color='tab:orange',label='UQLab')
-ax_e.legend(loc='best')
+# ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='cdf')
+# ax_e.step(IC_ex_max,p,lw=2,color='tab:blue',label='EasyVVUQ')
+# ax_e.step(IC_ex_max_UQLab,p,lw=2,color='tab:orange',label='UQLab')
+# ax_e.legend(loc='best')
 
-plt.tight_layout()
-f.savefig('figures/cdf_FC_MC100_comparison.png')
+# plt.tight_layout()
+# f.savefig('figures/cdf_FC_MC100_comparison.png')
 
 plt.show()

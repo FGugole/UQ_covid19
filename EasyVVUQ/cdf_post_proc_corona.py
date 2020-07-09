@@ -89,21 +89,21 @@ for i in range(n_runs-1):
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
 ax_p.step(IC_prev_avg_max,p,lw=2,label='empirical cdf')
-ax_p.step(IC_prev_avg_max,p+eps_DKW,'--',lw=2,color='tab:red',label='DKW bounds')
-ax_p.step(IC_prev_avg_max,p-eps_DKW,'--',lw=2,color='tab:red')
+ax_p.step(IC_prev_avg_max,p+eps_DKW,linestyle='--',lw=2,color='tab:red',label='DKW bounds')
+ax_p.step(IC_prev_avg_max,p-eps_DKW,linestyle='--',lw=2,color='tab:red')
 #ax_p.axvline(x=IC_capacity,color='tab:orange')
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
 ax_e.step(IC_ex_max,p,lw=2)
-ax_e.step(IC_ex_max,p+eps_DKW,'--',lw=2,color='tab:red')
-ax_e.step(IC_ex_max,p-eps_DKW,'--',lw=2,color='tab:red')
+ax_e.step(IC_ex_max,p+eps_DKW,linestyle='--',lw=2,color='tab:red')
+ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:red')
 
 ax_p.legend(loc='best')
 plt.tight_layout()
 f.savefig('figures/cdf_CT_MC1000.png')
 
 f = plt.figure('IC_ex_percentage_cdf')
-ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='cdf')
+ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='P(x)')
 ax.step(IC_ex_percentage*100,p,lw=2)
 ax.axvline(x=IC_ex_threshold*100,color='tab:orange')
 

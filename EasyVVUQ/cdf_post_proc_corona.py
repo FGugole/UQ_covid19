@@ -103,7 +103,6 @@ for i in range(n_r):
 
 IC_prev_avg_max_MC100.sort()
 IC_ex_max_MC100.sort()
-IC_ex_percentage_MC100.sort()
 
 p_MC100 = np.arange(start=1,stop=n_r+1,step=1)/n_r
 

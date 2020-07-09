@@ -92,11 +92,13 @@ ax_p.step(IC_prev_avg_max,p,lw=2,label='empirical cdf')
 ax_p.step(IC_prev_avg_max,p+eps_DKW,linestyle='--',lw=2,color='tab:red',label='DKW bounds')
 ax_p.step(IC_prev_avg_max,p-eps_DKW,linestyle='--',lw=2,color='tab:red')
 #ax_p.axvline(x=IC_capacity,color='tab:orange')
+ax_p.set_xscale('log')
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
 ax_e.step(IC_ex_max,p,lw=2)
 ax_e.step(IC_ex_max,p+eps_DKW,linestyle='--',lw=2,color='tab:red')
 ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:red')
+ax_e.set_xscale('log')
 
 ax_p.legend(loc='best')
 plt.tight_layout()

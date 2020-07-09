@@ -78,7 +78,7 @@ IC_ex_percentage.sort()
 p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 
 alpha_DKW = 0.05
-eps_DKW = np.sqrt( np.log(2/alpha) / (2*n_runs) )
+eps_DKW = np.sqrt( np.log(2/alpha_DKW) / (2*n_runs) )
 
 for i in range(n_runs-1):
     if (IC_prev_avg_max[i]<IC_capacity) & (IC_prev_avg_max[i+1]>IC_capacity):

@@ -87,17 +87,18 @@ for i in range(n_runs-1):
         print('Probability that the percentage of IC patient days is below 5%:',p[i])
 
 f = plt.figure('cdfs',figsize=[12,6])
-ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
-ax_p.step(IC_prev_avg_max,p,lw=2)
-ax_p.step(IC_prev_avg_max,p+eps_DKW,'--',lw=2,color='tab:red')
+ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
+ax_p.step(IC_prev_avg_max,p,lw=2,label='empirical cdf')
+ax_p.step(IC_prev_avg_max,p+eps_DKW,'--',lw=2,color='tab:red',label='DKW bounds')
 ax_p.step(IC_prev_avg_max,p-eps_DKW,'--',lw=2,color='tab:red')
 #ax_p.axvline(x=IC_capacity,color='tab:orange')
 
-ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='cdf')
+ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
 ax_e.step(IC_ex_max,p,lw=2)
 ax_e.step(IC_ex_max,p+eps_DKW,'--',lw=2,color='tab:red')
 ax_e.step(IC_ex_max,p-eps_DKW,'--',lw=2,color='tab:red')
 
+ax_p.legend(loc='best')
 plt.tight_layout()
 f.savefig('figures/cdf_CT_MC1000.png')
 

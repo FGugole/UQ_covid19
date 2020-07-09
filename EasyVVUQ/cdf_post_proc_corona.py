@@ -95,8 +95,8 @@ ax_p.step(IC_prev_avg_max,p-eps_DKW,'--',lw=2,color='tab:red')
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='cdf')
 ax_e.step(IC_ex_max,p,lw=2)
-ax_p.step(IC_ex_max,p+eps_DKW,'--',lw=2,color='tab:red')
-ax_p.step(IC_ex_max,p-eps_DKW,'--',lw=2,color='tab:red')
+ax_e.step(IC_ex_max,p+eps_DKW,'--',lw=2,color='tab:red')
+ax_e.step(IC_ex_max,p-eps_DKW,'--',lw=2,color='tab:red')
 
 plt.tight_layout()
 f.savefig('figures/cdf_CT_MC1000.png')

@@ -116,11 +116,11 @@ ax_p.step(IC_prev_avg_max_MC100,p_MC100,lw=2,color='tab:olive',label='MC 100 run
 ax_p.set_xscale('log')
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
-ax_e.step(IC_ex_max,p,lw=2,color='tab:olive')
+ax_e.step(IC_ex_max,p,lw=2)
 ax_e.step(IC_ex_max,p+eps_DKW,linestyle='--',lw=2,color='tab:orange')
 ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
 
-ax_e.step(IC_ex_max_MC100,p_MC100,lw=2)
+ax_e.step(IC_ex_max_MC100,p_MC100,lw=2,color='tab:olive')
 ax_e.set_xscale('log')
 
 ax_p.legend(loc='best')

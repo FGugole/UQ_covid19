@@ -40,7 +40,6 @@ data = my_campaign.get_collation_result()
 # Post-processing analysis
 #sc_analysis = uq.analysis.SCAnalysis(sampler=my_sampler, qoi_cols=output_columns)
 #my_campaign.apply_analysis(sc_analysis)
-
 #results = my_campaign.get_last_analysis()
 
 """
@@ -48,8 +47,7 @@ data = my_campaign.get_collation_result()
 * Empirical CDF of QoIs *
 *************************
 """
-#mu_IC_prev_avg = results['statistical_moments']['IC_prev_avg']['mean']
-L = 551 #len(mu_IC_prev_avg)
+L = 551 
 IC_capacity = 109
 IC_ex_threshold = 0.05
 
@@ -72,9 +70,6 @@ IC_prev_avg_max.sort()
 IC_ex_max.sort()
 IC_ex_percentage.sort()
 
-#print(IC_prev_avg_max)
-#print(IC_ex_max)
-
 p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 
 alpha_DKW = 0.05
@@ -86,18 +81,47 @@ for i in range(n_runs-1):
     if (IC_ex_percentage[i]<IC_ex_threshold) & (IC_ex_percentage[i+1]>IC_ex_threshold):
         print('Probability that the percentage of IC patient days is below 5%:',p[i])
 
+# Reload the smaller campaign
+campaign = uq.Campaign(state_file = "campaign_state_CT_MC100.json", work_dir = "/tmp")
+print('========================================================')
+print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
+print('========================================================')
+
+# collate output
+campaign.collate()
+# get full dataset of data
+data_MC100 = campaign.get_collation_result()
+
+n_r = 100
+
+IC_prev_avg_max_MC100 = np.zeros(n_r,dtype='float')
+IC_ex_max_MC100 = np.zeros(n_r,dtype='float')
+
+for i in range(n_r):
+    IC_prev_avg_max_MC100[i] = data_MC100.IC_prev_avg_max[i*L]
+    IC_ex_max_MC100[i] = data_MC100.IC_ex_max[i*L]
+
+IC_prev_avg_max_MC100.sort()
+IC_ex_max_MC100.sort()
+IC_ex_percentage_MC100.sort()
+
+p_MC100 = np.arange(start=1,stop=n_r+1,step=1)/n_r
+
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
 ax_p.step(IC_prev_avg_max,p,lw=2,label='empirical cdf')
-ax_p.step(IC_prev_avg_max,p+eps_DKW,linestyle='--',lw=2,color='tab:red',label='DKW bounds')
-ax_p.step(IC_prev_avg_max,p-eps_DKW,linestyle='--',lw=2,color='tab:red')
+ax_p.step(IC_prev_avg_max,p+eps_DKW,linestyle='--',lw=2,color='tab:orange',label='DKW bounds')
+ax_p.step(IC_prev_avg_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
 #ax_p.axvline(x=IC_capacity,color='tab:orange')
+ax_p.step(IC_prev_avg_max_MC100,p_MC100,lw=2,color='tab:olive',label='MC 100 runs')
 ax_p.set_xscale('log')
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
-ax_e.step(IC_ex_max,p,lw=2)
-ax_e.step(IC_ex_max,p+eps_DKW,linestyle='--',lw=2,color='tab:red')
-ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:red')
+ax_e.step(IC_ex_max,p,lw=2,color='tab:olive')
+ax_e.step(IC_ex_max,p+eps_DKW,linestyle='--',lw=2,color='tab:orange')
+ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
+
+ax_e.step(IC_ex_max_MC100,p_MC100,lw=2)
 ax_e.set_xscale('log')
 
 ax_p.legend(loc='best')

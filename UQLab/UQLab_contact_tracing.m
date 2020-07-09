@@ -12,7 +12,7 @@
 % you need to provide:
 % * R-file that calls Virsim, e.g. contact_tracing_UQ.R
 % * same R-file but then with uncertain parameters replaced by <X0001> etc,
-%   e.g. test_matlab_run.R.tpl
+%   e.g. contact_tracing_UQ.R.tpl
 % * file to read the virsim output, e.g. read_virsim_qoi.m
 % * make sure that a CSV file is created by Virsim and that the name
 %   corresponds to the name provided below
@@ -43,7 +43,7 @@ virsim_output  = 'output_contact_tracing.csv';
 % run(input_file);
 InputOpts.Marginals(1).Name = 'Trace-prob-E';
 InputOpts.Marginals(1).Type = 'Beta';
-InputOpts.Marginals(1).Parameters = [6 4];
+InputOpts.Marginals(1).Parameters = [2 4];
 
 InputOpts.Marginals(2).Name = 'Trace-rate-I';
 InputOpts.Marginals(2).Type = 'Gamma';
@@ -119,7 +119,7 @@ ModelOpts.Output.FileName = virsim_output;
 ModelOpts.Counter.Digits = 6; % (default value 6)
 ModelOpts.Format = {'%.8f','%.8f','%.8f','%.0f'}; % notation for variables, can also be an array, e.g. {'%1.8e','%2.6f'}
 ModelOpts.Archiving.Action = 'save';
-ModelOpts.Archiving.FolderName = 'runs';
+ModelOpts.Archiving.FolderName = 'runs_CT_MC100_v2';
 ModelOpts.Archiving.Zip = false ;
 ModelOpts.Display = 'quiet'; % Set the display to quiet
 

@@ -67,7 +67,7 @@ ax_p = f_CT.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
 ax_p.step(IC_prev_avg_max_CT,p,lw=2,color='tab:blue')
 ax_p.step(IC_prev_avg_max_UQLab_CT,p,lw=2,color='tab:orange')
 ax_p.set_xscale('log')
-ax_p.set_xticks([1e2, 1e3])
+#ax_p.set_xticks([1e2, 1e3])
 
 ax_e = f_CT.add_subplot(122, xlabel='IC patient-days in excess', ylabel='cdf')
 ax_e.step(IC_ex_max_CT,p,lw=2,color='tab:blue',label='EasyVVUQ')

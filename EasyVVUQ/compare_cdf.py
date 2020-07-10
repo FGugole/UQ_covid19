@@ -58,7 +58,7 @@ p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 #################################
 # Load data from UQLab campaign #
 #################################
-QoI_UQLab_CT = pd.read_csv('../UQLab/runs_CT_MC100_updated_beta_gamma/CT_QoI.csv',delimiter=',',header=None)
+QoI_UQLab_CT = pd.read_csv('../UQLab/runs_CT_MC100_updated_beta_gamma_inputfile/CT_QoI.csv',delimiter=',',header=None)
 
 IC_prev_avg_max_UQLab_CT = np.copy(QoI_UQLab_CT.iloc[:,0])
 IC_ex_max_UQLab_CT = np.copy(QoI_UQLab_CT.iloc[:,1])

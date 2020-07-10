@@ -56,9 +56,10 @@ intervention_t = cumsum(c(0, 10, 7, 53, 30))
 intervention_effect = c(1, .3, .15, .25, 1)
 intervention_uptake = rep(1, 5)
 
-trace_prob_E = <X0001> 
-trace_rate_I = <X0002> 
-trace_contact_reduction = <X0003>
+trace_prob_E = c(rep(0, 4), <X0001>)
+trace_rate_I = c(rep(0, 4), <X0002>)
+trace_contact_reduction = c(rep(0, 4), <X0003>)
+
 
 # Select a random seed per each realization 
 # set the seed

@@ -22,7 +22,7 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_CT_MC1000.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_FC_MC1000.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -82,29 +82,29 @@ for i in range(n_runs-1):
         print('Probability that the percentage of IC patient days is below 5%:',p[i])
 
 # Reload the smaller campaign
-campaign = uq.Campaign(state_file = "campaign_state_CT_MC100.json", work_dir = "/tmp")
-print('========================================================')
-print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
-print('========================================================')
+# campaign = uq.Campaign(state_file = "campaign_state_CT_MC100.json", work_dir = "/tmp")
+# print('========================================================')
+# print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
+# print('========================================================')
 
-# collate output
-campaign.collate()
-# get full dataset of data
-data_MC100 = campaign.get_collation_result()
+# # collate output
+# campaign.collate()
+# # get full dataset of data
+# data_MC100 = campaign.get_collation_result()
 
-n_r = 100
+# n_r = 100
 
-IC_prev_avg_max_MC100 = np.zeros(n_r,dtype='float')
-IC_ex_max_MC100 = np.zeros(n_r,dtype='float')
+# IC_prev_avg_max_MC100 = np.zeros(n_r,dtype='float')
+# IC_ex_max_MC100 = np.zeros(n_r,dtype='float')
 
-for i in range(n_r):
-    IC_prev_avg_max_MC100[i] = data_MC100.IC_prev_avg_max[i*L]
-    IC_ex_max_MC100[i] = data_MC100.IC_ex_max[i*L]
+# for i in range(n_r):
+#     IC_prev_avg_max_MC100[i] = data_MC100.IC_prev_avg_max[i*L]
+#     IC_ex_max_MC100[i] = data_MC100.IC_ex_max[i*L]
 
-IC_prev_avg_max_MC100.sort()
-IC_ex_max_MC100.sort()
+# IC_prev_avg_max_MC100.sort()
+# IC_ex_max_MC100.sort()
 
-p_MC100 = np.arange(start=1,stop=n_r+1,step=1)/n_r
+# p_MC100 = np.arange(start=1,stop=n_r+1,step=1)/n_r
 
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
@@ -112,7 +112,7 @@ ax_p.step(IC_prev_avg_max,p,lw=2,label='empirical cdf')
 ax_p.step(IC_prev_avg_max,p+eps_DKW,linestyle='--',lw=2,color='tab:orange',label='DKW bounds')
 ax_p.step(IC_prev_avg_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
 #ax_p.axvline(x=IC_capacity,color='tab:orange')
-ax_p.step(IC_prev_avg_max_MC100,p_MC100,lw=2,color='tab:olive',label='MC 100 runs')
+# ax_p.step(IC_prev_avg_max_MC100,p_MC100,lw=2,color='tab:olive',label='MC 100 runs')
 ax_p.set_xscale('log')
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
@@ -125,7 +125,7 @@ ax_e.set_xscale('log')
 
 ax_p.legend(loc='best')
 plt.tight_layout()
-f.savefig('figures/cdf_CT_MC1000.png')
+f.savefig('figures/cdf_FC_MC1000.png')
 
 f = plt.figure('IC_ex_percentage_cdf')
 ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='P(x)')
@@ -133,7 +133,7 @@ ax.step(IC_ex_percentage*100,p,lw=2)
 ax.axvline(x=IC_ex_threshold*100,color='tab:orange')
 
 plt.tight_layout()
-f.savefig('figures/cdf_CT_IC_ex_percentage')
+f.savefig('figures/cdf_FC_IC_ex_percentage')
 
 #################################
 # Load data from UQLab campaign #

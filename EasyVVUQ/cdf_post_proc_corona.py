@@ -120,7 +120,7 @@ ax_e.step(IC_ex_max,p,lw=2)
 ax_e.step(IC_ex_max,p+eps_DKW,linestyle='--',lw=2,color='tab:orange')
 ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
 
-ax_e.step(IC_ex_max_MC100,p_MC100,lw=2,color='tab:olive')
+#ax_e.step(IC_ex_max_MC100,p_MC100,lw=2,color='tab:olive')
 ax_e.set_xscale('log')
 
 ax_p.legend(loc='best')

@@ -45,13 +45,13 @@ IC_prev_max_CT = np.zeros(n_runs,dtype='float')
 for i in range(n_runs):
     IC_prev_avg_max_CT[i] = data_CT.IC_prev_avg_max[i*L]
     IC_ex_max_CT[i] = data_CT.IC_ex_max[i*L]
-    IC_prev_avg_max[i] = max(data_CT.IC_prev[i*L:(i+1)*L])
+    IC_prev_max_CT[i] = max(data_CT.IC_prev[i*L:(i+1)*L])
 
 IC_prev_avg_max_CT.sort()
 IC_ex_max_CT.sort()
 IC_prev_max_CT.sort()
 
-print(IC_prev_max_CT)
+#print(IC_prev_max_CT)
 
 p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 

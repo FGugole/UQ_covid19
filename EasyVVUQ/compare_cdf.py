@@ -62,7 +62,7 @@ tot_IC_UQLab_CT = np.copy(QoI_UQLab_CT.iloc[:,2])
 IC_prev_avg_max_UQLab_CT.sort()
 IC_ex_max_UQLab_CT.sort()
 
-f_CT = plt.figure('cdfs',figsize=[12,6])
+f_CT = plt.figure('cdfs_CT',figsize=[12,6])
 ax_p = f_CT.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
 ax_p.step(IC_prev_avg_max_CT,p,lw=2,color='tab:blue')
 ax_p.step(IC_prev_avg_max_UQLab_CT,p,lw=2,color='tab:orange') 
@@ -76,8 +76,6 @@ ax_e.legend(loc='best')
 
 plt.tight_layout()
 f_CT.savefig('figures/cdf_CT_MC100_comparison.png')
-
-plt.show()
 
 ########################
 # Flattening the curve #
@@ -115,7 +113,7 @@ tot_IC_UQLab_FC = np.copy(QoI_UQLab_FC.iloc[:,2])
 IC_prev_avg_max_UQLab_FC.sort()
 IC_ex_max_UQLab_FC.sort()
 
-f_FC = plt.figure('cdfs',figsize=[12,6])
+f_FC = plt.figure('cdfs_FC',figsize=[12,6])
 ax_1 = f_FC.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
 ax_1.step(IC_prev_avg_max_FC,p,lw=2,color='tab:blue')
 ax_1.step(IC_prev_avg_max_UQLab_FC,p,lw=2,color='tab:orange') 
@@ -129,3 +127,5 @@ ax_2.legend(loc='best')
 
 plt.tight_layout()
 f_FC.savefig('figures/cdf_FC_MC100_comparison.png')
+
+plt.show()

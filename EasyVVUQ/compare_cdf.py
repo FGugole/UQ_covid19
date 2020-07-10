@@ -35,6 +35,7 @@ campaign.collate()
 # get full dataset of data
 data_CT = campaign.get_collation_result()
 
+L = 551
 n_runs = 100
 
 IC_prev_avg_max_CT = np.zeros(n_runs,dtype='float')

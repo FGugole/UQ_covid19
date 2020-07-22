@@ -1,1 +1,1 @@
-{"outfile": "$out_file", "seed": "$seed", "trace_prob_E": "$trace_prob_E", "trace_rate_I": "$trace_rate_I", "trace_contact_reduction": "$trace_contact_reduction", "intervention_effect": "$intervention_effect", "uptake": "$uptake"}
+{"outfile": "$out_file", "seed": "$seed", "trace_prob_E": "$trace_prob_E", "trace_rate_I": "$trace_rate_I", "trace_contact_reduction": "$trace_contact_reduction", "intervention_effect": "$intervention_effect", "lockdown_effect": "$lockdown_effect", "lockdown_length": "$lockdown_length", "lift_length": "$lift_length", "uptake": "$uptake"}

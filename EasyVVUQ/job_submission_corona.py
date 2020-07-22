@@ -41,6 +41,21 @@ params = {
         "min": 0.0,
         "max": 1.0,
         "default": .35},
+    "lockdown_effect": {
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": .25},
+    "lockdown_length": {
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": .5},
+    "lift_length": {
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": .5},
     "uptake": {
         "type": "float",
         "min": 0.0,
@@ -75,7 +90,10 @@ vary = {
 #    "trace_prob_E": cp.Beta(alpha=2, beta=4),
 #    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
 #    "trace_contact_reduction": cp.Beta(alpha=10, beta=2),
-    "intervention_effect": cp.Beta(alpha=38, beta=70),
+#    "intervention_effect": cp.Beta(alpha=38, beta=70),
+    "lockdown_effect": cp.Beta(alpha=14, beta=42),
+    "lockdown_length": cp.Beta(alpha=2, beta=2),
+    "lift_length": cp.Beta(alpha=2, beta=2),
     "uptake": cp.Beta(alpha=16, beta=2)
 }
 

@@ -73,8 +73,8 @@ output_filename <- json_data$outfile
 #######################################################################################
 # Running an individual simulation for the Flattening the Curve strategy using virsim #
 #######################################################################################
-intervention_t = cumsum(c(0, 10, 7, 53, 30))
-intervention_effect = c(1, .3, .15, .25, int_effect)
+intervention_t = cumsum(c(0, 10, 7, 53, rep(c(lock_length, lift_length),5) ))
+intervention_effect = c(1, .3, .15, .25, rep(c(lock_effect, 1),5) )
 intervention_uptake = rep(uptake, length(intervention_t))
 
 # Select a random seed per each realization (using the system time)

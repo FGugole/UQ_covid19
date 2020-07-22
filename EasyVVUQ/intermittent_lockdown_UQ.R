@@ -65,6 +65,7 @@ lock_length <- sapply(10 + 30*lock_length, as.integer)
 
 lift_length <- unname(sapply(json_data$lift_length, as.numeric))
 lift_length <- sapply(10 + 15*lift_length, as.integer)
+cat(sprintf("lock_length = %f\n , lift_length = %f\n", lock_length, lift_length))
 
 uptake <- unname(sapply(json_data$uptake, as.numeric))
 
@@ -88,8 +89,7 @@ intermittent_lock <- do.call(what = virsim,
                       args = c(param_main,
                                list(intervention_t = intervention_t,
                                     intervention_uptake = intervention_uptake,
-                                    intervention_effect = intervention_effect,
-                                    efoi = 50 / 365 / param_main$n_agent)))
+                                    intervention_effect = intervention_effect)))
 
 intermittent_lock_data = aggregate_output(intermittent_lock$monitor)
 intermittent_lock_data[, c("IC_inc", "IC_prev") :=

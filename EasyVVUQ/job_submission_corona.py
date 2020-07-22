@@ -99,7 +99,7 @@ vary = {
 
 #my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 
 #                                   quadrature_rule='G', sparse=False)
-my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e1)
+my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e3)
 
 # Associate the sampler with the campaign
 my_campaign.set_sampler(my_sampler)
@@ -112,13 +112,13 @@ my_campaign.populate_runs_dir()
 #Run execution sequentially 
 #my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
 #my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ.r corona_in.json', interpret='Rscript'))
-my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('intermittent_lockdown_UQ.r corona_in.json', interpret='Rscript'))
+#my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('intermittent_lockdown_UQ.r corona_in.json', interpret='Rscript'))
 
 # Run execution in parallel without Fabsim (using gnu parallel)
-#cwd = os.getcwd()
-#pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/intermittent_lockdown_UQ.r corona_in.json > output.txt ; cd .. '"
-#print('Parallel run command: ',pcmd)
-#subprocess.call(pcmd,shell=True)
+cwd = os.getcwd()
+pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/intermittent_lockdown_UQ.r corona_in.json > output.txt ; cd .. '"
+print('Parallel run command: ',pcmd)
+subprocess.call(pcmd,shell=True)
 
 #Save the Campaign
 my_campaign.save_state("campaign_state.json")

@@ -40,9 +40,9 @@ param_main <- within(param_sim, {
                         shape = 1,
                         scale = exp(log(5) - lgamma(1 + 1 / 1)))
   
-  trace_prob_E <- c(rep(0, 5))
-  trace_rate_I <- c(rep(0, 5))
-  trace_contact_reduction <- c(rep(0, 5))
+  trace_prob_E <- c(rep(0, 14))
+  trace_rate_I <- c(rep(0, 14))
+  trace_contact_reduction <- c(rep(0, 14))
 
   temp_storage <- "RAM"
   aggregate <- "population"
@@ -65,7 +65,6 @@ lock_length <- sapply(10 + 30*lock_length, as.integer)
 
 lift_length <- unname(sapply(json_data$lift_length, as.numeric))
 lift_length <- sapply(10 + 15*lift_length, as.integer)
-cat(sprintf("lock_length = %f\n , lift_length = %f\n", lock_length, lift_length))
 
 uptake <- unname(sapply(json_data$uptake, as.numeric))
 

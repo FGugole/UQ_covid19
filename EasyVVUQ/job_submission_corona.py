@@ -99,7 +99,7 @@ vary = {
 
 #my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 
 #                                   quadrature_rule='G', sparse=False)
-my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e3)
+my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e1)
 
 # Associate the sampler with the campaign
 my_campaign.set_sampler(my_sampler)
@@ -115,7 +115,7 @@ my_campaign.populate_runs_dir()
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 cwd = os.getcwd()
-pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ.r corona_in.json > output.txt ; cd .. '"
+pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/intermittent_lockdown_UQ.r corona_in.json > output.txt ; cd .. '"
 print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
 

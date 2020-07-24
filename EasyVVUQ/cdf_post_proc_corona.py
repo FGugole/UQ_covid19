@@ -84,9 +84,9 @@ for i in range(n_runs-1):
 params = list(my_sampler.vary.get_keys())
 # Print parameters values used in the simulations
 info = my_campaign.list_runs()
-for run in info:
-    print(run[0])
-    print(run[1]['params'])
+# for run in info:
+#     print(run[0])
+#     print(run[1]['params'])
 
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
@@ -104,7 +104,7 @@ ax_e.step(IC_ex_max,p+eps_DKW,linestyle='--',lw=2,color='tab:orange')
 ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
 #ax_e.step(IC_ex_max_MC100,p_MC100,lw=2,color='tab:olive')
 ax_e.set_xscale('log')
-ax_e.set_xticks([1e4, 1e5])
+ax_e.set_xticks([1e4])
 
 ax_p.legend(loc='best')
 plt.tight_layout()

@@ -17,7 +17,7 @@ param_main <- within(param_sim, {
   
   n_agent <- 1e6 * size_multiplier
   n_cluster <- 1e3 * size_multiplier
-  n_supercluster <- 25
+  n_supercluster <- 20
   
   cluster_size_sd <- 0.95
   supercluster_size_sd <- 0
@@ -77,8 +77,7 @@ output_filename <- json_data$outfile
 param_temp <- gen_phased_lift(intervention_start = 15,
                               init_lockdown_dur = 60,
                               lockdown_effect = 0.2,
-                              n_phases = 25,
-                              n_supercluster = 25,
+                              n_phases = 20,
                               interventions_lift_interval = lift_interval,
                               extra_duration_first_interval = extra_1st_interval,
                               start_reduce_interval = 3,

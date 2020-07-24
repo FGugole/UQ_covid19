@@ -22,13 +22,13 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_FC_MC1000.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_IL_MC1000.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
 # get sampler and output columns from my_campaign object
-#my_sampler = my_campaign._active_sampler
+my_sampler = my_campaign._active_sampler
 #output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
@@ -81,6 +81,11 @@ for i in range(n_runs-1):
     if (IC_ex_percentage[i]<IC_ex_threshold) & (IC_ex_percentage[i+1]>IC_ex_threshold):
         print('Probability that the percentage of IC patient days is below 5%:',p[i])
 
+params = list(my_sampler.vary.get_keys())
+# Print parameters values used in the simulations
+for param in params:
+    print('Unique values of ',param,' are: ',data[param].unique())
+
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
 ax_p.step(IC_prev_avg_max,p,lw=2,label='empirical cdf')
@@ -100,7 +105,7 @@ ax_e.set_xscale('log')
 
 ax_p.legend(loc='best')
 plt.tight_layout()
-f.savefig('figures/cdf_FC_MC1000.png')
+f.savefig('figures/cdf_IL_MC1000.png')
 
 f = plt.figure('IC_ex_percentage_cdf')
 ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='P(x)')
@@ -108,6 +113,6 @@ ax.step(IC_ex_percentage*100,p,lw=2)
 ax.axvline(x=IC_ex_threshold*100,color='tab:orange')
 
 plt.tight_layout()
-f.savefig('figures/cdf_FC_IC_ex_percentage')
+f.savefig('figures/cdf_IL_IC_ex_percentage')
 
 plt.show()

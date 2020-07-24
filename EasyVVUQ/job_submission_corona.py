@@ -92,7 +92,7 @@ vary = {
 #    "trace_contact_reduction": cp.Beta(alpha=10, beta=2),
 #    "intervention_effect": cp.Beta(alpha=38, beta=70),
     "lockdown_effect": cp.Beta(alpha=14, beta=42),
-    "lockdown_length": cp.Gamma(shape=17.5, scale=2),
+    "lockdown_length": cp.Gamma(shape=20, scale=2),
     "lift_length": cp.Gamma(shape=17.5, scale=1),
     "uptake": cp.Beta(alpha=16, beta=2)
 }

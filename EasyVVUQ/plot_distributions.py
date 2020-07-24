@@ -48,7 +48,7 @@ plt.tight_layout()
 
 # Intermittent lockdown
 beta_lockeffect = cp.Beta(alpha=14,beta=42)
-gamma_locklength = cp.Gamma(shape=17.5,scale=2)
+gamma_locklength = cp.Gamma(shape=20,scale=2)
 gamma_liftlength = cp.Gamma(shape=17.5,scale=1)
 
 x_IL = np.linspace(0, 1, 101)

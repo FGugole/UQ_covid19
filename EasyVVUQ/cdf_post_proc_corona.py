@@ -35,7 +35,7 @@ my_sampler = my_campaign._active_sampler
 my_campaign.collate()
 # get full dataset of data
 data = my_campaign.get_collation_result()
-#print(data)
+#print(data.columns)
 
 # Post-processing analysis
 #sc_analysis = uq.analysis.SCAnalysis(sampler=my_sampler, qoi_cols=output_columns)
@@ -83,8 +83,10 @@ for i in range(n_runs-1):
 
 params = list(my_sampler.vary.get_keys())
 # Print parameters values used in the simulations
-for param in params:
-    print('Unique values of ',param,' are: ',data[param].unique())
+info = my_campaign.list_runs()
+for run in info:
+    print(run[0])
+    print(run[1]['params'])
 
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
@@ -94,6 +96,7 @@ ax_p.step(IC_prev_avg_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
 #ax_p.axvline(x=IC_capacity,color='tab:orange')
 # ax_p.step(IC_prev_avg_max_MC100,p_MC100,lw=2,color='tab:olive',label='MC 100 runs')
 ax_p.set_xscale('log')
+ax_p.set_xticks([1e2, 1e3])
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
 ax_e.step(IC_ex_max,p,lw=2)
@@ -110,7 +113,7 @@ f.savefig('figures/cdf_IL_MC1000.png')
 f = plt.figure('IC_ex_percentage_cdf')
 ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='P(x)')
 ax.step(IC_ex_percentage*100,p,lw=2)
-ax.axvline(x=IC_ex_threshold*100,color='tab:orange')
+#ax.axvline(x=IC_ex_threshold*100,color='tab:orange')
 
 plt.tight_layout()
 f.savefig('figures/cdf_IL_IC_ex_percentage')

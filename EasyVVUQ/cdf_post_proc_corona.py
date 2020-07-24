@@ -102,9 +102,9 @@ ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
 ax_e.step(IC_ex_max,p,lw=2)
 ax_e.step(IC_ex_max,p+eps_DKW,linestyle='--',lw=2,color='tab:orange')
 ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
-
 #ax_e.step(IC_ex_max_MC100,p_MC100,lw=2,color='tab:olive')
 ax_e.set_xscale('log')
+ax_e.set_xticks([1e4, 6e4])
 
 ax_p.legend(loc='best')
 plt.tight_layout()

@@ -85,7 +85,7 @@ param_temp <- gen_phased_lift(intervention_start = 15,
                               pl_intervention_effect_lo = 1,
                               uptake = uptake,
                               sc_isolation_effect = 0.5,
-                              lockdown_isol = FALSE))
+                              lockdown_isol = FALSE)
 # Select a random seed per each realization (using the system time)
 #initial_seed <- as.integer(Sys.time())
 # take the last 5 digits of the initial seed

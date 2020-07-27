@@ -74,4 +74,29 @@ leg = plt.legend()
 leg.set_draggable(True)
 plt.tight_layout()
 
+# Phased opening
+gamma_phase_interval = cp.Gamma(shape=25,scale=2)
+
+x_PO = np.linspace(0, 1, 101)
+x_PO_length = np.linspace(0, 90, 901)
+
+f = plt.figure('distributions_PO')
+ax = f.add_subplot(111, xlabel='x', ylabel='pdf')
+ax.plot(x_PO,beta_lockeffect.pdf(x_PO),lw=2,label='intervention_effect')
+ax.plot(x_PO,beta_up.pdf(x_PO),lw=2,label='uptake')
+ax.set_xticks([0.0, .5, 1.0])
+
+leg = plt.legend()
+leg.set_draggable(True)
+plt.tight_layout()
+
+f = plt.figure('distributions_PO_lengths')
+ax = f.add_subplot(111, xlabel='x', ylabel='pdf')
+ax.plot(x_PO_length,gamma_phase_interval.pdf(x_PO_length),lw=2,label='intervention_lift_interval')
+ax.set_xticks([0, 30, 60, 90])
+
+leg = plt.legend()
+leg.set_draggable(True)
+plt.tight_layout()
+
 plt.show()

@@ -60,9 +60,7 @@ rnd_seed <- unname(sapply(json_data$seed, as.integer))
 
 lock_effect <- unname(sapply(json_data$lockdown_effect, as.numeric))
 
-lift_interval <- unname(sapply(json_data$lift_interval, as.integer))
-
-extra_1st_interval <- unname(sapply(json_data$extra_first_interval, as.integer))
+phase_interval <- unname(sapply(json_data$phase_interval, as.integer))
 
 uptake <- unname(sapply(json_data$uptake, as.numeric))
 
@@ -78,11 +76,11 @@ param_temp <- gen_phased_lift(intervention_start = 15,
                               init_lockdown_dur = 60,
                               lockdown_effect = 0.2,
                               n_phases = 20,
-                              interventions_lift_interval = lift_interval,
-                              extra_duration_first_interval = extra_1st_interval,
-                              start_reduce_interval = 3,
+                              interventions_lift_interval = phase_interval,
+                              extra_duration_first_interval = 0,
+                              start_reduce_interval = 20,
                               repeat_reduction = 1,
-                              reduce_interval = c(15, rep(c(5, rep(0, 4)), 4)),
+                              reduce_interval = 0,
                               pl_intervention_effect_hi = lock_effect,
                               pl_intervention_effect_lo = 1,
                               uptake = uptake,

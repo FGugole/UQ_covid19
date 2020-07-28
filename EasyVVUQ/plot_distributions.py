@@ -99,4 +99,33 @@ leg = plt.legend()
 leg.set_draggable(True)
 plt.tight_layout()
 
+# Biology related parameters
+gamma_Rzero = cp.Gamma(shape=100,scale=.025)
+gamma_duration_infectiousness = cp.Gamma(shape=25,scale=.2)
+gamma_intervention_effect_var = cp.Gamma(shape=2,scale=.05)
+gamma_exposed_time = cp.Gamma(shape=17.5,scale=1)
+
+x_bio = np.linspace(0, 8, 801)
+x_exposed_time = np.linspace(0, 40, 4001)
+
+f = plt.figure('distributions_bio')
+ax = f.add_subplot(111, xlabel='x', ylabel='pdf')
+ax.plot(x_bio,gamma_Rzero.pdf(x_bio),lw=2,label='$R_{0}$')
+ax.plot(x_bio,gamma_duration_infectiousness.pdf(x_bio),lw=2,label='duration_infectiousness')
+ax.plot(x_bio,gamma_intervention_effect_var.pdf(x_bio),lw=2,label='intervention_effect_var$^{-1}$')
+ax.set_xticks([0, 4, 8])
+
+leg = plt.legend()
+leg.set_draggable(True)
+plt.tight_layout()
+
+f = plt.figure('distribution_exposed_time')
+ax = f.add_subplot(111, xlabel='x', ylabel='pdf')
+ax.plot(x_exposed_time,gamma_exposed_time.pdf(x_exposed_time),lw=2,label='shape param. of exposed time distr.')
+ax.set_xticks([0, 20, 40])
+
+leg = plt.legend()
+leg.set_draggable(True)
+plt.tight_layout()
+
 plt.show()

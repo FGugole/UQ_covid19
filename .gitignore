@@ -4,3 +4,4 @@ EasyVVUQ/*.json
 exec/.Rhistory
 exec/log.txt
 figures/*
+EasyVVUQ/nohup.out

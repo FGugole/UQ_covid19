@@ -66,6 +66,26 @@ params = {
         "min": 0.0,
         "max": 1.0,
         "default": 1.0},
+    "Rzero": {
+        "type": "float",
+        "min": 0.0,
+        "max": 5.0,
+        "default": 2.5},
+    "duration_infectiousness": {
+        "type": "float",
+        "min": 0.0,
+        "max": 10.0,
+        "default": 5.0},
+    "shape_exposed_time": {
+        "type": "float",
+        "min": 0.0,
+        "max": 50.0,
+        "default": 20.0},
+    "intervention_effect_var_inv": {
+        "type": "float",
+        "min": 0.0,
+        "max": 10.0,
+        "default": 0.1},
     "out_file": {
         "type": "string",
         "default": "output.csv"}}
@@ -100,7 +120,11 @@ vary = {
 #    "lockdown_length": cp.Gamma(shape=20, scale=2),
 #    "lift_length": cp.Gamma(shape=17.5, scale=1),
     "phase_interval": cp.Gamma(shape=25, scale=2),
-    "uptake": cp.Beta(alpha=16, beta=2)
+    "uptake": cp.Beta(alpha=16, beta=2)#,
+#    "Rzero": cp.Gamma(shape=100,scale=.025),
+#    "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
+#    "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
+#    "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
 
 #my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 

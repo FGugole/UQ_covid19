@@ -133,9 +133,9 @@ avg_window <- 30
 #  IC_prev_avg[i] <- mean(phased_opening_data$IC_prev[i:min(i+avg_window-1,L)])
 #}
 IC_prev_avg <- ma(x=phased_opening_data$IC_prev,order=avg_window)
-IC_prev_avg <- na.omit(IC_prev_avg)
+#IC_prev_avg <- na.omit(IC_prev_avg)
 phased_opening_data[, "IC_prev_avg"] <- IC_prev_avg
-phased_opening_data[, "IC_prev_avg_max"] <- max(IC_prev_avg)
+phased_opening_data[, "IC_prev_avg_max"] <- max(na.omit(IC_prev_avg))
 
 ###########################################################
 # Compute the number of IC patients exceeding IC capacity #

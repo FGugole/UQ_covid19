@@ -116,11 +116,12 @@ flat_curve_data[, c("IC_inc", "IC_prev") :=
 L <- length(flat_curve_data$IC_prev)
 IC_prev_avg <- vector(mode="numeric", length=L)
 
-avg_window = 30
+avg_window <- 30
 #for (i in 1:L){
 #  IC_prev_avg[i] <- mean(flat_curve_data$IC_prev[i:min(i+avg_window-1,L)])
 #}
-IC_prev_avg = ma(x=flat_curve_data$IC_prev,order=avg_window)
+IC_prev_avg <- ma(x=flat_curve_data$IC_prev,order=avg_window)
+IC_prev_avg <- na.omit(IC_prev_avg)
 flat_curve_data[, "IC_prev_avg"] <- IC_prev_avg
 flat_curve_data[, "IC_prev_avg_max"] <- max(IC_prev_avg)
 

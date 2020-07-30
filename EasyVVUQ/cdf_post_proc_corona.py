@@ -22,7 +22,7 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_PO_MC1000.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_CT_bio_MC1000.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -70,6 +70,8 @@ IC_prev_avg_max.sort()
 IC_ex_max.sort()
 IC_ex_percentage.sort()
 
+print('Minimum value in the peak of IC patients = ',min(IC_prev_avg_max))
+
 p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 
 alpha_DKW = 0.05
@@ -108,7 +110,7 @@ ax_e.set_xscale('log')
 
 ax_p.legend(loc='best')
 plt.tight_layout()
-f.savefig('figures/cdf_PO_MC1000.png')
+f.savefig('figures/cdf_CT_bio_MC1000.png')
 
 f = plt.figure('IC_ex_percentage_cdf')
 ax = f.add_subplot(111, xlabel='% of IC patient days in excess', ylabel='P(x)')
@@ -116,6 +118,6 @@ ax.step(IC_ex_percentage*100,p,lw=2)
 #ax.axvline(x=IC_ex_threshold*100,color='tab:orange')
 
 plt.tight_layout()
-f.savefig('figures/cdf_PO_IC_ex_percentage')
+f.savefig('figures/cdf_CT_bio_IC_ex_percentage')
 
 plt.show()

@@ -9,7 +9,7 @@ import easyvvuq as uq
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib
+from matplotlib.ticker import ScalarFormatter, NullFormatter
 plt.rcParams.update({'font.size': 20})
 plt.rcParams['figure.figsize'] = 8,6
 
@@ -101,6 +101,7 @@ ax_p.step(IC_prev_avg_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
 ax_p.set_xscale('log')
 ax_p.set_xticks([3e2, 1e3])
 ax_p.get_xaxis().get_major_formatter().labelOnlyBase = False
+ax_p.get_xaxis().set_minor_formatter(NullFormatter())
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
 ax_e.step(IC_ex_max,p,lw=2)
@@ -109,7 +110,8 @@ ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
 #ax_e.step(IC_ex_max_MC100,p_MC100,lw=2,color='tab:olive')
 ax_e.set_xscale('log')
 ax_e.set_xticks([1e4, 6e4])
-ax_e.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+ax_e.get_xaxis().set_major_formatter(ScalarFormatter())
+ax_e.get_xaxis().set_minor_formatter(NullFormatter())
 
 ax_p.legend(loc='best')
 plt.tight_layout()

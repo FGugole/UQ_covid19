@@ -110,7 +110,8 @@ ax_e.step(IC_ex_max,p-eps_DKW,linestyle='--',lw=2,color='tab:orange')
 #ax_e.step(IC_ex_max_MC100,p_MC100,lw=2,color='tab:olive')
 ax_e.set_xscale('log')
 ax_e.set_xticks([1e4, 6e4])
-ax_e.get_xaxis().set_major_formatter(ScalarFormatter())
+#ax_e.get_xaxis().set_major_formatter(ScalarFormatter())
+ax_e.get_xaxis().get_major_formatter().labelOnlyBase = False
 ax_e.get_xaxis().set_minor_formatter(NullFormatter())
 
 ax_p.legend(loc='best')

@@ -112,19 +112,19 @@ my_campaign.add_app(name="sc",
 # Create the sampler
 vary = {
     # "seed": cp.DiscreteUniform(2**14, 2**16),
-    # "trace_prob_E": cp.Beta(alpha=2, beta=4),
-    # "trace_rate_I": cp.Gamma(shape=2, scale=.4),
-    # "trace_contact_reduction": cp.Beta(alpha=10, beta=2),
+    "trace_prob_E": cp.Beta(alpha=2, beta=4),
+    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
+    "trace_contact_reduction": cp.Beta(alpha=10, beta=2),
     # "intervention_effect": cp.Beta(alpha=38, beta=70),
-    "lockdown_effect": cp.Beta(alpha=14, beta=42),
+    # "lockdown_effect": cp.Beta(alpha=14, beta=42),
     # "lockdown_length": cp.Gamma(shape=20, scale=2),
     # "lift_length": cp.Gamma(shape=17.5, scale=1),
-    "phase_interval": cp.Gamma(shape=25, scale=2),
-    "uptake": cp.Beta(alpha=16, beta=2),
-    "Rzero": cp.Gamma(shape=100,scale=.025),
-    "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
-    "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
-    "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
+    # "phase_interval": cp.Gamma(shape=25, scale=2),
+    # "uptake": cp.Beta(alpha=16, beta=2),
+    # "Rzero": cp.Gamma(shape=100,scale=.025),
+    # "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
+    # "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
+    # "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
 
 #my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 
@@ -149,7 +149,7 @@ print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
 
 #Save the Campaign
-my_campaign.save_state("campaign_state_PO_bio_MC1000.json")
+my_campaign.save_state("campaign_state_CT_MC1000.json")
 
 print('Job submission complete')
 

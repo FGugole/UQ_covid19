@@ -60,12 +60,12 @@ print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
 n_runs = 1000
-n_uncertain_parameters = 3
+n_uncertain_params = 4
 
 # get sampler and output columns from my_campaign object
 my_sampler = my_campaign._active_sampler
 my_sampler.n_samples = n_runs
-my_sampler.n_uncertain_params = n_uncertain_parameters
+my_sampler.n_uncertain_params = n_uncertain_params
 
 output_columns = my_campaign._active_app_decoder.output_columns
 

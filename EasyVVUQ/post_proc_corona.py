@@ -54,7 +54,7 @@ def plot_runs(myruns):
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_FC_po3_moreuptake.json", work_dir = "/tmp")
+my_campaign = uq.Campaign(state_file = "campaign_state_PO_MC1000.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -70,11 +70,11 @@ data = my_campaign.get_collation_result()
 #print(data)
 
 # Post-processing analysis
-sc_analysis = uq.analysis.SCAnalysis(sampler=my_sampler, qoi_cols=output_columns)
-my_campaign.apply_analysis(sc_analysis)
+qmc_analysis = uq.analysis.QMCAnalysis(sampler=my_sampler, qoi_cols=output_columns)
+my_campaign.apply_analysis(qmc_analysis)
 
 results = my_campaign.get_last_analysis()
-
+print(results)
 #sc_analysis.plot_grid()
 """
 ****************
@@ -263,50 +263,50 @@ ff.savefig('figures/Sobol_IC_max.png')
 * SOBOL HIGHER ORDER INDECES *
 ******************************
 """
-sobols_all_IC_ex = sc_analysis.get_sobol_indices(qoi='IC_ex',typ='all')
-sobols_all_IC_prev_avg = sc_analysis.get_sobol_indices(qoi='IC_prev_avg',typ='all')
-#
+# sobols_all_IC_ex = sc_analysis.get_sobol_indices(qoi='IC_ex',typ='all')
+# sobols_all_IC_prev_avg = sc_analysis.get_sobol_indices(qoi='IC_prev_avg',typ='all')
+# #
 
-f = plt.figure('Sobol_higher_order_IC_ex',figsize=[12,6])
-ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
-ax2.set_ylim([-.1, 1.1])
+# f = plt.figure('Sobol_higher_order_IC_ex',figsize=[12,6])
+# ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
+# ax2.set_ylim([-.1, 1.1])
 
-ax3 = f.add_subplot(122, xlabel='time', title='3rd order')
-ax3.set_ylim([-.1, 1.1])
+# ax3 = f.add_subplot(122, xlabel='time', title='3rd order')
+# ax3.set_ylim([-.1, 1.1])
 
-ax2.plot(time[skip:],sobols_all_IC_ex[(0, 1)][skip:],lw=2, label='(0, 1)')
-ax2.plot(time[skip:],sobols_all_IC_ex[(0, 2)][skip:],lw=2, label='(0, 2)')
-ax2.plot(time[skip:],sobols_all_IC_ex[(1, 2)][skip:],lw=2, label='(1, 2)')
-ax2.legend(loc='best')
-#
-ax3.plot(time[skip:],sobols_all_IC_ex[(0, 1, 2)][skip:], lw=2)
+# ax2.plot(time[skip:],sobols_all_IC_ex[(0, 1)][skip:],lw=2, label='(0, 1)')
+# ax2.plot(time[skip:],sobols_all_IC_ex[(0, 2)][skip:],lw=2, label='(0, 2)')
+# ax2.plot(time[skip:],sobols_all_IC_ex[(1, 2)][skip:],lw=2, label='(1, 2)')
+# ax2.legend(loc='best')
+# #
+# ax3.plot(time[skip:],sobols_all_IC_ex[(0, 1, 2)][skip:], lw=2)
 
-plt.tight_layout()
-f.savefig('figures/Sobol_higher_order_IC_ex.png')
-
-
-f = plt.figure('Sobol_higher_order_IC_prev_avg',figsize=[12,6])
-ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
-ax2.set_ylim([-.1, 1.1])
-
-ax3 = f.add_subplot(122, xlabel='time', title='3rd order')
-ax3.set_ylim([-.1, 1.1])
-
-ax2.plot(time[skip:],sobols_all_IC_prev_avg[(0, 1)][skip:],lw=2, label='(0, 1)')
-ax2.plot(time[skip:],sobols_all_IC_prev_avg[(0, 2)][skip:],lw=2, label='(0, 2)')
-ax2.plot(time[skip:],sobols_all_IC_prev_avg[(1, 2)][skip:],lw=2, label='(1, 2)')
-ax2.legend(loc='best')
-#
-ax3.plot(time[skip:],sobols_all_IC_prev_avg[(0, 1, 2)][skip:], lw=2)
-
-plt.tight_layout()
-f.savefig('figures/Sobol_higher_order_IC_prev_avg.png')
+# plt.tight_layout()
+# f.savefig('figures/Sobol_higher_order_IC_ex.png')
 
 
-sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
-print('Higher order Sobol indices for IC_ex_max:',sobols_all_IC_ex_max)
-sobols_all_IC_prev_avg_max = sc_analysis.get_sobol_indices(qoi='IC_prev_avg_max',typ='all')
-print('Higher order Sobol indices for IC_prev_avg_max:',sobols_all_IC_prev_avg_max)
+# f = plt.figure('Sobol_higher_order_IC_prev_avg',figsize=[12,6])
+# ax2 = f.add_subplot(121, xlabel='time', title='2nd order')
+# ax2.set_ylim([-.1, 1.1])
+
+# ax3 = f.add_subplot(122, xlabel='time', title='3rd order')
+# ax3.set_ylim([-.1, 1.1])
+
+# ax2.plot(time[skip:],sobols_all_IC_prev_avg[(0, 1)][skip:],lw=2, label='(0, 1)')
+# ax2.plot(time[skip:],sobols_all_IC_prev_avg[(0, 2)][skip:],lw=2, label='(0, 2)')
+# ax2.plot(time[skip:],sobols_all_IC_prev_avg[(1, 2)][skip:],lw=2, label='(1, 2)')
+# ax2.legend(loc='best')
+# #
+# ax3.plot(time[skip:],sobols_all_IC_prev_avg[(0, 1, 2)][skip:], lw=2)
+
+# plt.tight_layout()
+# f.savefig('figures/Sobol_higher_order_IC_prev_avg.png')
+
+
+# sobols_all_IC_ex_max = sc_analysis.get_sobol_indices(qoi='IC_ex_max',typ='all')
+# print('Higher order Sobol indices for IC_ex_max:',sobols_all_IC_ex_max)
+# sobols_all_IC_prev_avg_max = sc_analysis.get_sobol_indices(qoi='IC_prev_avg_max',typ='all')
+# print('Higher order Sobol indices for IC_prev_avg_max:',sobols_all_IC_prev_avg_max)
 
 """
 ************************
@@ -314,18 +314,18 @@ print('Higher order Sobol indices for IC_prev_avg_max:',sobols_all_IC_prev_avg_m
 ************************
 """
 
-# Remember: if I used polynomial_order=p in the sampler, then it created p+1 runs
-Runlist = ['Run_1','Run_2','Run_3','Run_4','Run_5','Run_6','Run_7','Run_8','Run_9','Run_10',\
-'Run_11','Run_12','Run_13','Run_14','Run_15','Run_16']
-Rundic = {'Run_1':0,'Run_2':1,'Run_3':2,'Run_4':3,'Run_5':4,'Run_6':5,'Run_7':6,'Run_8':7,\
-'Run_9':8,'Run_10':9,'Run_11':10,'Run_12':11,'Run_13':12,'Run_14':13,'Run_15':14,'Run_16':15}
+# # Remember: if I used polynomial_order=p in the sampler, then it created p+1 runs
+# Runlist = ['Run_1','Run_2','Run_3','Run_4','Run_5','Run_6','Run_7','Run_8','Run_9','Run_10',\
+# 'Run_11','Run_12','Run_13','Run_14','Run_15','Run_16']
+# Rundic = {'Run_1':0,'Run_2':1,'Run_3':2,'Run_4':3,'Run_5':4,'Run_6':5,'Run_7':6,'Run_8':7,\
+# 'Run_9':8,'Run_10':9,'Run_11':10,'Run_12':11,'Run_13':12,'Run_14':13,'Run_15':14,'Run_16':15}
 
-plot_runs(Runlist)
+# plot_runs(Runlist)
 
-# Print parameters values used in the simulations
-for param in params:
-    print('Unique values of ',param,' are: ',data[param].unique())
+# # Print parameters values used in the simulations
+# for param in params:
+#     print('Unique values of ',param,' are: ',data[param].unique())
 
-plt.show()
+# plt.show()
 
 ### END OF CODE ###

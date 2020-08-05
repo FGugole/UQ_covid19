@@ -111,7 +111,7 @@ my_campaign.add_app(name="sc",
 
 # Create the sampler
 vary = {
-    # "seed": cp.DiscreteUniform(2**14, 2**16),
+    "seed": cp.DiscreteUniform(2**14, 2**16),
     "trace_prob_E": cp.Beta(alpha=2, beta=4),
     "trace_rate_I": cp.Gamma(shape=2, scale=.4),
     "trace_contact_reduction": cp.Beta(alpha=10, beta=2),

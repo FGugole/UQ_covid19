@@ -13,9 +13,9 @@ import os
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign without bio
-IL_campaign = uq.Campaign(state_file = "campaign_state_IL_MC1000.json", work_dir = "/tmp")
+campaign = uq.Campaign(state_file = "campaign_state_PO_MC1000.json", work_dir = "/tmp")
 print('========================================================')
-print('Reloaded campaign', IL_campaign.campaign_dir.split('/')[-1])
+print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
 # get sampler and output columns from my_campaign object
@@ -23,25 +23,25 @@ print('========================================================')
 #output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
-IL_campaign.collate()
+campaign.collate()
 # get full dataset of data
-IL_data = IL_campaign.get_collation_result()
+data = campaign.get_collation_result()
 #print(IL_data.columns)
 
 # Reload the campaign with bio
-IL_bio_campaign = uq.Campaign(state_file = "campaign_state_IL_bio_MC1000.json", work_dir = "/tmp")
+bio_campaign = uq.Campaign(state_file = "campaign_state_PO_bio_MC1000.json", work_dir = "/tmp")
 print('========================================================')
-print('Reloaded campaign', IL_bio_campaign.campaign_dir.split('/')[-1])
+print('Reloaded campaign', bio_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
 # get sampler and output columns from my_campaign object
-#IL_bio_sampler = IL_bio_campaign._active_sampler
+#bio_sampler = bio_campaign._active_sampler
 #output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
-IL_bio_campaign.collate()
+bio_campaign.collate()
 # get full dataset of data
-IL_bio_data = IL_bio_campaign.get_collation_result()
+bio_data = bio_campaign.get_collation_result()
 #print(IL_bio_data.columns)
 
 # Extract maximum values within the ensemble
@@ -50,15 +50,18 @@ IC_capacity = 109
 
 n_runs = 1000
 
-IL_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
-IL_bio_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
+IC_prev_avg_max = np.zeros(n_runs,dtype='float')
+bio_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
 
 for i in range(n_runs):
-    IL_IC_prev_avg_max[i] = IL_data.IC_prev_avg_max[i*L]
-    IL_bio_IC_prev_avg_max[i] = IL_bio_data.IC_prev_avg_max[i*L]
+    IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
+    bio_IC_prev_avg_max[i] = bio_data.IC_prev_avg_max[i*L]
 
 # Perform Welch's t-test to see if the difference between the two is significant
-[t_stat, p_val] = stats.ttest_ind(a=IL_IC_prev_avg_max, b=IL_bio_IC_prev_avg_max, equal_var=False)
+[t_stat, p_val] = stats.ttest_ind(a=IC_prev_avg_max, b=bio_IC_prev_avg_max, equal_var=False)
+
+print('Minimum value without bio = ',min(IC_prev_avg_max))
+print('Minimum value with bio = ',min(bio_IC_prev_avg_max))
 
 print('t-statistic = ',t_stat)
 print('p-value = ',p_val)

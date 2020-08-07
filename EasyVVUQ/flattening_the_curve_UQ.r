@@ -71,7 +71,7 @@ param_main <- within(param_sim, {
                         shape = 1,
                         scale = exp(log(avg_duration_infectiousness) - lgamma(1 + 1 / 1)))
   
-  intervention_effect_var <- 1 / intervention_effect_var_inv
+  # intervention_effect_var <- 1 / intervention_effect_var_inv
 
   trace_prob_E <- c(rep(0, 5))
   trace_rate_I <- c(rep(0, 5))

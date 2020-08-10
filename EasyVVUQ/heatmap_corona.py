@@ -61,11 +61,10 @@ for run in info:
 #     print(run[0])
 #     print(run[1]['params'])
 
-f, ax = plt.subplots()
-im = ax.scatter(x=intervention_effect, y=uptake, c=IC_prev_avg_max, cmap='plasma')
-im.xlabel('intervention_effect')
-im.ylabel('uptake')
-f.colorbar(im, ax=ax)
+f = plt.figure('heatmap')
+ax = f.add_subplot(111, xlabel='intervention_effect', ylabel='uptake')
+ax.scatter(x=intervention_effect, y=uptake, c=IC_prev_avg_max, cmap='plasma')
+f.colorbar(ax=ax)
 
 plt.tight_layout()
 f.savefig('figures/heatmap_FC_MC1000.png')

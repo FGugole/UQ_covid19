@@ -51,7 +51,7 @@ L = 551
 IC_prev_avg = np.zeros((L,n_runs), dtype='float')
 
 for i in range(n_runs):
-	IC_prev_avg[:,i] = data.IC_prev_avg[i*L+0:L]
+	IC_prev_avg[:,i] = data.IC_prev_avg[i*L:(i+1)*L]
 
 mean_IC_prev_avg = np.mean(IC_prev_avg, axis=1)
 std_IC_prev_avg = np.std(IC_prev_avg, axis=1)
@@ -61,8 +61,8 @@ t = np.arange(start=0, stop=L, step=1)
 f = plt.figure('IC_prev_avg')
 ax = f.add_subplot(111, xlabel='time', ylabel='IC_prev_avg')
 ax.plot(t,mean_IC_prev_avg,lw=2,label='ensemble mean')
-ax.plot(t,mean_IC_prev_avg-1.96*std_IC_prev_avg,linestyle='--',lw=2,col='tab:green',label='95% CI')
-ax.plot(t,mean_IC_prev_avg+1.96*std_IC_prev_avg,linestyle='--',lw=2,col='tab:green')
+ax.plot(t,mean_IC_prev_avg-1.96*std_IC_prev_avg,linestyle='--',lw=2,color='tab:green',label='95% CI')
+ax.plot(t,mean_IC_prev_avg+1.96*std_IC_prev_avg,linestyle='--',lw=2,color='tab:green')
 
 ax.legend(loc='best')
 plt.tight_layout()

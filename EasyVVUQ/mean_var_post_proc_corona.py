@@ -71,6 +71,7 @@ ax.plot(t,mean_IC_prev_avg,lw=2,label='ensemble mean')
 ax.plot(t,CI_low,linestyle='--',lw=2,color='tab:green',label='95% CI')
 ax.plot(t,CI_up,linestyle='--',lw=2,color='tab:green')
 
+ax.set_xticks([0, 150, 300, 450])
 ax.set_yticks([0, 100, 200, 300])
 
 ax.legend(loc='best')

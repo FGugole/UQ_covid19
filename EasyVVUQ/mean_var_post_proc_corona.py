@@ -61,7 +61,7 @@ CI_up = np.zeros(L, dtype='float')
 
 for i in range(L):
     CI_low[i] = max(0, mean_IC_prev_avg[i]-1.96*std_IC_prev_avg[i])
-    CI_low[i] = max(0, mean_IC_prev_avg[i]+1.96*std_IC_prev_avg[i])
+    CI_up[i] = max(0, mean_IC_prev_avg[i]+1.96*std_IC_prev_avg[i])
 
 t = np.arange(start=0, stop=L, step=1)
 

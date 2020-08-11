@@ -118,7 +118,7 @@ vary = {
     # "intervention_effect": cp.Beta(alpha=38, beta=70),
     "lockdown_effect": cp.Beta(alpha=14, beta=42),
     "lockdown_length": cp.Gamma(shape=20, scale=2),
-    "lift_length": cp.Gamma(shape=10, scale=1),
+    "lift_length": cp.Gamma(shape=15, scale=1),
     # "phase_interval": cp.Gamma(shape=25, scale=2),
     "uptake": cp.Beta(alpha=16, beta=2),
     # "Rzero": cp.Gamma(shape=100,scale=.025),

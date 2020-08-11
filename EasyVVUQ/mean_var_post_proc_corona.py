@@ -47,6 +47,7 @@ data = campaign.get_collation_result()
 
 n_runs = 1000
 L = 551 
+IC_capacity = 109
 
 IC_prev_avg = np.zeros((L,n_runs), dtype='float')
 
@@ -67,9 +68,10 @@ t = np.arange(start=0, stop=L, step=1)
 
 f = plt.figure('IC_prev_avg')
 ax = f.add_subplot(111, xlabel='time', ylabel='IC_prev_avg')
-ax.plot(t[15:-15],mean_IC_prev_avg[15:-15],lw=2,label='ensemble mean')
-ax.plot(t[15:-15],CI_low[15:-15],linestyle='--',lw=2,color='tab:green',label='95% CI')
-ax.plot(t[15:-15],CI_up[15:-15],linestyle='--',lw=2,color='tab:green')
+ax.plot(t[15:-15], mean_IC_prev_avg[15:-15], lw=2, label='ensemble mean')
+ax.plot(t[15:-15], CI_low[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
+ax.plot(t[15:-15], CI_up[15:-15], linestyle='--', lw=2, color='tab:green')
+ax.hlines(y=IC_capacity, linestyle=':', lw=2, color='tab:red', label='IC capacity')
 
 ax.set_xticks([0, 150, 300, 450])
 ax.set_yticks([0, 100, 200, 300])

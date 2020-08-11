@@ -28,19 +28,42 @@ print('========================================================')
 print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
-sampler = campaign._active_sampler
-output_columns = campaign._active_app_decoder.output_columns
-
 # collate output
 campaign.collate()
 # get full dataset of data
 data = campaign.get_collation_result()
 #print(data.columns)
 
-# Post-processing analysis
-mc_analysis = uq.analysis.BasicStats(qoi_cols=output_columns)
-campaign.apply_analysis(mc_analysis)
+# get sampler and output columns from campaign object
+# sampler = campaign._active_sampler
+# output_columns = campaign._active_app_decoder.output_columns
 
-results = campaign.get_last_analysis()
-print(results)
+# Post-processing analysis
+# mc_analysis = uq.analysis.BasicStats(qoi_cols=output_columns)
+# campaign.apply_analysis(mc_analysis)
+
+# results = campaign.get_last_analysis()
+# print(results) # returns the averall mean and not the mean-time series
+
+n_runs = 1000
+L = 551 
+
+IC_prev_avg = np.zeros((L,n_runs), dtype='float')
+
+for i in range(n_runs):
+	IC_prev_avg[:,i] = data.IC_prev_avg[i*L+0:L]
+
+mean_IC_prev_avg = np.mean(IC_prev_avg, axis=1)
+std_IC_prev_avg = np.std(IC_prev_avg, axis=1)
+
+t = np.arange(start=0, stop=L, step=1)
+
+f = plt.figure('IC_prev_avg')
+ax = f.add_subplot(111, xlabel='time', ylabel='IC_prev_avg')
+ax.plot(t,mean_IC_prev_avg,lw=2,label='ensemble mean')
+ax.plot(t,mean_IC_prev_avg-1.96*std_IC_prev_avg,linestyle='--',lw=2,col='tab:green',label='95% CI')
+ax.plot(t,mean_IC_prev_avg+1.96*std_IC_prev_avg,linestyle='--',lw=2,col='tab:green')
+
+ax.legend(loc='best')
+plt.tight_layout()
+f.savefig('figures/IC_prev_avg_PO_MC1000.png')

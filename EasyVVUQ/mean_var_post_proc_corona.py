@@ -23,7 +23,7 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-campaign = uq.Campaign(state_file = "campaign_state_PO_bio_MC1000.json", work_dir = "/tmp")
+campaign = uq.Campaign(state_file = "campaign_state_FC_bio_MC1000.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -71,11 +71,11 @@ ax = f.add_subplot(111, xlabel='time', ylabel='IC_prev_avg')
 ax.plot(t[15:-15], mean_IC_prev_avg[15:-15], lw=2, label='ensemble mean')
 ax.plot(t[15:-15], CI_low[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
 ax.plot(t[15:-15], CI_up[15:-15], linestyle='--', lw=2, color='tab:green')
-ax.hlines(y=IC_capacity, linestyle=':', lw=2, color='tab:red', label='IC capacity')
+ax.hlines(y=IC_capacity, xmin=15, xmax=L-15, linestyle=':', lw=2, color='tab:red', label='IC capacity')
 
 ax.set_xticks([0, 150, 300, 450])
 ax.set_yticks([0, 100, 200, 300])
 
 ax.legend(loc='best')
 plt.tight_layout()
-f.savefig('figures/IC_prev_avg_PO_bio_MC1000.png')
+f.savefig('figures/IC_prev_avg_FC_bio_MC1000.png')

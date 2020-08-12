@@ -96,10 +96,9 @@ ax = f.add_subplot(111, xlabel='time', ylabel='IC_ex')
 ax.plot(t[15:-15], mean_IC_ex[15:-15], lw=2, label='mean')
 ax.plot(t[15:-15], CI_low_IC_ex[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
 ax.plot(t[15:-15], CI_up_IC_ex[15:-15], linestyle='--', lw=2, color='tab:green')
-ax.hlines(y=IC_capacity, xmin=15, xmax=L-15, linestyle=':', lw=2, color='tab:red', label='IC capacity')
 
 ax.set_xticks([0, 150, 300, 450])
-#ax.set_yticks([0, 100, 200, 300])
+ax.set_yticks([0, 5e3, 15e3, 25e3])
 
 ax.legend(loc='best')
 plt.tight_layout()

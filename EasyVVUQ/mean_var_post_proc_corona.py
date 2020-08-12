@@ -77,29 +77,25 @@ for i in range(L):
 
 t = np.arange(start=0, stop=L, step=1)
 
-f = plt.figure('IC_prev_avg')
-ax = f.add_subplot(111, xlabel='time', ylabel='IC_prev_avg')
-ax.plot(t[15:-15], mean_IC_prev_avg[15:-15], lw=2, label='mean')
-ax.plot(t[15:-15], CI_low_IC_prev_avg[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
-ax.plot(t[15:-15], CI_up_IC_prev_avg[15:-15], linestyle='--', lw=2, color='tab:green')
-ax.hlines(y=IC_capacity, xmin=15, xmax=L-15, linestyle=':', lw=2, color='tab:red', label='IC capacity')
+f = plt.figure('QoI',figsize=[12,6])
+ax_p = f.add_subplot(121, xlabel='time', ylabel='IC_prev_avg')
+ax_p.plot(t[15:-15], mean_IC_prev_avg[15:-15], lw=2, label='mean')
+ax_p.plot(t[15:-15], CI_low_IC_prev_avg[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
+ax_p.plot(t[15:-15], CI_up_IC_prev_avg[15:-15], linestyle='--', lw=2, color='tab:green')
+ax_p.hlines(y=IC_capacity, xmin=15, xmax=L-15, linestyle=':', lw=2, color='tab:red', label='IC capacity')
 
-ax.set_xticks([0, 150, 300, 450])
-ax.set_yticks([0, 200, 400])
+ax_p.set_xticks([0, 150, 300, 450])
+ax_p.set_yticks([0, 200, 400])
 
-ax.legend(loc='best')
+ax_p.legend(loc='best')
+
+ax_e = f.add_subplot(122, xlabel='time', ylabel='IC_ex')
+ax_e.plot(t[15:-15], mean_IC_ex[15:-15], lw=2, label='mean')
+ax_e.plot(t[15:-15], CI_low_IC_ex[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
+ax_e.plot(t[15:-15], CI_up_IC_ex[15:-15], linestyle='--', lw=2, color='tab:green')
+
+ax_e.set_xticks([0, 150, 300, 450])
+ax_e.set_yticks([0, 1e4, 2e4, 3e4])
+
 plt.tight_layout()
-f.savefig('figures/IC_prev_avg_CT_bio_MC1000.png')
-
-f = plt.figure('IC_ex')
-ax = f.add_subplot(111, xlabel='time', ylabel='IC_ex')
-ax.plot(t[15:-15], mean_IC_ex[15:-15], lw=2, label='mean')
-ax.plot(t[15:-15], CI_low_IC_ex[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
-ax.plot(t[15:-15], CI_up_IC_ex[15:-15], linestyle='--', lw=2, color='tab:green')
-
-ax.set_xticks([0, 150, 300, 450])
-ax.set_yticks([0, 1e4, 2e4, 3e4])
-
-ax.legend(loc='best')
-plt.tight_layout()
-f.savefig('figures/IC_ex_CT_bio_MC1000.png')
+f.savefig('figures/QoIs_CT_bio_MC1000.png')

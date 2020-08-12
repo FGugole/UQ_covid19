@@ -50,27 +50,38 @@ L = 551
 IC_capacity = 109
 
 IC_prev_avg = np.zeros((L,n_runs), dtype='float')
+IC_ex = np.zeros((L,n_runs), dtype='float')
 
 for i in range(n_runs):
     IC_prev_avg[:,i] = data.IC_prev_avg[i*L:(i+1)*L]
+    IC_ex[:,i] = data.IC_ex[i*L:(i+1)*L]
 
 mean_IC_prev_avg = np.mean(IC_prev_avg, axis=1)
 std_IC_prev_avg = np.std(IC_prev_avg, axis=1)
 
-CI_low = np.zeros(L, dtype='float')
-CI_up = np.zeros(L, dtype='float')
+mean_IC_ex = np.mean(IC_ex, axis=1)
+std_IC_ex = np.std(IC_ex, axis=1)
+
+CI_low_IC_prev_avg = np.zeros(L, dtype='float')
+CI_up_IC_prev_avg = np.zeros(L, dtype='float')
+
+CI_low_IC_ex = np.zeros(L, dtype='float')
+CI_up_IC_ex = np.zeros(L, dtype='float')
 
 for i in range(L):
-    CI_low[i] = max(0, mean_IC_prev_avg[i]-1.96*std_IC_prev_avg[i])
-    CI_up[i] = max(0, mean_IC_prev_avg[i]+1.96*std_IC_prev_avg[i])
+    CI_low_IC_prev_avg[i] = max(0, mean_IC_prev_avg[i]-1.96*std_IC_prev_avg[i])
+    CI_up_IC_prev_avg[i] = max(0, mean_IC_prev_avg[i]+1.96*std_IC_prev_avg[i])
+
+    CI_low_IC_ex[i] = max(0, mean_IC_ex[i]-1.96*std_IC_ex[i])
+    CI_up_IC_ex[i] = max(0, mean_IC_ex[i]+1.96*std_IC_ex[i])
 
 t = np.arange(start=0, stop=L, step=1)
 
 f = plt.figure('IC_prev_avg')
 ax = f.add_subplot(111, xlabel='time', ylabel='IC_prev_avg')
 ax.plot(t[15:-15], mean_IC_prev_avg[15:-15], lw=2, label='mean')
-ax.plot(t[15:-15], CI_low[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
-ax.plot(t[15:-15], CI_up[15:-15], linestyle='--', lw=2, color='tab:green')
+ax.plot(t[15:-15], CI_low_IC_prev_avg[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
+ax.plot(t[15:-15], CI_up_IC_prev_avg[15:-15], linestyle='--', lw=2, color='tab:green')
 ax.hlines(y=IC_capacity, xmin=15, xmax=L-15, linestyle=':', lw=2, color='tab:red', label='IC capacity')
 
 ax.set_xticks([0, 150, 300, 450])
@@ -79,3 +90,17 @@ ax.set_yticks([0, 100, 200, 300])
 ax.legend(loc='best')
 plt.tight_layout()
 f.savefig('figures/IC_prev_avg_FC_bio_MC1000.png')
+
+f = plt.figure('IC_ex')
+ax = f.add_subplot(111, xlabel='time', ylabel='IC_ex')
+ax.plot(t[15:-15], mean_IC_ex[15:-15], lw=2, label='mean')
+ax.plot(t[15:-15], CI_low_IC_ex[15:-15], linestyle='--', lw=2, color='tab:green', label='95% CI')
+ax.plot(t[15:-15], CI_up_IC_ex[15:-15], linestyle='--', lw=2, color='tab:green')
+ax.hlines(y=IC_capacity, xmin=15, xmax=L-15, linestyle=':', lw=2, color='tab:red', label='IC capacity')
+
+ax.set_xticks([0, 150, 300, 450])
+#ax.set_yticks([0, 100, 200, 300])
+
+ax.legend(loc='best')
+plt.tight_layout()
+f.savefig('figures/IC_ex_FC_bio_MC1000.png')

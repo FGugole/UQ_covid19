@@ -47,7 +47,10 @@ InputOpts.Marginals(1).Parameters = [2 4];
 
 InputOpts.Marginals(2).Name = 'Trace-rate-I';
 InputOpts.Marginals(2).Type = 'Gamma';
-InputOpts.Marginals(2).Parameters = [2 0.4];
+% note! UQLab reverses the arguments and uses the rate instead of the scale
+% so: Gamma(rate,shape)
+% this is in contrast to matlab's gampdf, which uses gampdf(shape,scale)
+InputOpts.Marginals(2).Parameters = [1/0.4 2]; 
 
 InputOpts.Marginals(3).Name = 'Trace-contact-red';
 InputOpts.Marginals(3).Type = 'Beta';
@@ -119,7 +122,7 @@ ModelOpts.Output.FileName = virsim_output;
 ModelOpts.Counter.Digits = 6; % (default value 6)
 ModelOpts.Format = {'%.8f','%.8f','%.8f','%.0f'}; % notation for variables, can also be an array, e.g. {'%1.8e','%2.6f'}
 ModelOpts.Archiving.Action = 'save';
-ModelOpts.Archiving.FolderName = 'runs_CT_MC100_v2';
+ModelOpts.Archiving.FolderName = 'runs_CT_MC100_updated_beta_gamma_inputfile';
 ModelOpts.Archiving.Zip = false ;
 ModelOpts.Display = 'quiet'; % Set the display to quiet
 

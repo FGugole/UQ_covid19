@@ -3,18 +3,18 @@ clearvars
 close all
 
 %% settings
-folder_name = 'runs_FC_MC100/UQLinkOutput/';
-file_name   = 'output_flattening_the_curve';
+folder_name = 'runs_CT_MC100_updated_beta_gamma_inputfile/UQLinkOutput/';
+file_name   = 'output_contact_tracing';
 file_ext    = '.csv';
 n_start  = 1;
 n_end    = 100;
 n_digits = 6;
 
 avg_window  = 30;
-IC_capacity = 108;
+IC_capacity = 109;
 
 % UQLab results synthesis in MAT file
-matfile_name = 'runs_FC_MC100/Virsim_FC_MC100.mat';
+matfile_name = 'runs_CT_MC100_updated_beta_gamma_inputfile/Virsim_CT_MC100.mat';
 
 
 %% get colormap
@@ -39,6 +39,11 @@ for i=n_start:n_end
     % read file
     n_zero = n_digits - length(num2str(i));
     zeros  = num2str(10^n_zero);
+    file_i = [folder_name file_name zeros(2:end) num2str(i) file_ext];
+    if (~isfile(file_i))
+        warning(['missing file ' file_i]);
+        continue;
+    end
     T      = readtable([folder_name file_name zeros(2:end) num2str(i) file_ext]);
     
     % process data to get QoIs
@@ -67,8 +72,13 @@ for i=n_start:n_end
     figure(102)
     plot(T.time,IC_excess);
     hold on
-%     plot(T.time(ind_excess_max(j)),IC_excess_max(j),'o');
     
+%     plot(T.time(ind_excess_max(j)),IC_excess_max(j),'o');
+    figure(105)
+    if (max(T.IC_prev)<10)
+    plot(T.time,T.IC_prev);
+    hold on
+    end
 
 end
 
@@ -118,4 +128,4 @@ xlabel('cumulative IC excess')
 ylabel('empirical cdf');
 
 %% write to csv
-csvwrite('FC_QoI.csv',Y);
+csvwrite('CT_QoI.csv',Y);

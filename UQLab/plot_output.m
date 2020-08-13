@@ -3,19 +3,23 @@ clearvars
 close all
 
 %% settings
-folder_name = 'runs_CT_MC100_updated_beta_gamma_inputfile/UQLinkOutput/';
-file_name   = 'output_contact_tracing';
+folder_name = 'runs_Cartesius/PO_MC960/'; %'runs_CT_MC100_updated_beta_gamma_inputfile/UQLinkOutput/';
+file_name   = 'output_phased_opening';
 file_ext    = '.csv';
 n_start  = 1;
-n_end    = 100;
+n_end    = 960;
 n_digits = 6;
 
 avg_window  = 30;
 IC_capacity = 109;
 
 % UQLab results synthesis in MAT file
-matfile_name = 'runs_CT_MC100_updated_beta_gamma_inputfile/Virsim_CT_MC100.mat';
+% if not available, set to ''
+matfile_name = ''; %'runs_CT_MC100_updated_beta_gamma_inputfile/Virsim_CT_MC100.mat';
 
+plotsims = 0; % 1: plot all simulations in same graph
+
+filename_QoI = 'PO960_QoI.csv';
 
 %% get colormap
 figure(101)
@@ -31,6 +35,7 @@ IC_excess_max  = zeros(n_tot,1);
 ind_excess_max = zeros(n_tot,1);
 
 Y = zeros(n_tot,3); % QoIs
+w = waitbar(0,'loading csv files');
 
 for i=n_start:n_end
     
@@ -44,7 +49,7 @@ for i=n_start:n_end
         warning(['missing file ' file_i]);
         continue;
     end
-    T      = readtable([folder_name file_name zeros(2:end) num2str(i) file_ext]);
+    T      = readtable(file_i); %[folder_name file_name zeros(2:end) num2str(i) file_ext]);
     
     % process data to get QoIs
     % moving average of IC cases
@@ -60,49 +65,59 @@ for i=n_start:n_end
     Y(j,2) = IC_excess_max(j);
     Y(j,3) = IC_tot;
     
-    figure(101)
+    waitbar(i/n_tot,w);
     
-    %     plot(T.time,T.IC_prev_avg)
-    %     hold on
-    j_mod = mod(j-1,nc)+1;
-    plot(T.time,IC_avg,'-','Color',cmap(j_mod,:))
-    hold on
-    plot(T.time(ind_avg_max(j)),IC_avg_max(j),'o','Color',cmap(j_mod,:));
-    
-    figure(102)
-    plot(T.time,IC_excess);
-    hold on
-    
-%     plot(T.time(ind_excess_max(j)),IC_excess_max(j),'o');
-    figure(105)
-    if (max(T.IC_prev)<10)
-    plot(T.time,T.IC_prev);
-    hold on
+    if (plotsims == 1)
+        figure(101)
+        
+        %     plot(T.time,T.IC_prev_avg)
+        %     hold on
+        j_mod = mod(j-1,nc)+1;
+        plot(T.time,IC_avg,'-','Color',cmap(j_mod,:))
+        hold on
+        plot(T.time(ind_avg_max(j)),IC_avg_max(j),'o','Color',cmap(j_mod,:));
+        
+        figure(102)
+        plot(T.time,IC_excess);
+        hold on
+        
+        %     plot(T.time(ind_excess_max(j)),IC_excess_max(j),'o');
+        figure(105)
+        if (max(T.IC_prev)<10)
+            plot(T.time,T.IC_prev);
+            hold on
+        end
     end
-
+    
 end
 
-%%
-figure(101)
-set(gcf,'Color','w')
-set(gca,'LineWidth',1)
-set(gca,'FontSize',14)
-grid on
-xlabel('time (days)')
-ylabel('Moving average of total IC patients');
+close(w)
 
-figure(102)
-set(gcf,'Color','w')
-set(gca,'LineWidth',1)
-set(gca,'FontSize',14)
-grid on
-xlabel('time (days)')
-ylabel('Cumulative excess in IC person-days');
+%% cosmetic stuff on figures
+if (plotsims==1)
+    figure(101)
+    set(gcf,'Color','w')
+    set(gca,'LineWidth',1)
+    set(gca,'FontSize',14)
+    grid on
+    xlabel('time (days)')
+    ylabel('Moving average of total IC patients');
+    
+    figure(102)
+    set(gcf,'Color','w')
+    set(gca,'LineWidth',1)
+    set(gca,'FontSize',14)
+    grid on
+    xlabel('time (days)')
+    ylabel('Cumulative excess in IC person-days');
+end
 
-%%
-UQdata = load(matfile_name);
-if ( max(abs(UQdata.uq_ProcessedY - Y(:,1)))>eps)
-    error('stored QoI different from postprocessed QoI');
+%% plot cdfs
+if (exist(matfile_name,'file'))
+    UQdata = load(matfile_name);
+    if ( max(abs(UQdata.uq_ProcessedY - Y(:,1)))>eps)
+        error('stored QoI different from postprocessed QoI');
+    end
 end
 figure(103)
 % histogram(Y(:,1),n_tot,'Normalization','cdf','DisplayStyle','stairs')
@@ -128,4 +143,4 @@ xlabel('cumulative IC excess')
 ylabel('empirical cdf');
 
 %% write to csv
-csvwrite('CT_QoI.csv',Y);
+csvwrite(filename_QoI,Y);

@@ -6,16 +6,14 @@
 
 % this code uses:
 % -UQLab (Matlab package)
+% -Virsim (R package)
 % -this script
-
-% Virsim/R is not needed, only inputfiles are created with this code
-% these inputfiles can then be run in batch with R on a cluster
 
 % you need to provide:
 % * R-file that calls Virsim, e.g. contact_tracing_UQ.R
 % * same R-file but then with uncertain parameters replaced by <X0001> etc,
 %   e.g. contact_tracing_UQ.R.tpl
-% * file to read the virsim output, e.g. read_virsim_dummy.m
+% * file to read the virsim output, e.g. read_virsim_qoi.m
 % * make sure that a CSV file is created by Virsim and that the name
 %   corresponds to the name provided below
 
@@ -31,36 +29,36 @@ clc
 UQLab_path     = '/Users/sanderse/Dropbox/work/Programming/UQ/UQLabCore_Rel1.3.0/';
 
 % R filename
-filename_R     = 'contact_tracing_UQ.r'; % pointing to R file in current directory
+filename_R     = 'phased_opening_UQ.r'; % pointing to R file in current directory
 
 % Matlab filename that processes Virsim output
 process_output = 'read_virsim_dummy';
 
 % CSV filename that is created by Virsim when executing filename_R
-virsim_output  = 'output_contact_tracing.csv';
+virsim_output  = 'output_phased_opening.csv';
 
 % target folder to copy inputfiles to; if not specified then stored in 
 % ModelOpts.Archiving.FolderName / UQLinkInput
-target_folder  = 'runs_Cartesius/CT_MC3840/';
+target_folder  = 'runs_Cartesius/PO_MC960/';
 
 %% input uncertainties
 
 % load case-specific parameters
 % run(input_file);
-InputOpts.Marginals(1).Name = 'Trace-prob-E';
+InputOpts.Marginals(1).Name = 'Lockdown_Effect';
 InputOpts.Marginals(1).Type = 'Beta';
-InputOpts.Marginals(1).Parameters = [2 4];
+InputOpts.Marginals(1).Parameters = [14 42];
 
-InputOpts.Marginals(2).Name = 'Trace-rate-I';
+InputOpts.Marginals(2).Name = 'Phase_Interval';
 InputOpts.Marginals(2).Type = 'Gamma';
 % note! UQLab reverses the arguments and uses the rate instead of the scale
 % so: Gamma(rate,shape)
 % this is in contrast to matlab's gampdf, which uses gampdf(shape,scale)
-InputOpts.Marginals(2).Parameters = [1/0.4 2]; 
+InputOpts.Marginals(2).Parameters = [1/2 25]; 
 
-InputOpts.Marginals(3).Name = 'Trace-contact-red';
+InputOpts.Marginals(3).Name = 'Uptake';
 InputOpts.Marginals(3).Type = 'Beta';
-InputOpts.Marginals(3).Parameters = [10 2];
+InputOpts.Marginals(3).Parameters = [16 2];
 
 InputOpts.Marginals(4).Name = 'Seed';
 InputOpts.Marginals(4).Type = 'Uniform';
@@ -84,7 +82,7 @@ methods = {'MC'};
 % % graphs
 MC_repeat = 1;
 % % number of samples with MC
-NsamplesMC = [3840]; % 10 20 40 80]; % 160 320]; %[1e1 1e2 1e3 1e4];
+NsamplesMC = [960]; % 10 20 40 80]; % 160 320]; %[1e1 1e2 1e3 1e4];
 %
 % % for PCE-Quad, specify the polynomial degrees to be tested
 % DegreesQuad = 1:3; %[1 2 3 4 5 6];
@@ -115,7 +113,7 @@ Sobol_analysis = false;
 % by using input templates
 ModelOpts.Type = 'UQLink';
 ModelOpts.Name = 'Virsim_dummy';
-% dummy command
+% command to execute the R script
 ModelOpts.Command = ['ls ' filename_R];
 % template file
 ModelOpts.Template = [filename_R '.tpl'];
@@ -128,7 +126,7 @@ ModelOpts.Output.FileName = virsim_output;
 ModelOpts.Counter.Digits = 6; % (default value 6)
 ModelOpts.Format = {'%.8f','%.8f','%.8f','%.0f'}; % notation for variables, can also be an array, e.g. {'%1.8e','%2.6f'}
 ModelOpts.Archiving.Action = 'save';
-ModelOpts.Archiving.FolderName = 'runs_dummy';
+ModelOpts.Archiving.FolderName = 'runs_PO_MC';
 ModelOpts.Archiving.Zip = false ;
 ModelOpts.Display = 'quiet'; % Set the display to quiet
 

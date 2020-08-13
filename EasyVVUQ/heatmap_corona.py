@@ -46,9 +46,11 @@ n_runs = 1000
 intervention_effect = np.zeros(n_runs,dtype='float')
 uptake = np.zeros(n_runs,dtype='float')
 IC_prev_avg_max = np.zeros(n_runs,dtype='float')
+IC_ex_max = np.zeros(n_runs,dtype='float')
 
 for i in range(n_runs):
     IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
+    IC_ex_max[i] = data.IC_ex_max[i*L]
 
 params = list(my_sampler.vary.get_keys())
 # Save parameters values used in the simulations
@@ -61,10 +63,26 @@ for run in info:
 #     print(run[0])
 #     print(run[1]['params'])
 
-f = plt.figure('heatmap')
-ax = f.add_subplot(111, xlabel='intervention_effect', ylabel='uptake')
-im = ax.scatter(x=intervention_effect, y=uptake, c=IC_prev_avg_max, cmap='plasma')
-f.colorbar(im, ax=ax)
+f = plt.figure('heatmap',figsize=[12,6])
+ax_p = f.add_subplot(121, xlabel='intervention_effect', ylabel='uptake')
+im_p = ax_p.scatter(x=intervention_effect, y=uptake, c=IC_prev_avg_max, cmap='plasma')
+f.colorbar(im_p, ax=ax_p)
+
+ax_p.set_xticks([0.2, 0.35, 0.5])
+ax_p.set_yticks([0.6, 0.8, 1.0])
+
+ax_e = f.add_subplot(122, xlabel='intervention_effect')
+im_e = ax_e.scatter(x=intervention_effect, y=uptake, c=IC_ex_max, cmap='plasma')
+cbar_e = f.colorbar(im_e, ax=ax_e)
+cbar_e.set_ticks([0, 1e4, 2e4, 3e4])
+cbar_e.set_ticklabels(['0', '10000', '20000', '30000'])
+
+ax_e.set_xticks([0.2, 0.35, 0.5])
+ax_e.set_yticks([0.6, 0.8, 1.0])
 
 plt.tight_layout()
 f.savefig('figures/heatmap_FC_MC1000.png')
+
+plt.show()
+
+### END OF CODE ###

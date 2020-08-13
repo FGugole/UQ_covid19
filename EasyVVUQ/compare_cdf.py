@@ -136,3 +136,5 @@ plt.tight_layout()
 f_FC.savefig('figures/cdf_FC_MC100_comparison.png')
 
 plt.show()
+
+### END OF CODE ###

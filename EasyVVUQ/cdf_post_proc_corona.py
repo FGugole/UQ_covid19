@@ -127,3 +127,5 @@ plt.tight_layout()
 f.savefig('figures/cdf_IL_bio_IC_ex_percentage')
 
 plt.show()
+
+### END OF CODE ###

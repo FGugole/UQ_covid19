@@ -84,7 +84,7 @@ ax_e.set_xscale('log')
 ax_e.legend(loc='best')
 
 plt.tight_layout()
-f_CT.savefig('figures/cdf_CT_MC100_comparison.png')
+f_CT.savefig('figures/cdf_CT_comparison.png')
 
 ########################
 # Flattening the curve #

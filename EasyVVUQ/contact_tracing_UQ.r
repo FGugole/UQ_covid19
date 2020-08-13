@@ -149,3 +149,5 @@ contact_tracing_data[, "IC_ex_max"] <- max(IC_excess)
 # Write results to csv file #
 #############################
 write.csv(x=contact_tracing_data, file=output_filename, row.names=FALSE)
+
+### END OF CODE ###

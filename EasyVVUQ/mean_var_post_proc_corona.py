@@ -99,3 +99,7 @@ ax_e.set_yticks([0, 1e4, 2e4, 3e4])
 
 plt.tight_layout()
 f.savefig('figures/QoIs_CT_bio_MC1000.png')
+
+plt.show()
+
+### END OF CODE ###

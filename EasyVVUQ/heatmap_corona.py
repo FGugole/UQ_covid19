@@ -82,3 +82,7 @@ ax_e.set_yticks([0.6, 0.8, 1.0])
 
 plt.tight_layout()
 f.savefig('figures/heatmap_FC_MC1000.png')
+
+plt.show()
+
+### END OF CODE ###

@@ -138,6 +138,66 @@ f_CT.savefig('figures/cdf_CT_comparison.png')
 # plt.tight_layout()
 # f_FC.savefig('figures/cdf_FC_MC100_comparison.png')
 
+##################
+# Phased Opening #
+##################
+# Reload the campaign
+PO_campaign = uq.Campaign(state_file = "campaign_state_PO_MC1000.json", work_dir = "/tmp")
+print('========================================================')
+print('Reloaded campaign', PO_campaign.campaign_dir.split('/')[-1])
+print('========================================================')
+
+# collate output
+PO_campaign.collate()
+# get full dataset of data
+data_PO = PO_campaign.get_collation_result()
+
+IC_prev_avg_max_PO = np.zeros(n_runs,dtype='float')
+IC_ex_max_PO = np.zeros(n_runs,dtype='float')
+IC_prev_max_PO = np.zeros(n_runs,dtype='float')
+
+for i in range(n_runs):
+    IC_prev_avg_max_PO[i] = data_PO.IC_prev_avg_max[i*L]
+    IC_ex_max_PO[i] = data_PO.IC_ex_max[i*L]
+    IC_prev_max_PO[i] = max(data_PO.IC_prev[i*L:(i+1)*L])
+
+IC_prev_avg_max_PO.sort()
+IC_ex_max_PO.sort()
+IC_prev_max_PO.sort()
+
+#print(IC_prev_max_PO)
+
+#################################
+# Load data from UQLab campaign #
+#################################
+QoI_UQLab_PO = pd.read_csv('../UQLab/runs_Cartesius/PO_MC960/PO960_QoI.csv',delimiter=',',header=None)
+
+n_runs_UQLab = 960
+p_UQLab = np.arange(start=1,stop=n_runs_UQLab+1,step=1)/n_runs_UQLab
+
+IC_prev_avg_max_UQLab_PO = np.copy(QoI_UQLab_PO.iloc[:,0])
+IC_ex_max_UQLab_PO = np.copy(QoI_UQLab_PO.iloc[:,1])
+tot_IC_UQLab_PO = np.copy(QoI_UQLab_PO.iloc[:,2])
+
+IC_prev_avg_max_UQLab_PO.sort()
+IC_ex_max_UQLab_PO.sort()
+
+f_PO = plt.figure('cdfs_PO',figsize=[12,6])
+ax_p = f_PO.add_subplot(121, xlabel='maximum of patients in IC', ylabel='cdf')
+ax_p.step(IC_prev_avg_max_PO,p,lw=2,color='tab:blue')
+ax_p.step(IC_prev_avg_max_UQLab_PO,p_UQLab,lw=2,color='tab:orange')
+ax_p.set_xscale('log')
+#ax_p.set_xticks([1e2, 1e3])
+
+ax_e = f_PO.add_subplot(122, xlabel='IC patient-days in excess', ylabel='cdf')
+ax_e.step(IC_ex_max_PO,p,lw=2,color='tab:blue',label='EasyVVUQ')
+ax_e.step(IC_ex_max_UQLab_PO,p_UQLab,lw=2,color='tab:orange',label='UQLab')
+ax_e.set_xscale('log')
+ax_e.legend(loc='best')
+
+plt.tight_layout()
+f_PO.savefig('figures/cdf_PO_comparison.png')
+
 plt.show()
 
 ### END OF CODE ###

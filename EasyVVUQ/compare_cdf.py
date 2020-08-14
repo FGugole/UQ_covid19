@@ -170,7 +170,7 @@ IC_prev_max_PO.sort()
 #################################
 # Load data from UQLab campaign #
 #################################
-QoI_UQLab_PO = pd.read_csv('../UQLab/runs_Cartesius/PO_MC960/PO960_QoI.csv',delimiter=',',header=None)
+QoI_UQLab_PO = pd.read_csv('../UQLab/runs_Cartesius/PO_MC960/PO960_QoI_v2.csv',delimiter=',',header=None)
 
 n_runs_UQLab = 960
 p_UQLab = np.arange(start=1,stop=n_runs_UQLab+1,step=1)/n_runs_UQLab

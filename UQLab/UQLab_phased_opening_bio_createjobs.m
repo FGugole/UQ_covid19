@@ -29,17 +29,20 @@ clc
 UQLab_path     = '/Users/sanderse/Dropbox/work/Programming/UQ/UQLabCore_Rel1.3.0/';
 
 % R filename
-filename_R     = 'phased_opening_UQ.r'; % pointing to R file in current directory
+filename_R     = 'phased_opening_bio_UQ.r'; % pointing to R file in current directory
 
 % Matlab filename that processes Virsim output
 process_output = 'read_virsim_dummy';
 
 % CSV filename that is created by Virsim when executing filename_R
-virsim_output  = 'output_phased_opening.csv';
+virsim_output  = 'output_phased_opening_bio.csv';
 
 % target folder to copy inputfiles to; if not specified then stored in 
 % ModelOpts.Archiving.FolderName / UQLinkInput
-target_folder  = 'runs_Cartesius/PO_MC3840/';
+target_folder  = 'runs_Cartesius/PO_bio_MC960/';
+
+% make tar of input files
+make_tar      = true;
 
 %% input uncertainties
 
@@ -64,6 +67,23 @@ InputOpts.Marginals(4).Name = 'Seed';
 InputOpts.Marginals(4).Type = 'Uniform';
 InputOpts.Marginals(4).Parameters = [2^14 2^16];
 
+InputOpts.Marginals(5).Name = 'Rzero';
+InputOpts.Marginals(5).Type = 'Gamma';
+% note! UQLab reverses the arguments and uses the rate instead of the scale
+% so: Gamma(rate,shape)
+InputOpts.Marginals(5).Parameters = [1/0.025 100];
+
+InputOpts.Marginals(6).Name = 'Duration_Infectiousness';
+InputOpts.Marginals(6).Type = 'Gamma';
+InputOpts.Marginals(6).Parameters = [1/0.2 25];
+
+InputOpts.Marginals(7).Name = 'Shape_Exposed_Time';
+InputOpts.Marginals(7).Type = 'Gamma';
+InputOpts.Marginals(7).Parameters = [1/1 17.5];
+
+InputOpts.Marginals(8).Name = 'Intervention_Effect_Var_Inv';
+InputOpts.Marginals(8).Type = 'Gamma';
+InputOpts.Marginals(8).Parameters = [1/0.05 2];
 
 % dimension of parameter space:
 ndim = length(InputOpts.Marginals);
@@ -82,7 +102,7 @@ methods = {'MC'};
 % % graphs
 MC_repeat = 1;
 % % number of samples with MC
-NsamplesMC = [3840]; % 10 20 40 80]; % 160 320]; %[1e1 1e2 1e3 1e4];
+NsamplesMC = [960]; % 10 20 40 80]; % 160 320]; %[1e1 1e2 1e3 1e4];
 %
 % % for PCE-Quad, specify the polynomial degrees to be tested
 % DegreesQuad = 1:3; %[1 2 3 4 5 6];
@@ -125,7 +145,7 @@ ModelOpts.Output.FileName = virsim_output;
 % other options
 ModelOpts.Counter.Digits = 6; % (default value 6)
 % we use formatting to make seed an integer
-ModelOpts.Format = {'%.8f','%.0f','%.8f','%.0f'}; % notation for variables, can also be an array, e.g. {'%1.8e','%2.6f'}
+ModelOpts.Format = {'%.8f','%.0f','%.8f','%.0f','%.8f','%.8f','%.8f','%.8f'}; % notation for variables, can also be an array, e.g. {'%1.8e','%2.6f'}
 ModelOpts.Archiving.Action = 'save';
 ModelOpts.Archiving.FolderName = 'runs_PO_MC';
 ModelOpts.Archiving.Zip = false ;
@@ -449,8 +469,10 @@ for id = 1:length(files)
     movefile([inputfolder files(id).name], [target_folder rename]);
 end
 %% compress all R files into a tar
-tarname = strcat(target_folder,prefix);
-tar(tarname,'*.r',target_folder);
+if (make_tar)
+    tarname = strcat(target_folder,prefix);
+    tar(tarname,'*.r',target_folder);
+end
 
 %%
 post_processing;

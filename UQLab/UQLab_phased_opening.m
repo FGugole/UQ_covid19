@@ -120,7 +120,7 @@ ModelOpts.Output.FileName = virsim_output;
 
 % other options
 ModelOpts.Counter.Digits = 6; % (default value 6)
-ModelOpts.Format = {'%.8f','%.8f','%.8f','%.0f'}; % notation for variables, can also be an array, e.g. {'%1.8e','%2.6f'}
+ModelOpts.Format = {'%.8f','%.0f','%.8f','%.0f'}; % notation for variables, can also be an array, e.g. {'%1.8e','%2.6f'}
 ModelOpts.Archiving.Action = 'save';
 ModelOpts.Archiving.FolderName = 'runs_PO_MC1';
 ModelOpts.Archiving.Zip = false ;

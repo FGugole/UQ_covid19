@@ -3,8 +3,8 @@ clearvars
 close all
 
 %% settings
-folder_name = 'runs_Cartesius/PO_MC960/'; %'runs_CT_MC100_updated_beta_gamma_inputfile/UQLinkOutput/';
-file_name   = 'output_phased_opening';
+folder_name = 'runs_Cartesius/PO_bio_MC960/'; %'runs_CT_MC100_updated_beta_gamma_inputfile/UQLinkOutput/';
+file_name   = 'output_phased_opening_bio';
 file_ext    = '.csv';
 n_start  = 1;
 n_end    = 960;
@@ -19,7 +19,7 @@ matfile_name = ''; %'runs_CT_MC100_updated_beta_gamma_inputfile/Virsim_CT_MC100.
 
 plotsims = 0; % 1: plot all simulations in same graph
 
-filename_QoI = 'PO960_QoI.csv';
+filename_QoI = 'PO_bio_960_QoI.csv';
 
 %% get colormap
 figure(101)
@@ -34,7 +34,8 @@ ind_avg_max    = zeros(n_tot,1);
 IC_excess_max  = zeros(n_tot,1);
 ind_excess_max = zeros(n_tot,1);
 
-Y = zeros(n_tot,3); % QoIs
+Y = zeros(n_tot,3); % QoIs that are time-independent
+% Z = zeros(n_tot,
 w = waitbar(0,'loading csv files');
 
 for i=n_start:n_end
@@ -51,9 +52,15 @@ for i=n_start:n_end
     end
     T      = readtable(file_i); %[folder_name file_name zeros(2:end) num2str(i) file_ext]);
     
+    if (j==0)
+        % allocate space for time-dependent response
+        Z = zeros(n_tot,length(T.IC_prev));
+    end
+    
     % process data to get QoIs
     % moving average of IC cases
     IC_avg = movmean(T.IC_prev,avg_window);
+        
     [IC_avg_max(j), ind_avg_max(j)] = max(IC_avg);
     % cumulative excess capacity
     IC_excess = cumsum(max(0,T.IC_prev - IC_capacity));
@@ -61,9 +68,13 @@ for i=n_start:n_end
     % total IC-person days
     IC_tot = sum(T.IC_prev);
     
+    % store QoIs
     Y(j,1) = IC_avg_max(j);
     Y(j,2) = IC_excess_max(j);
     Y(j,3) = IC_tot;
+    
+    % also store the time dependent response:       
+    Z(j,:) = IC_avg;
     
     waitbar(i/n_tot,w);
     
@@ -82,11 +93,11 @@ for i=n_start:n_end
         hold on
         
         %     plot(T.time(ind_excess_max(j)),IC_excess_max(j),'o');
-        figure(105)
-        if (max(T.IC_prev)<10)
-            plot(T.time,T.IC_prev);
-            hold on
-        end
+%         figure(105)
+%         if (max(T.IC_prev)<10)
+%             plot(T.time,T.IC_prev);
+%             hold on
+%         end
     end
     
 end
@@ -111,6 +122,11 @@ if (plotsims==1)
     xlabel('time (days)')
     ylabel('Cumulative excess in IC person-days');
 end
+
+%% plot time averages
+figure(106)
+mean_IC_avg = mean(Z,1);
+plot(T.time,mean_IC_avg);
 
 %% plot cdfs
 if (exist(matfile_name,'file'))

@@ -29,7 +29,7 @@ clc
 UQLab_path     = '/Users/sanderse/Dropbox/work/Programming/UQ/UQLabCore_Rel1.3.0/';
 
 % R filename
-filename_R     = 'phased_opening_bio_UQ.r'; % pointing to R file in current directory
+filename_R     = 'phased_opening_bio_UQ.r'; % pointing to R template file in current directory
 
 % Matlab filename that processes Virsim output
 process_output = 'read_virsim_dummy';

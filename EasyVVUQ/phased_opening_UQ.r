@@ -22,17 +22,6 @@ rnd_seed <- unname(sapply(json_data$seed, as.integer))
 
 output_filename <- json_data$outfile
 
-# biology
-Rzero <- unname(sapply(json_data$Rzero, as.numeric))
-
-avg_duration_infectiousness <- unname(sapply(json_data$duration_infectiousness, as.numeric))
-
-avg_contact_rate <- Rzero / avg_duration_infectiousness
-
-shape_exposed_time <- unname(sapply(json_data$shape_exposed_time, as.numeric))
-
-intervention_effect_var_inv <- unname(sapply(json_data$intervention_effect_var_inv, as.numeric))
-
 # strategy
 lock_effect <- unname(sapply(json_data$lockdown_effect, as.numeric))
 
@@ -60,21 +49,19 @@ param_main <- within(param_sim, {
   seed_supercluster <- c(rep(9, 2), rep(2, 6), rep(1, 6), rep(0, 6))
   inc_cum_cond <- 9500 * size_multiplier
   
-  contact_rate <- avg_contact_rate
+  contact_rate <- 0.5
   contact_shape <- 3.4
   contact_assort <- 0.26
   population_mixing <- .05
   supercluster_mixing <- .05
   
   exposed_time <- list(name = "weibull",
-                       shape = shape_exposed_time,
-                       scale = exp(log(4.6) - lgamma(1 + 1 / shape_exposed_time)))
+                       shape = 20,
+                       scale = exp(log(4.6) - lgamma(1 + 1 / 20)))
   infected_time <- list(name = "weibull",
                         shape = 1,
-                        scale = exp(log(avg_duration_infectiousness) - lgamma(1 + 1 / 1)))
+                        scale = exp(log(5) - lgamma(1 + 1 / 1)))
   
-  # intervention_effect_var <- 1 / intervention_effect_var_inv
-
   trace_prob_E <- c(rep(0, 34))
   trace_rate_I <- c(rep(0, 34))
   trace_contact_reduction <- c(rep(0, 34))

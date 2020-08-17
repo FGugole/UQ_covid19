@@ -112,14 +112,7 @@ my_campaign.add_app(name="sc",
 # Create the sampler
 vary = {
     "seed": cp.DiscreteUniform(2**14, 2**16),
-    # "trace_prob_E": cp.Beta(alpha=2, beta=4),
-    # "trace_rate_I": cp.Gamma(shape=2, scale=.4),
-    # "trace_contact_reduction": cp.Beta(alpha=10, beta=2),
-    # "intervention_effect": cp.Beta(alpha=38, beta=70),
-    "lockdown_effect": cp.Beta(alpha=14, beta=42),
-    "lockdown_length": cp.Gamma(shape=30, scale=3),
-    "lift_length": cp.Gamma(shape=12, scale=3/4),
-    # "phase_interval": cp.Gamma(shape=25, scale=2),
+    "intervention_effect": cp.Beta(alpha=38, beta=70),
     "uptake": cp.Beta(alpha=16, beta=2),
     # "Rzero": cp.Gamma(shape=100,scale=.025),
     # "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
@@ -144,12 +137,12 @@ my_campaign.populate_runs_dir()
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 cwd = os.getcwd()
-pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/intermittent_lockdown_UQ.r corona_in.json > output.txt ; cd .. '"
+pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ.r corona_in.json > output.txt ; cd .. '"
 print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
 
 #Save the Campaign
-my_campaign.save_state("campaign_state.json")
+my_campaign.save_state("campaign_state_FC.json")
 
 print('Job submission complete')
 

@@ -109,14 +109,14 @@ f = plt.figure('QoI',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='time', ylabel='IC_prev_avg')
 # without biology
 ax_p.plot(t[15:-15], mean_IC_prev_avg[15:-15], lw=2, color='blue', label='without biology')
-ax_p.plot(t[15:-15], CI_low_IC_prev_avg[15:-15], linestyle='--', lw=2, color='cornflowerblue', label='95% CI')
+ax_p.plot(t[15:-15], CI_low_IC_prev_avg[15:-15], linestyle='--', lw=2, color='cornflowerblue')
 ax_p.plot(t[15:-15], CI_up_IC_prev_avg[15:-15], linestyle='--', lw=2, color='cornflowerblue')
 # with biology
 ax_p.plot(t[15:-15], mean_IC_prev_avg_bio[15:-15], lw=2, color='darkred', label='with biology')
-ax_p.plot(t[15:-15], CI_low_IC_prev_avg_bio[15:-15], linestyle='--', lw=2, color='indianred', label='95% CI')
+ax_p.plot(t[15:-15], CI_low_IC_prev_avg_bio[15:-15], linestyle='--', lw=2, color='indianred')
 ax_p.plot(t[15:-15], CI_up_IC_prev_avg_bio[15:-15], linestyle='--', lw=2, color='indianred')
 # general settings
-ax_p.hlines(y=IC_capacity, xmin=15, xmax=L-15, linestyle=':', lw=2, color='tab:red', label='IC capacity')
+ax_p.hlines(y=IC_capacity, xmin=15, xmax=L-15, linestyle=':', lw=2, color='darkorange', label='IC capacity')
 ax_p.set_xticks([0, 150, 300, 450])
 ax_p.set_yticks([0, 200, 400])
 ax_p.legend(loc='best')

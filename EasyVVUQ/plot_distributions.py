@@ -48,11 +48,11 @@ plt.tight_layout()
 
 # Intermittent lockdown
 beta_lockeffect = cp.Beta(alpha=14,beta=42)
-gamma_locklength = cp.Gamma(shape=20,scale=3)
-gamma_liftlength = cp.Gamma(shape=15,scale=2/3)
+gamma_locklength = cp.Gamma(shape=30,scale=3)
+gamma_liftlength = cp.Gamma(shape=12,scale=3/4)
 
 x_IL = np.linspace(0, 1, 101)
-x_IL_length = np.linspace(0, 100, 1001)
+x_IL_length = np.linspace(0, 120, 1201)
 
 f = plt.figure('distributions_IL')
 ax = f.add_subplot(111, xlabel='x', ylabel='pdf')
@@ -68,7 +68,7 @@ f = plt.figure('distributions_IL_lengths')
 ax = f.add_subplot(111, xlabel='x', ylabel='pdf')
 ax.plot(x_IL_length,gamma_locklength.pdf(x_IL_length),lw=2,label='length of lockdowns')
 ax.plot(x_IL_length,gamma_liftlength.pdf(x_IL_length),lw=2,label='length of lifts')
-ax.set_xticks([0, 30, 60, 90])
+ax.set_xticks([0, 40, 80, 120])
 
 leg = plt.legend()
 leg.set_draggable(True)

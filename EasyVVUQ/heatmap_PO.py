@@ -66,19 +66,21 @@ for run in info:
 f = plt.figure('heatmap',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
 im_p = ax_p.scatter(x=pl_intervention_effect_hi, y=phase_interval, c=IC_prev_avg_max, cmap='plasma')
-f.colorbar(im_p, ax=ax_p)
+cbar_p = f.colorbar(im_p, ax=ax_p)
+cbar_p.set_ticks([100, 300, 500, 700])
+cbar_p.set_ticklabels(['100', '300', '500', '700'])
 
-#ax_p.set_xticks([0.2, 0.35, 0.5])
-#ax_p.set_yticks([30, 50, 70])
+ax_p.set_xticks([0.2, 0.4])
+ax_p.set_yticks([30, 60, 90])
 
 ax_e = f.add_subplot(122, xlabel='pl_intervention_effect_hi')
 im_e = ax_e.scatter(x=pl_intervention_effect_hi, y=phase_interval, c=IC_ex_max, cmap='plasma')
 cbar_e = f.colorbar(im_e, ax=ax_e)
-cbar_e.set_ticks([0, 1e4, 2e4, 3e4])
-cbar_e.set_ticklabels(['0', '10000', '20000', '30000'])
+cbar_e.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
+cbar_e.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
 
-#ax_e.set_xticks([0.2, 0.35, 0.5])
-#ax_e.set_yticks([30, 50, 70])
+ax_e.set_xticks([0.2, 0.4])
+ax_e.set_yticks([30, 60, 90])
 
 plt.tight_layout()
 f.savefig('figures/heatmap_PO_MC1000.png')

@@ -122,8 +122,8 @@ ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
 # without biology
 ax_p.step(CT_IC_prev_avg_max,p,lw=2,label='CT')
 ax_p.step(FC_IC_prev_avg_max,p,lw=2,label='FC')
-ax_p.step(PO_IC_prev_avg_max,p,lw=2,label='PO')
-ax_p.axvline(x=IC_capacity,linestyle=':',color='black',label='IC capacity')
+ax_p.step(PO_IC_prev_avg_max,p,lw=2,color='tab:red',label='PO')
+ax_p.axvline(x=IC_capacity,lw=2,linestyle=':',color='black',label='IC capacity')
 # general settings
 ax_p.set_xscale('log')
 # ax_p.set_xticks([3e2, 1e3])
@@ -134,7 +134,7 @@ ax_e = f.add_subplot(122, xlabel='IC patient-days in excess')
 # without biology
 ax_e.step(CT_IC_ex_max,p,lw=2)
 ax_e.step(FC_IC_ex_max,p,lw=2)
-ax_e.step(PO_IC_ex_max,p,lw=2)
+ax_e.step(PO_IC_ex_max,p,lw=2,color='tab:red')
 # general settings
 ax_e.set_xscale('log')
 # ax_e.set_xticks([1e4, 6e4])

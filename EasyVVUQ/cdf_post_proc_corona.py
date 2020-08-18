@@ -95,13 +95,9 @@ for i in range(n_runs-1):
 	# wihout biology
     if (IC_prev_avg_max[i]<IC_capacity) & (IC_prev_avg_max[i+1]>IC_capacity):
         print('Probability that the maximum number of IC patient is below IC capacity (without biology):',p[i])
-    if (IC_ex_percentage[i]<IC_ex_threshold) & (IC_ex_percentage[i+1]>IC_ex_threshold):
-        print('Probability that the percentage of IC patient days is below 5% (without biology):',p[i])
     # with biology
     if (IC_prev_avg_max_bio[i]<IC_capacity) & (IC_prev_avg_max_bio[i+1]>IC_capacity):
         print('Probability that the maximum number of IC patient is below IC capacity (with biology):',p[i])
-    if (IC_ex_percentage_bio[i]<IC_ex_threshold) & (IC_ex_percentage_bio[i+1]>IC_ex_threshold):
-        print('Probability that the percentage of IC patient days is below 5% (with biology):',p[i])
 
 params = list(sampler.vary.get_keys())
 bio_params = list(bio_sampler.vary.get_keys())

@@ -102,7 +102,7 @@ for i in range(n_runs-1):
 params = list(sampler.vary.get_keys())
 bio_params = list(bio_sampler.vary.get_keys())
 # Print parameters values used in the simulations
-info = my_campaign.list_runs()
+info = campaign.list_runs()
 # for run in info:
 #     print(run[0])
 #     print(run[1]['params'])

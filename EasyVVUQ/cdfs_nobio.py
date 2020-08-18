@@ -120,9 +120,9 @@ p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 f = plt.figure('cdfs',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
 # without biology
-ax_p.step(CT_IC_prev_avg_max,p,lw=2,label='CT')
-ax_p.step(FC_IC_prev_avg_max,p,lw=2,label='FC')
-ax_p.step(PO_IC_prev_avg_max,p,lw=2,color='tab:olive',label='PO')
+ax_p.step(CT_IC_prev_avg_max,p,lw=2,color='cornflowerblue',label='CT')
+ax_p.step(FC_IC_prev_avg_max,p,lw=2,color='salmon',label='FC')
+ax_p.step(PO_IC_prev_avg_max,p,lw=2,color='lightseagreen',label='PO')
 ax_p.axvline(x=IC_capacity,lw=2,linestyle=':',color='black',label='IC capacity')
 # general settings
 ax_p.set_xscale('log')
@@ -132,9 +132,9 @@ ax_p.get_xaxis().set_minor_formatter(NullFormatter())
 
 ax_e = f.add_subplot(122, xlabel='IC patient-days in excess')
 # without biology
-ax_e.step(CT_IC_ex_max,p,lw=2)
-ax_e.step(FC_IC_ex_max,p,lw=2)
-ax_e.step(PO_IC_ex_max,p,lw=2,color='tab:olive')
+ax_e.step(CT_IC_ex_max,p,lw=2,color='cornflowerblue')
+ax_e.step(FC_IC_ex_max,p,lw=2,color='salmon')
+ax_e.step(PO_IC_ex_max,p,lw=2,color='lightseagreen')
 # general settings
 ax_e.set_xscale('log')
 # ax_e.set_xticks([1e4, 6e4])

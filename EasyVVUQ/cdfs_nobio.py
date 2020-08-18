@@ -129,7 +129,7 @@ ax_p.set_xscale('log')
 ax_p.get_xaxis().get_major_formatter().labelOnlyBase = False
 ax_p.get_xaxis().set_minor_formatter(NullFormatter())
 
-ax_e = f.add_subplot(122, xlabel='IC patient-days in excess', ylabel='P(x)')
+ax_e = f.add_subplot(122, xlabel='IC patient-days in excess')
 # without biology
 ax_e.step(CT_IC_ex_max,p,lw=2)
 ax_e.step(FC_IC_ex_max,p,lw=2)

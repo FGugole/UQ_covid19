@@ -123,6 +123,7 @@ ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
 ax_p.step(CT_IC_prev_avg_max,p,lw=2,label='CT')
 ax_p.step(FC_IC_prev_avg_max,p,lw=2,label='FC')
 ax_p.step(PO_IC_prev_avg_max,p,lw=2,label='PO')
+ax_p.axvline(x=109, linestyle=':', color='black')
 # general settings
 ax_p.set_xscale('log')
 # ax_p.set_xticks([3e2, 1e3])

@@ -39,20 +39,20 @@ data = campaign.get_collation_result()
 #print(data.columns)
 
 # Reload the campaign with biology
-bio_campaign = uq.Campaign(state_file = "campaign_state_CT_bio_MC1000.json", work_dir = "/tmp")
+campaign_bio = uq.Campaign(state_file = "campaign_state_CT_bio_MC1000.json", work_dir = "/tmp")
 print('========================================================')
-print('Reloaded campaign', bio_campaign.campaign_dir.split('/')[-1])
+print('Reloaded campaign', campaign_bio.campaign_dir.split('/')[-1])
 print('========================================================')
 
 # get sampler and output columns from my_campaign object
-bio_sampler = bio_campaign._active_sampler
+sampler_bio = campaign_bio._active_sampler
 #output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
-bio_campaign.collate()
+campaign_bio.collate()
 # get full dataset of data
-bio_data = bio_campaign.get_collation_result()
-#print(bio_data.columns)
+data_bio = campaign_bio.get_collation_result()
+#print(data_bio.columns)
 
 """
 *************************
@@ -75,8 +75,8 @@ for i in range(n_runs):
     IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
     IC_ex_max[i] = data.IC_ex_max[i*L]
     # with biology
-    IC_prev_avg_max_bio[i] = bio_data.IC_prev_avg_max[i*L]
-    IC_ex_max_bio[i] = bio_data.IC_ex_max[i*L]
+    IC_prev_avg_max_bio[i] = data_bio.IC_prev_avg_max[i*L]
+    IC_ex_max_bio[i] = data_bio.IC_ex_max[i*L]
 
 IC_prev_avg_max.sort()
 IC_ex_max.sort()
@@ -100,7 +100,7 @@ for i in range(n_runs-1):
         print('Probability that the maximum number of IC patient is below IC capacity (with biology):',p[i])
 
 params = list(sampler.vary.get_keys())
-bio_params = list(bio_sampler.vary.get_keys())
+bio_params = list(sampler_bio.vary.get_keys())
 # Print parameters values used in the simulations
 info = campaign.list_runs()
 # for run in info:

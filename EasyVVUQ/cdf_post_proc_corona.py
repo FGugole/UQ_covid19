@@ -115,8 +115,8 @@ ax_p.step(IC_prev_avg_max,p+eps_DKW,linestyle='--',lw=2,color='cornflowerblue')
 ax_p.step(IC_prev_avg_max,p-eps_DKW,linestyle='--',lw=2,color='cornflowerblue')
 # with biology
 ax_p.step(IC_prev_avg_max_bio,p,lw=2,color='darkred',label='with biology')
-ax_p.step(IC_prev_avg_max_bio,p+eps_DKW,linestyle=':',lw=2,color='indianred')
-ax_p.step(IC_prev_avg_max_bio,p-eps_DKW,linestyle=':',lw=2,color='indianred')
+ax_p.step(IC_prev_avg_max_bio,p+eps_DKW,linestyle='--',lw=2,color='indianred')
+ax_p.step(IC_prev_avg_max_bio,p-eps_DKW,linestyle='--',lw=2,color='indianred')
 # general settings
 ax_p.set_xscale('log')
 # ax_p.set_xticks([3e2, 1e3])

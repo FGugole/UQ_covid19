@@ -67,7 +67,63 @@ for run in info:
 #     print(run[1]['params'])
 
 q_uptake = np.quantile(uptake,[0, 0.25, 0.5, 0.75, 1])
-print('q_uptake=',q_uptake)
+# print('q_uptake=',q_uptake)
+
+# Take slabs of data corresponding to the quartiles of uptake
+pl_intervention_effect_hi_0 = []
+phase_interval_0 = []
+IC_prev_avg_max_0 = []
+IC_ex_max_0 = []
+
+pl_intervention_effect_hi_1 = []
+phase_interval_1 = []
+IC_prev_avg_max_1 = []
+IC_ex_max_1 = []
+
+pl_intervention_effect_hi_2 = []
+phase_interval_2 = []
+IC_prev_avg_max_2 = []
+IC_ex_max_2 = []
+
+pl_intervention_effect_hi_3 = []
+phase_interval_3 = []
+IC_prev_avg_max_3 = []
+IC_ex_max_3 = []
+
+for i in range(n_runs):
+    if (uptake[i] > q_uptake[0]) & (uptake[i] < q_uptake[1]):
+        # first quartile
+        pl_intervention_effect_hi_0.append(pl_intervention_effect_hi[i])
+        phase_interval_0.append(phase_interval[i])
+
+        IC_prev_avg_max_0.append(IC_prev_avg_max[i])
+        IC_ex_max_0.append(IC_ex_max[i])
+    if (uptake[i] > q_uptake[1]) & (uptake[i] < q_uptake[2]):
+        # second quartile
+        pl_intervention_effect_hi_1.append(pl_intervention_effect_hi[i])
+        phase_interval_1.append(phase_interval[i])
+
+        IC_prev_avg_max_1.append(IC_prev_avg_max[i])
+        IC_ex_max_1.append(IC_ex_max[i])
+    if (uptake[i] > q_uptake[2]) & (uptake[i] < q_uptake[3]):
+        # third quartile
+        pl_intervention_effect_hi_2.append(pl_intervention_effect_hi[i])
+        phase_interval_2.append(phase_interval[i])
+
+        IC_prev_avg_max_2.append(IC_prev_avg_max[i])
+        IC_ex_max_2.append(IC_ex_max[i])
+    if (uptake[i] > q_uptake[3]) & (uptake[i] < q_uptake[4]):
+        # first quartile
+        pl_intervention_effect_hi_3.append(pl_intervention_effect_hi[i])
+        phase_interval_3.append(phase_interval[i])
+
+        IC_prev_avg_max_3.append(IC_prev_avg_max[i])
+        IC_ex_max_3.append(IC_ex_max[i])
+
+print(len(phase_interval_0))
+print(len(phase_interval_1))
+print(len(phase_interval_2))
+print(len(phase_interval_3))
 
 f = plt.figure('heatmap',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')

@@ -150,6 +150,45 @@ ax_3.set_yticks([30, 60, 90])
 plt.tight_layout()
 f.savefig('figures/heatmap_PO_IC_prev.png')
 
+"""
+* Heatmap for IC_ex_max
+"""
+f = plt.figure('heatmap_IC_ex',figsize=[12,12])
+ax_0 = f.add_subplot(221, ylabel='phase_interval')
+im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[:,0], y=phase_interval_q[:,0], c=IC_ex_max_q[:,0], cmap='plasma')
+cbar_0 = f.colorbar(im_0, ax=ax_0)
+cbar_0.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
+cbar_0.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
+ax_0.set_xticks([0.2, 0.4])
+ax_0.set_yticks([30, 60, 90])
+
+ax_1 = f.add_subplot(222)
+im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[:,1], y=phase_interval_q[:,1], c=IC_ex_max_q[:,1], cmap='plasma')
+cbar_1 = f.colorbar(im_1, ax=ax_1)
+cbar_1.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
+cbar_1.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
+ax_1.set_xticks([0.2, 0.4])
+ax_1.set_yticks([30, 60, 90])
+
+ax_2 = f.add_subplot(223, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
+im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[:,2], y=phase_interval_q[:,2], c=IC_ex_max_q[:,2], cmap='plasma')
+cbar_2 = f.colorbar(im_2, ax=ax_2)
+cbar_2.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
+cbar_2.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
+ax_2.set_xticks([0.2, 0.4])
+ax_2.set_yticks([30, 60, 90])
+
+ax_3 = f.add_subplot(224, xlabel='pl_intervention_effect_hi')
+im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[:,3], y=phase_interval_q[:,3], c=IC_ex_max_q[:,3], cmap='plasma')
+cbar_3 = f.colorbar(im_3, ax=ax_3)
+cbar_3.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
+cbar_3.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
+ax_3.set_xticks([0.2, 0.4])
+ax_3.set_yticks([30, 60, 90])
+
+plt.tight_layout()
+f.savefig('figures/heatmap_PO_IC_ex.png')
+
 # f = plt.figure('heatmap_IC_ex',figsize=[12,6])
 # ax_e = f.add_subplot(122, xlabel='pl_intervention_effect_hi')
 # im_e = ax_e.scatter(x=pl_intervention_effect_hi, y=phase_interval, c=IC_ex_max, cmap='plasma')

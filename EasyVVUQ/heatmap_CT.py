@@ -67,11 +67,11 @@ for run in info:
 #     print(run[0])
 #     print(run[1]['params'])
 
-q_trace_rate_I = np.quantile(trace_rate_I,[0, 0.25, 0.5, 0.75, 1])
-# print('q_uptake=',q_uptake)
+q_trace_prob_E = np.quantile(trace_prob_E,[0, 0.25, 0.5, 0.75, 1])
+# print('q_prob_E=',q_prob_E)
 
 # Take slabs of data corresponding to the quartiles of uptake
-trace_prob_E_q = np.zeros((np.int(n_runs/4),4),dtype='float')
+trace_rate_I_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 trace_contact_reduction_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 IC_prev_avg_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 IC_ex_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
@@ -79,33 +79,33 @@ IC_ex_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 cnt0 = 0; cnt1 = 0; cnt2 = 0; cnt3=0
 
 for i in range(n_runs):
-    if (trace_rate_I[i] >= q_trace_rate_I[0]) & (trace_rate_I[i] < q_trace_rate_I[1]):
+    if (trace_prob_E[i] >= q_trace_prob_E[0]) & (trace_prob_E[i] < q_trace_prob_E[1]):
         # first quartile
-        trace_prob_E_q[cnt0,0] = trace_prob_E[i]
+        trace_rate_I_q[cnt0,0] = trace_rate_I[i]
         trace_contact_reduction_q[cnt0,0] = trace_contact_reduction[i]
 
         IC_prev_avg_max_q[cnt0,0] = IC_prev_avg_max[i]
         IC_ex_max_q[cnt0,0] = IC_ex_max[i]
         cnt0 += 1
-    if (trace_rate_I[i] >= q_trace_rate_I[1]) & (trace_rate_I[i] < q_trace_rate_I[2]):
+    if (trace_prob_E[i] >= q_trace_prob_E[1]) & (trace_prob_E[i] < q_trace_prob_E[2]):
         # second quartile
-        trace_prob_E_q[cnt1,1] = trace_prob_E[i]
+        trace_rate_I_q[cnt1,1] = trace_rate_I[i]
         trace_contact_reduction_q[cnt1,1] = trace_contact_reduction[i]
 
         IC_prev_avg_max_q[cnt1,1] = IC_prev_avg_max[i]
         IC_ex_max_q[cnt1,1] = IC_ex_max[i]
         cnt1 += 1
-    if (trace_rate_I[i] >= q_trace_rate_I[2]) & (trace_rate_I[i] < q_trace_rate_I[3]):
+    if (trace_prob_E[i] >= q_trace_prob_E[2]) & (trace_prob_E[i] < q_trace_prob_E[3]):
         # third quartile
-        trace_prob_E_q[cnt2,2] = trace_prob_E[i]
+        trace_rate_I_q[cnt2,2] = trace_rate_I[i]
         trace_contact_reduction_q[cnt2,2] = trace_contact_reduction[i]
 
         IC_prev_avg_max_q[cnt2,2] = IC_prev_avg_max[i]
         IC_ex_max_q[cnt2,2] = IC_ex_max[i]
         cnt2 += 1
-    if (trace_rate_I[i] >= q_trace_rate_I[3]) & (trace_rate_I[i] <= q_trace_rate_I[4]):
+    if (trace_prob_E[i] >= q_trace_prob_E[3]) & (trace_prob_E[i] <= q_trace_prob_E[4]):
         # fourth quartile
-        trace_prob_E_q[cnt3,3] = trace_prob_E[i]
+        trace_rate_I_q[cnt3,3] = trace_rate_I[i]
         trace_contact_reduction_q[cnt3,3] = trace_contact_reduction[i]
 
         IC_prev_avg_max_q[cnt3,3] = IC_prev_avg_max[i]
@@ -117,35 +117,35 @@ for i in range(n_runs):
 """
 f = plt.figure('heatmap_IC_prev',figsize=[12,12])
 ax_0 = f.add_subplot(221, ylabel='trace_contact_reduction')
-im_0 = ax_0.scatter(x=trace_prob_E_q[:,0], y=trace_contact_reduction_q[:,0], c=IC_prev_avg_max_q[:,0], cmap='plasma')
+im_0 = ax_0.scatter(x=trace_rate_I_q[:,0], y=trace_contact_reduction_q[:,0], c=IC_prev_avg_max_q[:,0], cmap='plasma')
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([100, 400, 700, 1000])
 cbar_0.set_ticklabels(['100', '400', '700', '1000'])
-ax_0.set_xticks([0, 0.4, 0.8])
+ax_0.set_xticks([0, 2, 4])
 ax_0.set_yticks([0.4, 0.7, 1])
 
 ax_1 = f.add_subplot(222)
-im_1 = ax_1.scatter(x=trace_prob_E_q[:,1], y=trace_contact_reduction_q[:,1], c=IC_prev_avg_max_q[:,1], cmap='plasma')
+im_1 = ax_1.scatter(x=trace_rate_I_q[:,1], y=trace_contact_reduction_q[:,1], c=IC_prev_avg_max_q[:,1], cmap='plasma')
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([100, 400, 700, 1000])
 cbar_1.set_ticklabels(['100', '400', '700', '1000'])
-ax_1.set_xticks([0, 0.4, 0.8])
+ax_1.set_xticks([0, 2, 4])
 ax_1.set_yticks([0.4, 0.7, 1])
 
-ax_2 = f.add_subplot(223, xlabel='trace_prob_E', ylabel='trace_contact_reduction')
-im_2 = ax_2.scatter(x=trace_prob_E_q[:,2], y=trace_contact_reduction_q[:,2], c=IC_prev_avg_max_q[:,2], cmap='plasma')
+ax_2 = f.add_subplot(223, xlabel='trace_rate_I', ylabel='trace_contact_reduction')
+im_2 = ax_2.scatter(x=trace_rate_I_q[:,2], y=trace_contact_reduction_q[:,2], c=IC_prev_avg_max_q[:,2], cmap='plasma')
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([100, 400, 700, 1000])
 cbar_2.set_ticklabels(['100', '400', '700', '1000'])
-ax_2.set_xticks([0, 0.4, 0.8])
+ax_2.set_xticks([0, 2, 4])
 ax_2.set_yticks([0.4, 0.7, 1])
 
-ax_3 = f.add_subplot(224, xlabel='trace_prob_E')
-im_3 = ax_3.scatter(x=trace_prob_E_q[:,3], y=trace_contact_reduction_q[:,3], c=IC_prev_avg_max_q[:,3], cmap='plasma')
+ax_3 = f.add_subplot(224, xlabel='trace_rate_I')
+im_3 = ax_3.scatter(x=trace_rate_I_q[:,3], y=trace_contact_reduction_q[:,3], c=IC_prev_avg_max_q[:,3], cmap='plasma')
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([100, 400, 700, 1000])
 cbar_3.set_ticklabels(['100', '400', '700', '1000'])
-ax_3.set_xticks([0, 0.4, 0.8])
+ax_3.set_xticks([0, 2, 4])
 ax_3.set_yticks([0.4, 0.7, 1])
 
 plt.tight_layout()
@@ -156,35 +156,35 @@ f.savefig('figures/heatmap_CT_IC_prev.png')
 """
 f = plt.figure('heatmap_IC_ex',figsize=[12,12])
 ax_0 = f.add_subplot(221, ylabel='trace_contact_reduction')
-im_0 = ax_0.scatter(x=trace_prob_E_q[:,0], y=trace_contact_reduction_q[:,0], c=IC_ex_max_q[:,0], cmap='plasma')
+im_0 = ax_0.scatter(x=trace_rate_I_q[:,0], y=trace_contact_reduction_q[:,0], c=IC_ex_max_q[:,0], cmap='plasma')
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([0, 2e4, 4e4, 6e4])
 cbar_0.set_ticklabels(['0', '20000', '40000', '60000'])
-ax_0.set_xticks([0, 0.4, 0.8])
+ax_0.set_xticks([0, 2, 4])
 ax_0.set_yticks([0.4, 0.7, 1])
 
 ax_1 = f.add_subplot(222)
-im_1 = ax_1.scatter(x=trace_prob_E_q[:,1], y=trace_contact_reduction_q[:,1], c=IC_ex_max_q[:,1], cmap='plasma')
+im_1 = ax_1.scatter(x=trace_rate_I_q[:,1], y=trace_contact_reduction_q[:,1], c=IC_ex_max_q[:,1], cmap='plasma')
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([0, 2e4, 4e4, 6e4])
 cbar_1.set_ticklabels(['0', '20000', '40000', '60000'])
-ax_1.set_xticks([0, 0.4, 0.8])
+ax_1.set_xticks([0, 2, 4])
 ax_1.set_yticks([0.4, 0.7, 1])
 
-ax_2 = f.add_subplot(223, xlabel='trace_prob_E', ylabel='trace_contact_reduction')
-im_2 = ax_2.scatter(x=trace_prob_E_q[:,2], y=trace_contact_reduction_q[:,2], c=IC_ex_max_q[:,2], cmap='plasma')
+ax_2 = f.add_subplot(223, xlabel='trace_rate_I', ylabel='trace_contact_reduction')
+im_2 = ax_2.scatter(x=trace_rate_I_q[:,2], y=trace_contact_reduction_q[:,2], c=IC_ex_max_q[:,2], cmap='plasma')
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([0, 2e4, 4e4, 6e4])
 cbar_2.set_ticklabels(['0', '20000', '40000', '60000'])
-ax_2.set_xticks([0, 0.4, 0.8])
+ax_2.set_xticks([0, 2, 4])
 ax_2.set_yticks([0.4, 0.7, 1])
 
-ax_3 = f.add_subplot(224, xlabel='trace_prob_E')
-im_3 = ax_3.scatter(x=trace_prob_E_q[:,3], y=trace_contact_reduction_q[:,3], c=IC_ex_max_q[:,3], cmap='plasma')
+ax_3 = f.add_subplot(224, xlabel='trace_rate_I')
+im_3 = ax_3.scatter(x=trace_rate_I_q[:,3], y=trace_contact_reduction_q[:,3], c=IC_ex_max_q[:,3], cmap='plasma')
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([0, 2e4, 4e4, 6e4])
 cbar_3.set_ticklabels(['0', '20000', '40000', '60000'])
-ax_3.set_xticks([0, 0.4, 0.8])
+ax_3.set_xticks([0, 2, 4])
 ax_3.set_yticks([0.4, 0.7, 1])
 
 plt.tight_layout()

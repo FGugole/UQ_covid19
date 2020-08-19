@@ -8,6 +8,7 @@ import numpy as np
 import easyvvuq as uq
 import os
 import pandas as pd
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter, NullFormatter
 plt.rcParams.update({'font.size': 20})
@@ -189,18 +190,28 @@ ax_3.set_yticks([30, 60, 90])
 plt.tight_layout()
 f.savefig('figures/heatmap_PO_IC_ex.png')
 
-# f = plt.figure('heatmap_IC_ex',figsize=[12,6])
-# ax_e = f.add_subplot(122, xlabel='pl_intervention_effect_hi')
-# im_e = ax_e.scatter(x=pl_intervention_effect_hi, y=phase_interval, c=IC_ex_max, cmap='plasma')
-# cbar_e = f.colorbar(im_e, ax=ax_e)
-# cbar_e.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
-# cbar_e.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
+"""
+* 3D plots *
+"""
 
-# ax_e.set_xticks([0.2, 0.4])
-# ax_e.set_yticks([30, 60, 90])
+f = plt.figure('heatmap',figsize=[12,6], projection='3d')
+ax_p = f.add_subplot(121, xlabel='pl_intervention_effect_hi')
+im_p = ax_e.scatter(xs=pl_intervention_effect_hi, ys=phase_interval, zs=uptake, c=IC_prev_avg_max, cmap='plasma')
+cbar_p = f.colorbar(im_e, ax=ax_e)
+cbar_p.set_ticks([0, 100, 300, 500, 700])
+cbar_p.set_ticklabels(['0', '100', '300', '500', '700'])
 
-# plt.tight_layout()
-# f.savefig('figures/heatmap_PO_MC1000.png')
+ax_e = f.add_subplot(122, xlabel='pl_intervention_effect_hi')
+im_e = ax_e.scatter(xs=pl_intervention_effect_hi, ys=phase_interval, zs=uptake, c=IC_ex_max, cmap='plasma')
+cbar_e = f.colorbar(im_e, ax=ax_e)
+cbar_e.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
+cbar_e.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
+
+ax_e.set_xticks([0.2, 0.4])
+ax_e.set_yticks([30, 60, 90])
+
+plt.tight_layout()
+f.savefig('figures/heatmap_PO_MC1000.png')
 
 plt.show()
 

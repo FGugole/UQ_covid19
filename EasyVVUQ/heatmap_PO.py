@@ -223,7 +223,7 @@ ax_e.set_xticks([0.2, 0.4])
 ax_e.set_yticks([30, 60, 90])
 ax_e.set_zticks([0.5, 0.75, 1])
 
-#ax_e.set_xlabel(linespacing=3)
+ax_e.xaxis.labelpad = 30
 #ax_e.set_ylabel(linespacing=3)
 #ax_e.set_zlabel(linespacing=3)
 

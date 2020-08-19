@@ -149,7 +149,7 @@ ax_p.step(CT_IC_prev_avg_max,p,lw=2,color='cornflowerblue',label='CT')
 ax_p.step(FC_IC_prev_avg_max,p,lw=2,color='salmon',label='FC')
 ax_p.step(IL_IC_prev_avg_max,p,lw=2,color='hotpink',label='IL')
 ax_p.step(PO_IC_prev_avg_max,p,lw=2,color='lightseagreen',label='PO')
-ax_p.axvline(x=IC_capacity,lw=2,linestyle=':',color='black',label='IC capacity')
+ax_p.axvline(x=IC_capacity,lw=2,linestyle=':',color='black')#,label='IC capacity')
 # general settings
 ax_p.set_xscale('log')
 # ax_p.set_xticks([3e2, 1e3])

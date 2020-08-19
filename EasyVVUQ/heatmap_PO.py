@@ -195,24 +195,38 @@ f.savefig('figures/heatmap_PO_IC_ex.png')
 """
 
 f = plt.figure('heatmap',figsize=[16,6])
-ax_p = f.add_subplot(121, xlabel='pl_intervention_effect_hi', ylabel='phase_interval', zlabel='uptake', projection='3d')
+ax_p = f.add_subplot(121, projection='3d')
 im_p = ax_p.scatter(xs=pl_intervention_effect_hi, ys=phase_interval, zs=uptake, c=IC_prev_avg_max, cmap='plasma')
+
 cbar_p = f.colorbar(im_p, ax=ax_p)
 cbar_p.set_ticks([0, 100, 300, 500, 700])
 cbar_p.set_ticklabels(['0', '100', '300', '500', '700'])
+
 ax_p.set_xticks([0.2, 0.4])
 ax_p.set_yticks([30, 60, 90])
 ax_p.set_zticks([0.5, 0.75, 1])
+
+ax_p.set_xlabel(xlabel='pl_intervention_effect_hi', linespacing=3)
+ax_p.set_ylabel(ylabel='phase_interval', linespacing=3)
+ax_p.set_zlabel(zlabel='uptake', linespacing=3)
+
 ax_p.view_init(azim=60)
 
 ax_e = f.add_subplot(122, xlabel='pl_intervention_effect_hi', ylabel='phase_interval', zlabel='uptake', projection='3d')
 im_e = ax_e.scatter(xs=pl_intervention_effect_hi, ys=phase_interval, zs=uptake, c=IC_ex_max, cmap='plasma')
+
 cbar_e = f.colorbar(im_e, ax=ax_e)
 cbar_e.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
 cbar_e.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
+
 ax_e.set_xticks([0.2, 0.4])
 ax_e.set_yticks([30, 60, 90])
 ax_e.set_zticks([0.5, 0.75, 1])
+
+#ax_e.set_xlabel(linespacing=3)
+#ax_e.set_ylabel(linespacing=3)
+#ax_e.set_zlabel(linespacing=3)
+
 ax_e.view_init(azim=60)
 
 plt.tight_layout()

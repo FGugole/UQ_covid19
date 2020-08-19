@@ -195,7 +195,7 @@ f.savefig('figures/heatmap_PO_IC_ex.png')
 """
 
 f = plt.figure('heatmap',figsize=[16,6])
-ax_p = f.add_subplot(121, projection='3d')
+ax_p = f.add_subplot(121, xlabel='pl_intervention_effect_hi', ylabel='phase_interval', zlabel='uptake', projection='3d')
 im_p = ax_p.scatter(xs=pl_intervention_effect_hi, ys=phase_interval, zs=uptake, c=IC_prev_avg_max, cmap='plasma')
 
 cbar_p = f.colorbar(im_p, ax=ax_p)
@@ -206,9 +206,9 @@ ax_p.set_xticks([0.2, 0.4])
 ax_p.set_yticks([30, 60, 90])
 ax_p.set_zticks([0.5, 0.75, 1])
 
-ax_p.set_xlabel(xlabel='pl_intervention_effect_hi', linespacing=3)
-ax_p.set_ylabel(ylabel='phase_interval', linespacing=3)
-ax_p.set_zlabel(zlabel='uptake', linespacing=3)
+ax_p.xaxis.labelpad = 20
+ax_p.yaxis.labelpad = 20
+ax_p.zaxis.labelpad = 20
 
 ax_p.view_init(azim=60)
 
@@ -223,9 +223,9 @@ ax_e.set_xticks([0.2, 0.4])
 ax_e.set_yticks([30, 60, 90])
 ax_e.set_zticks([0.5, 0.75, 1])
 
-ax_e.xaxis.labelpad = 30
-#ax_e.set_ylabel(linespacing=3)
-#ax_e.set_zlabel(linespacing=3)
+ax_e.xaxis.labelpad = 20
+ax_e.yaxis.labelpad = 20
+ax_e.zaxis.labelpad = 20
 
 ax_e.view_init(azim=60)
 

@@ -75,6 +75,8 @@ phase_interval_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 IC_prev_avg_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 IC_ex_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 
+cnt0 = 0; cnt1 = 0; cnt2 = 0; cnt3=0
+
 for i in range(n_runs):
     if (uptake[i] >= q_uptake[0]) & (uptake[i] < q_uptake[1]):
         # first quartile
@@ -122,7 +124,7 @@ ax_0.set_xticks([0.2, 0.4])
 ax_0.set_yticks([30, 60, 90])
 
 ax_1 = f.add_subplot(222, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
-im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[:,1], y=phase_interval_q[:,1], c=IC_prev_avg_max[:,1], cmap='plasma')
+im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[:,1], y=phase_interval_q[:,1], c=IC_prev_avg_max_q[:,1], cmap='plasma')
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([100, 300, 500, 700])
 cbar_1.set_ticklabels(['100', '300', '500', '700'])
@@ -130,7 +132,7 @@ ax_1.set_xticks([0.2, 0.4])
 ax_1.set_yticks([30, 60, 90])
 
 ax_2 = f.add_subplot(223, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
-im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[:,2], y=phase_interval_q[:,2], c=IC_prev_avg_max[:,2], cmap='plasma')
+im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[:,2], y=phase_interval_q[:,2], c=IC_prev_avg_max_q[:,2], cmap='plasma')
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([100, 300, 500, 700])
 cbar_2.set_ticklabels(['100', '300', '500', '700'])
@@ -138,7 +140,7 @@ ax_2.set_xticks([0.2, 0.4])
 ax_2.set_yticks([30, 60, 90])
 
 ax_3 = f.add_subplot(224, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
-im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[:,3], y=phase_interval_q[:,3], c=IC_prev_avg_max[:,3], cmap='plasma')
+im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[:,3], y=phase_interval_q[:,3], c=IC_prev_avg_max_q[:,3], cmap='plasma')
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([100, 300, 500, 700])
 cbar_3.set_ticklabels(['100', '300', '500', '700'])

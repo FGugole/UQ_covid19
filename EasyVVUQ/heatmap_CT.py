@@ -210,7 +210,7 @@ ax_p.xaxis.labelpad = 10
 ax_p.yaxis.labelpad = 10
 ax_p.zaxis.labelpad = 15
 
-# ax_p.view_init(azim=60)
+ax_p.view_init(azim=30)
 
 ax_e = f.add_subplot(122, xlabel='trace_prob_E', ylabel='trace_cont_red', zlabel='trace_rate_I', projection='3d')
 im_e = ax_e.scatter(xs=trace_prob_E, ys=trace_contact_reduction, zs=trace_rate_I, c=IC_ex_max, cmap='plasma')
@@ -227,7 +227,7 @@ ax_e.xaxis.labelpad = 10
 ax_e.yaxis.labelpad = 10
 ax_e.zaxis.labelpad = 15
 
-# ax_e.view_init(azim=60)
+ax_e.view_init(azim=30)
 
 plt.tight_layout()
 f.savefig('figures/heatmap_CT_MC1000.png')

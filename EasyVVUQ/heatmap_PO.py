@@ -194,7 +194,7 @@ f.savefig('figures/heatmap_PO_IC_ex.png')
 * 3D plots *
 """
 
-f = plt.figure('heatmap',figsize=[14,6])
+f = plt.figure('heatmap',figsize=[16,6])
 ax_p = f.add_subplot(121, xlabel='pl_intervention_effect_hi', ylabel='phase_interval', zlabel='uptake', projection='3d')
 im_p = ax_p.scatter(xs=pl_intervention_effect_hi, ys=phase_interval, zs=uptake, c=IC_prev_avg_max, cmap='plasma')
 cbar_p = f.colorbar(im_p, ax=ax_p)
@@ -203,7 +203,7 @@ cbar_p.set_ticklabels(['0', '100', '300', '500', '700'])
 ax_p.set_xticks([0.2, 0.4])
 ax_p.set_yticks([30, 60, 90])
 ax_p.set_zticks([0.5, 0.75, 1])
-ax_p.view_init(azim=30)
+ax_p.view_init(azim=60)
 
 ax_e = f.add_subplot(122, xlabel='pl_intervention_effect_hi', ylabel='phase_interval', zlabel='uptake', projection='3d')
 im_e = ax_e.scatter(xs=pl_intervention_effect_hi, ys=phase_interval, zs=uptake, c=IC_ex_max, cmap='plasma')

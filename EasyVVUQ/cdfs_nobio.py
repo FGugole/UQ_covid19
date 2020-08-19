@@ -53,6 +53,22 @@ FC_campaign.collate()
 FC_data = FC_campaign.get_collation_result()
 #print(FC_data.columns)
 
+# Reload the IL campaign without biology
+IL_campaign = uq.Campaign(state_file = "campaign_state_IL_MC1000.json", work_dir = "/tmp")
+print('========================================================')
+print('Reloaded campaign', IL_campaign.campaign_dir.split('/')[-1])
+print('========================================================')
+
+# get sampler and output columns from my_campaign object
+IL_sampler = IL_campaign._active_sampler
+#output_columns = my_campaign._active_app_decoder.output_columns
+
+# collate output
+IL_campaign.collate()
+# get full dataset of data
+IL_data = IL_campaign.get_collation_result()
+#print(IL_data.columns)
+
 # Reload the PO campaign without biology
 PO_campaign = uq.Campaign(state_file = "campaign_state_PO_MC1000.json", work_dir = "/tmp")
 print('========================================================')
@@ -86,6 +102,9 @@ CT_IC_ex_max = np.zeros(n_runs,dtype='float')
 FC_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
 FC_IC_ex_max = np.zeros(n_runs,dtype='float')
 
+IL_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
+IL_IC_ex_max = np.zeros(n_runs,dtype='float')
+
 PO_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
 PO_IC_ex_max = np.zeros(n_runs,dtype='float')
 
@@ -96,6 +115,9 @@ for i in range(n_runs):
     # FC
     FC_IC_prev_avg_max[i] = FC_data.IC_prev_avg_max[i*L]
     FC_IC_ex_max[i] = FC_data.IC_ex_max[i*L]
+    # IL
+    IL_IC_prev_avg_max[i] = IL_data.IC_prev_avg_max[i*L]
+    IL_IC_ex_max[i] = IL_data.IC_ex_max[i*L]
     # PO
     PO_IC_prev_avg_max[i] = PO_data.IC_prev_avg_max[i*L]
     PO_IC_ex_max[i] = PO_data.IC_ex_max[i*L]
@@ -105,6 +127,9 @@ CT_IC_ex_max.sort()
 
 FC_IC_prev_avg_max.sort()
 FC_IC_ex_max.sort()
+
+IL_IC_prev_avg_max.sort()
+IL_IC_ex_max.sort()
 
 PO_IC_prev_avg_max.sort()
 PO_IC_ex_max.sort()
@@ -122,7 +147,8 @@ ax_p = f.add_subplot(121, xlabel='maximum of patients in IC', ylabel='P(x)')
 # without biology
 ax_p.step(CT_IC_prev_avg_max,p,lw=2,color='cornflowerblue',label='CT')
 ax_p.step(FC_IC_prev_avg_max,p,lw=2,color='salmon',label='FC')
-ax_p.step(PO_IC_prev_avg_max,p,lw=2,color='lightseagreen',label='PO')
+ax_p.step(IL_IC_prev_avg_max,p,lw=2,color='lightseagreen',label='IL')
+ax_p.step(PO_IC_prev_avg_max,p,lw=2,color='orchid',label='PO')
 ax_p.axvline(x=IC_capacity,lw=2,linestyle=':',color='black',label='IC capacity')
 # general settings
 ax_p.set_xscale('log')
@@ -134,7 +160,8 @@ ax_e = f.add_subplot(122, xlabel='IC patient-days in excess')
 # without biology
 ax_e.step(CT_IC_ex_max,p,lw=2,color='cornflowerblue')
 ax_e.step(FC_IC_ex_max,p,lw=2,color='salmon')
-ax_e.step(PO_IC_ex_max,p,lw=2,color='lightseagreen')
+ax_e.step(IL_IC_ex_max,p,lw=2,color='lightseagreen')
+ax_e.step(PO_IC_ex_max,p,lw=2,color='orchid')
 # general settings
 ax_e.set_xscale('log')
 # ax_e.set_xticks([1e4, 6e4])

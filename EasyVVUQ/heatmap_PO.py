@@ -206,8 +206,8 @@ ax_p.set_xticks([0.2, 0.4])
 ax_p.set_yticks([30, 60, 90])
 ax_p.set_zticks([0.5, 0.75, 1])
 
-ax_p.xaxis.labelpad = 15
-ax_p.yaxis.labelpad = 15
+ax_p.xaxis.labelpad = 10
+ax_p.yaxis.labelpad = 10
 ax_p.zaxis.labelpad = 15
 
 ax_p.view_init(azim=60)
@@ -223,8 +223,8 @@ ax_e.set_xticks([0.2, 0.4])
 ax_e.set_yticks([30, 60, 90])
 ax_e.set_zticks([0.5, 0.75, 1])
 
-ax_e.xaxis.labelpad = 15
-ax_e.yaxis.labelpad = 15
+ax_e.xaxis.labelpad = 10
+ax_e.yaxis.labelpad = 10
 ax_e.zaxis.labelpad = 15
 
 ax_e.view_init(azim=60)

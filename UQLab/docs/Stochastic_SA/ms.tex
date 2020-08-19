@@ -111,7 +111,7 @@ Y(\hat{\vt{x}}) = \sin(x_{1}) + 7 \sin(x_{2})^2 + \exp( x_{3} + (x_{1}/\pi) x_{4
 \end{equation}
 with $X_{3}\sim \mathcal{U}(0,1)$ and $X_{4}\sim \mathcal{N}(0,1)$. This requires explicit knowledge of the internal stochasticity, i.e.\ the expression for $Z$. The input space is now four-dimensional. In this case one can use existing UQ techniques, such as polynomial chaos expansions.
 \item Treat $Z$ via the random seed. This is a slightly less intrusive approach only requiring access to the random seed. We take $X_{3} \sim \mathcal{U}(2^{14}, 2^{16})$ (rounded to give integer values), which sets the value for the random seed: $\texttt{seed}(X_{3})$, and then $Z_{1} \sim \mathcal{U}(0,1)$, $Z_{2} \sim \mathcal{N}(0,1)$. In this case the input space is three-dimensional instead of four-dimensional.
-\item Don't treat $Z$: in case no access is given to $Z$ (a black-box code in which only $X$ can be controlled), and the actual form \eqref{eqn:example} is not known, one can only sample a two-dimensional parameter space ($X_{1}$, $X_{2}$), and has to depend on the stochasticity introduced by the black-box code.
+\item Don't treat $Z$: in case no access is given to $Z$ (a black-box code in which only $X$ can be controlled), and the actual form \eqref{eqn:example} is not known, one can only sample a two-dimensional parameter space ($X_{1}$, $X_{2}$), and one fully depends on the stochasticity introduced by the black-box code.
 \end{enumerate}
 
 Depending on the type of access to the latent variables $Z$, different approaches are possible to perform a global sensitivity analysis (Sobol' analysis):
@@ -123,6 +123,7 @@ Depending on the type of access to the latent variables $Z$, different approache
 
 
 \section{Example results}
+\subsection{Classical analysis}
 Classical analysis with type 1 access is shown in figure \ref{fig:type1}, based on Monte Carlo simulation. We set $M=10^{4}$ samples, but in reality $N =12 M$ samples are needed to compute the first and second order indices. The total and first order indices require $M (p+2) = 6 M$ ($p=4$) evaluations (Saltelli method), and the second order indices require $M \cdot {p \choose 2} = 6 M$ evaluations.
 
 \begin{figure}[hbtp]
@@ -146,7 +147,7 @@ Classical analysis with type 1 access is shown in figure \ref{fig:type1}, based 
 	\caption{Sobol' indices for type 1.\label{fig:type1}}
 \end{figure}
 
-Classical analysis with type 2 access is shown in figure \ref{fig:type2}. In this case there are 3 input uncertainties, so $N=8M$ samples are necessary for total, first, and second order indices. One can note that 
+Classical analysis with type 2 access is shown in figure \ref{fig:type2}. In this case there are 3 input uncertainties, so $N=8M$ samples are necessary for total, first, and second order indices. Although $X_{3}$ in this case is now responsible for both the effect of $Z_{1}$ and $Z_{2}$ as used in the previous (type 1) case, it is generally \textit{not} true that the Sobol index for $X_{3}$ are the sum of those of $X_{3}$ and $X_{4}$ in the previous case.
 
 \begin{figure}[hbtp]
 \centering
@@ -167,6 +168,53 @@ Classical analysis with type 2 access is shown in figure \ref{fig:type2}. In thi
 	\caption{Second order.\label{fig:second_type2}}
 	\end{subfigure}
 	\caption{Sobol' indices for type 2.\label{fig:type2}}
+\end{figure}
+
+Classical analysis with type 3 access is shown in figure \ref{fig:type2}. In this case there are 2 input uncertainties, so $N=5M$ samples are necessary for total, first, and second order indices. Combining classical analysis with type 3 access is questionable, as the effect of $Z$ is completely ignored in computing the Sobol' indices.
+
+\begin{figure}[hbtp]
+\centering
+	\begin{subfigure}[b]{.49\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{figures/total_type3.pdf}
+	\caption{Total index.\label{fig:total_type3}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{.49\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{figures/first_type3.pdf}
+	\caption{First order.\label{fig:first_type3}}
+	\end{subfigure}\\
+	\begin{subfigure}[b]{.49\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{figures/second_type3.pdf}
+	\caption{Second order.\label{fig:second_type3}}
+	\end{subfigure}
+	\caption{Sobol' indices for type 3.\label{fig:type3}}
+\end{figure}
+
+\subsection{QoI-based analysis}
+QoI-based analysis is essentially the same for type 1, 2 or 3, as the QoI-based analysis integrates over $Z$ first, and this does not require knowledge about $Z$. In this case we take as QoI the mean of \eqref{eqn:example}, where the mean is computed via a Monte Carlo sample of $\hat{M}=10^{3}$ samples of $Z$. There are only two uncertainties remaining, namely $X_{1}$ and $X_{2}$. The Sobol' indices are then computed using $M=10^{4}$ samples, requiring $5 M$ samples. However, since for each model evaluation $\hat{M}$ samples are necessary, the total number of evaluations is $5 M \hat{M} = 5 \cdot 10^{7}$. The resulting indices are shown in \ref{fig:QoI}. Important to note that these figures can change drastically when a different QoI is taken (e.g. the standard deviation).
+
+\begin{figure}[hbtp]
+\centering
+	\begin{subfigure}[b]{.49\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{figures/total_QoI.pdf}
+	\caption{Total index.\label{fig:total_QoI}}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{.49\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{figures/first_QoI.pdf}
+	\caption{First order.\label{fig:first_QoI}}
+	\end{subfigure}\\
+	\begin{subfigure}[b]{.49\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{figures/second_QoI.pdf}
+	\caption{Second order.\label{fig:second_QoI}}
+	\end{subfigure}
+	\caption{Sobol' indices for QoI-based analysis, where the mean is taken as QoI.\label{fig:QoI}}
 \end{figure}
 
 %\input{introduction.tex}

@@ -70,82 +70,96 @@ q_uptake = np.quantile(uptake,[0, 0.25, 0.5, 0.75, 1])
 # print('q_uptake=',q_uptake)
 
 # Take slabs of data corresponding to the quartiles of uptake
-pl_intervention_effect_hi_0 = []
-phase_interval_0 = []
-IC_prev_avg_max_0 = []
-IC_ex_max_0 = []
-
-pl_intervention_effect_hi_1 = []
-phase_interval_1 = []
-IC_prev_avg_max_1 = []
-IC_ex_max_1 = []
-
-pl_intervention_effect_hi_2 = []
-phase_interval_2 = []
-IC_prev_avg_max_2 = []
-IC_ex_max_2 = []
-
-pl_intervention_effect_hi_3 = []
-phase_interval_3 = []
-IC_prev_avg_max_3 = []
-IC_ex_max_3 = []
+pl_intervention_effect_hi_q = np.zeros((np.int(n_runs/4),4),dtype='float')
+phase_interval_q = np.zeros((np.int(n_runs/4),4),dtype='float')
+IC_prev_avg_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
+IC_ex_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 
 for i in range(n_runs):
-    if (uptake[i] > q_uptake[0]) & (uptake[i] < q_uptake[1]):
+    if (uptake[i] >= q_uptake[0]) & (uptake[i] < q_uptake[1]):
         # first quartile
-        pl_intervention_effect_hi_0.append(pl_intervention_effect_hi[i])
-        phase_interval_0.append(phase_interval[i])
+        pl_intervention_effect_hi_q[cnt0,0] = pl_intervention_effect_hi[i]
+        phase_interval_q[cnt0,0] = phase_interval[i]
 
-        IC_prev_avg_max_0.append(IC_prev_avg_max[i])
-        IC_ex_max_0.append(IC_ex_max[i])
-    if (uptake[i] > q_uptake[1]) & (uptake[i] < q_uptake[2]):
+        IC_prev_avg_max_q[cnt0,0] = IC_prev_avg_max[i]
+        IC_ex_max_q[cnt0,0] = IC_ex_max[i]
+        cnt0 += 1
+    if (uptake[i] >= q_uptake[1]) & (uptake[i] < q_uptake[2]):
         # second quartile
-        pl_intervention_effect_hi_1.append(pl_intervention_effect_hi[i])
-        phase_interval_1.append(phase_interval[i])
+        pl_intervention_effect_hi_q[cnt1,1] = pl_intervention_effect_hi[i]
+        phase_interval_q[cnt1,1] = phase_interval[i]
 
-        IC_prev_avg_max_1.append(IC_prev_avg_max[i])
-        IC_ex_max_1.append(IC_ex_max[i])
-    if (uptake[i] > q_uptake[2]) & (uptake[i] < q_uptake[3]):
+        IC_prev_avg_max_q[cnt1,1] = IC_prev_avg_max[i]
+        IC_ex_max_q[cnt1,1] = IC_ex_max[i]
+        cnt1 += 1
+    if (uptake[i] >= q_uptake[2]) & (uptake[i] < q_uptake[3]):
         # third quartile
-        pl_intervention_effect_hi_2.append(pl_intervention_effect_hi[i])
-        phase_interval_2.append(phase_interval[i])
+        pl_intervention_effect_hi_q[cnt2,2] = pl_intervention_effect_hi[i]
+        phase_interval_q[cnt2,2] = phase_interval[i]
 
-        IC_prev_avg_max_2.append(IC_prev_avg_max[i])
-        IC_ex_max_2.append(IC_ex_max[i])
-    if (uptake[i] > q_uptake[3]) & (uptake[i] < q_uptake[4]):
-        # first quartile
-        pl_intervention_effect_hi_3.append(pl_intervention_effect_hi[i])
-        phase_interval_3.append(phase_interval[i])
+        IC_prev_avg_max_q[cnt2,2] = IC_prev_avg_max[i]
+        IC_ex_max_q[cnt2,2] = IC_ex_max[i]
+        cnt2 += 1
+    if (uptake[i] >= q_uptake[3]) & (uptake[i] <= q_uptake[4]):
+        # fourth quartile
+        pl_intervention_effect_hi_q[cnt3,3] = pl_intervention_effect_hi[i]
+        phase_interval_q[cnt3,3] = phase_interval[i]
 
-        IC_prev_avg_max_3.append(IC_prev_avg_max[i])
-        IC_ex_max_3.append(IC_ex_max[i])
+        IC_prev_avg_max_q[cnt3,3] = IC_prev_avg_max[i]
+        IC_ex_max_q[cnt3,3] = IC_ex_max[i]
+        cnt3 += 1
 
-print(len(phase_interval_0))
-print(len(phase_interval_1))
-print(len(phase_interval_2))
-print(len(phase_interval_3))
+"""
+* Heatmap for IC_prev_avg_max
+"""
+f = plt.figure('heatmap_IC_prev',figsize=[12,12])
+ax_0 = f.add_subplot(221, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
+im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[:,0], y=phase_interval_q[:,0], c=IC_prev_avg_max_q[:,0], cmap='plasma')
+cbar_0 = f.colorbar(im_0, ax=ax_0)
+cbar_0.set_ticks([100, 300, 500, 700])
+cbar_0.set_ticklabels(['100', '300', '500', '700'])
+ax_0.set_xticks([0.2, 0.4])
+ax_0.set_yticks([30, 60, 90])
 
-f = plt.figure('heatmap',figsize=[12,6])
-ax_p = f.add_subplot(121, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
-im_p = ax_p.scatter(x=pl_intervention_effect_hi, y=phase_interval, c=IC_prev_avg_max, cmap='plasma')
-cbar_p = f.colorbar(im_p, ax=ax_p)
-cbar_p.set_ticks([100, 300, 500, 700])
-cbar_p.set_ticklabels(['100', '300', '500', '700'])
+ax_1 = f.add_subplot(222, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
+im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[:,1], y=phase_interval_q[:,1], c=IC_prev_avg_max[:,1], cmap='plasma')
+cbar_1 = f.colorbar(im_1, ax=ax_1)
+cbar_1.set_ticks([100, 300, 500, 700])
+cbar_1.set_ticklabels(['100', '300', '500', '700'])
+ax_1.set_xticks([0.2, 0.4])
+ax_1.set_yticks([30, 60, 90])
 
-ax_p.set_xticks([0.2, 0.4])
-ax_p.set_yticks([30, 60, 90])
+ax_2 = f.add_subplot(223, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
+im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[:,2], y=phase_interval_q[:,2], c=IC_prev_avg_max[:,2], cmap='plasma')
+cbar_2 = f.colorbar(im_2, ax=ax_2)
+cbar_2.set_ticks([100, 300, 500, 700])
+cbar_2.set_ticklabels(['100', '300', '500', '700'])
+ax_2.set_xticks([0.2, 0.4])
+ax_2.set_yticks([30, 60, 90])
 
-ax_e = f.add_subplot(122, xlabel='pl_intervention_effect_hi')
-im_e = ax_e.scatter(x=pl_intervention_effect_hi, y=phase_interval, c=IC_ex_max, cmap='plasma')
-cbar_e = f.colorbar(im_e, ax=ax_e)
-cbar_e.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
-cbar_e.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
-
-ax_e.set_xticks([0.2, 0.4])
-ax_e.set_yticks([30, 60, 90])
+ax_3 = f.add_subplot(224, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')
+im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[:,3], y=phase_interval_q[:,3], c=IC_prev_avg_max[:,3], cmap='plasma')
+cbar_3 = f.colorbar(im_3, ax=ax_3)
+cbar_3.set_ticks([100, 300, 500, 700])
+cbar_3.set_ticklabels(['100', '300', '500', '700'])
+ax_3.set_xticks([0.2, 0.4])
+ax_3.set_yticks([30, 60, 90])
 
 plt.tight_layout()
-f.savefig('figures/heatmap_PO_MC1000.png')
+f.savefig('figures/heatmap_PO_IC_prev.png')
+
+# f = plt.figure('heatmap_IC_ex',figsize=[12,6])
+# ax_e = f.add_subplot(122, xlabel='pl_intervention_effect_hi')
+# im_e = ax_e.scatter(x=pl_intervention_effect_hi, y=phase_interval, c=IC_ex_max, cmap='plasma')
+# cbar_e = f.colorbar(im_e, ax=ax_e)
+# cbar_e.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
+# cbar_e.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
+
+# ax_e.set_xticks([0.2, 0.4])
+# ax_e.set_yticks([30, 60, 90])
+
+# plt.tight_layout()
+# f.savefig('figures/heatmap_PO_MC1000.png')
 
 plt.show()
 

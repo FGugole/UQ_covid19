@@ -45,6 +45,8 @@ n_runs = 1000
 
 pl_intervention_effect_hi = np.zeros(n_runs,dtype='float')
 phase_interval = np.zeros(n_runs,dtype='float')
+uptake = np.zeros(n_runs,dtype='float')
+
 IC_prev_avg_max = np.zeros(n_runs,dtype='float')
 IC_ex_max = np.zeros(n_runs,dtype='float')
 
@@ -57,11 +59,15 @@ params = list(my_sampler.vary.get_keys())
 cnt = 0
 info = my_campaign.list_runs()
 for run in info:
-	pl_intervention_effect_hi[cnt] = run[1]['params']['lockdown_effect']
-	phase_interval[cnt] = run[1]['params']['phase_interval']
-	cnt += 1
+    pl_intervention_effect_hi[cnt] = run[1]['params']['lockdown_effect']
+    phase_interval[cnt] = run[1]['params']['phase_interval']
+    uptake[cnt] = run[1]['params']['uptake']
+    cnt += 1
 #     print(run[0])
 #     print(run[1]['params'])
+
+q_uptake = np.quantile(uptake,[0, 0.25, 0.5, 0.75, 1])
+print('q_uptake=',q_uptake)
 
 f = plt.figure('heatmap',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='pl_intervention_effect_hi', ylabel='phase_interval')

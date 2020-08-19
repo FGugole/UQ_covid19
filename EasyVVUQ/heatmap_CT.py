@@ -208,7 +208,7 @@ ax_p.set_zticks([0, 2, 4])
 
 ax_p.xaxis.labelpad = 10
 ax_p.yaxis.labelpad = 10
-ax_p.zaxis.labelpad = 15
+ax_p.zaxis.labelpad = 10
 
 ax_p.view_init(azim=-30)
 
@@ -225,7 +225,7 @@ ax_e.set_zticks([0, 2, 4])
 
 ax_e.xaxis.labelpad = 10
 ax_e.yaxis.labelpad = 10
-ax_e.zaxis.labelpad = 15
+ax_e.zaxis.labelpad = 10
 
 ax_e.view_init(azim=-30)
 

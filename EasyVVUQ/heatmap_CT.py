@@ -118,7 +118,7 @@ for i in range(n_runs):
 f = plt.figure('heatmap_IC_prev',figsize=[12,12])
 ax_0 = f.add_subplot(221, ylabel='trace_contact_reduction')
 im_0 = ax_0.scatter(x=trace_rate_I_q[:,0], y=trace_contact_reduction_q[:,0], c=IC_prev_avg_max_q[:,0], cmap='plasma', \
-    vmin=min(IC_prev_avg_max_q[:,0]), vmax=max(IC_prev_avg_max_q[:,0]))
+    vmin=min(IC_prev_avg_max_q), vmax=max(IC_prev_avg_max_q))
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([100, 400, 700, 1000])
 cbar_0.set_ticklabels(['100', '400', '700', '1000'])
@@ -127,7 +127,7 @@ ax_0.set_yticks([0.4, 0.7, 1])
 
 ax_1 = f.add_subplot(222)
 im_1 = ax_1.scatter(x=trace_rate_I_q[:,1], y=trace_contact_reduction_q[:,1], c=IC_prev_avg_max_q[:,1], cmap='plasma', \
-    vmin=min(IC_prev_avg_max_q[:,1]), vmax=max(IC_prev_avg_max_q[:,1]))
+    vmin=min(IC_prev_avg_max_q), vmax=max(IC_prev_avg_max_q))
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([100, 400, 700, 1000])
 cbar_1.set_ticklabels(['100', '400', '700', '1000'])
@@ -136,7 +136,7 @@ ax_1.set_yticks([0.4, 0.7, 1])
 
 ax_2 = f.add_subplot(223, xlabel='trace_rate_I', ylabel='trace_contact_reduction')
 im_2 = ax_2.scatter(x=trace_rate_I_q[:,2], y=trace_contact_reduction_q[:,2], c=IC_prev_avg_max_q[:,2], cmap='plasma', \
-    vmin=min(IC_prev_avg_max_q[:,2]), vmax=max(IC_prev_avg_max_q[:,2]))
+    vmin=min(IC_prev_avg_max_q), vmax=max(IC_prev_avg_max_q))
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([100, 400, 700, 1000])
 cbar_2.set_ticklabels(['100', '400', '700', '1000'])
@@ -145,7 +145,7 @@ ax_2.set_yticks([0.4, 0.7, 1])
 
 ax_3 = f.add_subplot(224, xlabel='trace_rate_I')
 im_3 = ax_3.scatter(x=trace_rate_I_q[:,3], y=trace_contact_reduction_q[:,3], c=IC_prev_avg_max_q[:,3], cmap='plasma', \
-    vmin=min(IC_prev_avg_max_q[:,3]), vmax=max(IC_prev_avg_max_q[:,3]))
+    vmin=min(IC_prev_avg_max_q), vmax=max(IC_prev_avg_max_q))
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([100, 400, 700, 1000])
 cbar_3.set_ticklabels(['100', '400', '700', '1000'])
@@ -161,7 +161,7 @@ f.savefig('figures/heatmap_CT_IC_prev.png')
 f = plt.figure('heatmap_IC_ex',figsize=[12,12])
 ax_0 = f.add_subplot(221, ylabel='trace_contact_reduction')
 im_0 = ax_0.scatter(x=trace_rate_I_q[:,0], y=trace_contact_reduction_q[:,0], c=IC_ex_max_q[:,0], cmap='plasma', \
-    vmin=min(IC_ex_max_q[:,0]), vmax=max(IC_ex_max_q[:,0]))
+    vmin=min(IC_ex_max_q), vmax=max(IC_ex_max_q))
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([0, 2e4, 4e4, 6e4])
 cbar_0.set_ticklabels(['0', '20000', '40000', '60000'])
@@ -170,7 +170,7 @@ ax_0.set_yticks([0.4, 0.7, 1])
 
 ax_1 = f.add_subplot(222)
 im_1 = ax_1.scatter(x=trace_rate_I_q[:,1], y=trace_contact_reduction_q[:,1], c=IC_ex_max_q[:,1], cmap='plasma', \
-    vmin=min(IC_ex_max_q[:,1]), vmax=max(IC_ex_max_q[:,1]))
+    vmin=min(IC_ex_max_q), vmax=max(IC_ex_max_q))
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([0, 2e4, 4e4, 6e4])
 cbar_1.set_ticklabels(['0', '20000', '40000', '60000'])
@@ -179,7 +179,7 @@ ax_1.set_yticks([0.4, 0.7, 1])
 
 ax_2 = f.add_subplot(223, xlabel='trace_rate_I', ylabel='trace_contact_reduction')
 im_2 = ax_2.scatter(x=trace_rate_I_q[:,2], y=trace_contact_reduction_q[:,2], c=IC_ex_max_q[:,2], cmap='plasma', \
-    vmin=min(IC_ex_max_q[:,2]), vmax=max(IC_ex_max_q[:,2]))
+    vmin=min(IC_ex_max_q), vmax=max(IC_ex_max_q))
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([0, 2e4, 4e4, 6e4])
 cbar_2.set_ticklabels(['0', '20000', '40000', '60000'])
@@ -188,7 +188,7 @@ ax_2.set_yticks([0.4, 0.7, 1])
 
 ax_3 = f.add_subplot(224, xlabel='trace_rate_I')
 im_3 = ax_3.scatter(x=trace_rate_I_q[:,3], y=trace_contact_reduction_q[:,3], c=IC_ex_max_q[:,3], cmap='plasma', \
-    vmin=min(IC_ex_max_q[:,3]), vmax=max(IC_ex_max_q[:,3]))
+    vmin=min(IC_ex_max_q), vmax=max(IC_ex_max_q))
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([0, 2e4, 4e4, 6e4])
 cbar_3.set_ticklabels(['0', '20000', '40000', '60000'])

@@ -118,7 +118,7 @@ for i in range(n_runs):
 f = plt.figure('heatmap_IC_prev',figsize=[12,12])
 ax_0 = f.add_subplot(221, ylabel='uptake')
 im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[:,0], y=uptake_q[:,0], c=IC_prev_avg_max_q[:,0], cmap='plasma', \
-    vmin=min(IC_prev_avg_max_q), vmax=max(IC_prev_avg_max_q))
+    vmin=np.min(IC_prev_avg_max_q), vmax=np.max(IC_prev_avg_max_q))
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([100, 300, 500, 700])
 cbar_0.set_ticklabels(['100', '300', '500', '700'])
@@ -127,7 +127,7 @@ ax_0.set_yticks([0.5, 0.75, 1])
 
 ax_1 = f.add_subplot(222)
 im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[:,1], y=uptake_q[:,1], c=IC_prev_avg_max_q[:,1], cmap='plasma', \
-    vmin=min(IC_prev_avg_max_q), vmax=max(IC_prev_avg_max_q))
+    vmin=np.min(IC_prev_avg_max_q), vmax=np.max(IC_prev_avg_max_q))
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([100, 300, 500, 700])
 cbar_1.set_ticklabels(['100', '300', '500', '700'])
@@ -136,7 +136,7 @@ ax_1.set_yticks([.5, .75, 1])
 
 ax_2 = f.add_subplot(223, xlabel='pl_intervention_effect_hi', ylabel='uptake')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[:,2], y=uptake_q[:,2], c=IC_prev_avg_max_q[:,2], cmap='plasma', \
-    vmin=min(IC_prev_avg_max_q), vmax=max(IC_prev_avg_max_q))
+    vmin=np.min(IC_prev_avg_max_q), vmax=np.max(IC_prev_avg_max_q))
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([100, 300, 500, 700])
 cbar_2.set_ticklabels(['100', '300', '500', '700'])
@@ -145,7 +145,7 @@ ax_2.set_yticks([.5, .75, 1])
 
 ax_3 = f.add_subplot(224, xlabel='pl_intervention_effect_hi')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[:,3], y=uptake_q[:,3], c=IC_prev_avg_max_q[:,3], cmap='plasma', \
-    vmin=min(IC_prev_avg_max_q), vmax=max(IC_prev_avg_max_q))
+    vmin=np.min(IC_prev_avg_max_q), vmax=np.max(IC_prev_avg_max_q))
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([100, 300, 500, 700])
 cbar_3.set_ticklabels(['100', '300', '500', '700'])
@@ -161,7 +161,7 @@ f.savefig('figures/heatmap_PO_IC_prev.png')
 f = plt.figure('heatmap_IC_ex',figsize=[12,12])
 ax_0 = f.add_subplot(221, ylabel='uptake')
 im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[:,0], y=uptake_q[:,0], c=IC_ex_max_q[:,0], cmap='plasma', \
-    vmin=min(IC_ex_max_q), vmax=max(IC_ex_max_q))
+    vmin=np.min(IC_ex_max_q), vmax=np.max(IC_ex_max_q))
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
 cbar_0.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
@@ -170,7 +170,7 @@ ax_0.set_yticks([.5, .75, 1])
 
 ax_1 = f.add_subplot(222)
 im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[:,1], y=uptake_q[:,1], c=IC_ex_max_q[:,1], cmap='plasma', \
-    vmin=min(IC_ex_max_q), vmax=max(IC_ex_max_q))
+    vmin=np.min(IC_ex_max_q), vmax=np.max(IC_ex_max_q))
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
 cbar_1.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
@@ -179,7 +179,7 @@ ax_1.set_yticks([.5, .75, 1])
 
 ax_2 = f.add_subplot(223, xlabel='pl_intervention_effect_hi', ylabel='uptake')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[:,2], y=uptake_q[:,2], c=IC_ex_max_q[:,2], cmap='plasma', \
-    vmin=min(IC_ex_max_q), vmax=max(IC_ex_max_q))
+    vmin=np.min(IC_ex_max_q), vmax=np.max(IC_ex_max_q))
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
 cbar_2.set_ticklabels(['0', '10000', '20000', '30000', '40000'])
@@ -188,7 +188,7 @@ ax_2.set_yticks([.5, .75, 1])
 
 ax_3 = f.add_subplot(224, xlabel='pl_intervention_effect_hi')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[:,3], y=uptake_q[:,3], c=IC_ex_max_q[:,3], cmap='plasma', \
-    vmin=min(IC_ex_max_q), vmax=max(IC_ex_max_q))
+    vmin=np.min(IC_ex_max_q), vmax=np.max(IC_ex_max_q))
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([0, 1e4, 2e4, 3e4, 4e4])
 cbar_3.set_ticklabels(['0', '10000', '20000', '30000', '40000'])

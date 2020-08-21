@@ -120,7 +120,7 @@ ax_e.set_xticks([0, 150, 300, 450])
 ax_e.set_yticks([0, 1e4, 2e4, 3e4])
 
 plt.tight_layout()
-f.savefig('figures/QoIs_FC_MC1000_ranking.eps')
+f.savefig('figures/QoIs_FC_MC1000_ranking.pdf')
 
 plt.show()
 

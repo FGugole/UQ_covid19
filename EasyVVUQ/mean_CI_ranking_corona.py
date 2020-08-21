@@ -21,7 +21,7 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign without biology
-campaign = uq.Campaign(state_file = "campaign_state_CT_MC1000.json", work_dir = "/tmp")
+campaign = uq.Campaign(state_file = "campaign_state_PO_MC1000.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -33,7 +33,7 @@ data = campaign.get_collation_result()
 #print(data.columns)
 
 # Reload the campaign with biology
-campaign_bio = uq.Campaign(state_file = "campaign_state_CT_bio_MC1000.json", work_dir = "/tmp")
+campaign_bio = uq.Campaign(state_file = "campaign_state_PO_bio_MC1000.json", work_dir = "/tmp")
 print('========================================================')
 print('Reloaded campaign', campaign_bio.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -112,7 +112,7 @@ ax_e.plot(t[15:-15], mean_IC_ex[15:-15], lw=2, color='blue')
 ax_e.plot(t[15:-15], IC_ex[15:-15,n_burn+1], linestyle='--', lw=2, color='cornflowerblue')
 ax_e.plot(t[15:-15], IC_ex[15:-15,-n_burn-1], linestyle='--', lw=2, color='cornflowerblue')
 # with biology
-ax_e.plot(t[15:-15], mean_IC_prev_avg_bio[15:-15], lw=2, color='darkred', label='with biology')
+ax_e.plot(t[15:-15], mean_IC_ex_bio[15:-15], lw=2, color='darkred', label='with biology')
 ax_e.plot(t[15:-15], IC_ex_bio[15:-15,n_burn+1], linestyle='--', lw=2, color='indianred')
 ax_e.plot(t[15:-15], IC_ex_bio[15:-15,-n_burn-1], linestyle='--', lw=2, color='indianred')
 # general settings
@@ -120,7 +120,7 @@ ax_e.set_xticks([0, 150, 300, 450])
 ax_e.set_yticks([0, 1e4, 2e4, 3e4])
 
 plt.tight_layout()
-f.savefig('figures/QoIs_CT_MC1000_ranking.png')
+f.savefig('figures/QoIs_PO_MC1000_ranking.png')
 
 plt.show()
 

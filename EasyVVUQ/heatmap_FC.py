@@ -71,7 +71,9 @@ im_p = ax_p.scatter(x=intervention_effect[np.where(IC_prev_avg_max <= IC_capacit
 	c='black')
 im_p = ax_p.scatter(x=intervention_effect[np.where(IC_prev_avg_max > IC_capacity)], y=uptake[np.where(IC_prev_avg_max > IC_capacity)], \
 	c=IC_prev_avg_max[np.where(IC_prev_avg_max > IC_capacity)], cmap='plasma')
-f.colorbar(im_p, ax=ax_p)
+cbar_p = f.colorbar(im_p, ax=ax_p)
+cbar_p.set_ticks([150, 250, 350, 450])
+cbar_p.set_ticklabels(['150', '250', '350', '450'])
 
 ax_p.set_xticks([0.2, 0.35, 0.5])
 ax_p.set_yticks([0.6, 0.8, 1.0])

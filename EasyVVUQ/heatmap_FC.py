@@ -84,8 +84,8 @@ im_e = ax_e.scatter(x=intervention_effect[np.where(IC_ex_max == 0)], y=uptake[np
 im_e = ax_e.scatter(x=intervention_effect[np.where(IC_ex_max > 0)], y=uptake[np.where(IC_ex_max > 0)], \
 	c=IC_ex_max[np.where(IC_ex_max > 0)], cmap='plasma')
 cbar_e = f.colorbar(im_e, ax=ax_e)
-#cbar_e.set_ticks([0, 1e4, 2e4, 3e4])
-#cbar_e.set_ticklabels(['0', '10000', '20000', '30000'])
+cbar_e.set_ticks([1e4, 2e4, 3e4])
+cbar_e.set_ticklabels(['10000', '20000', '30000'])
 
 ax_e.set_xticks([0.2, 0.35, 0.5])
 ax_e.set_yticks([0.6, 0.8, 1.0])

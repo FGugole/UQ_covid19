@@ -172,6 +172,7 @@ ax_e.get_xaxis().set_minor_formatter(NullFormatter())
 ax_p.legend(loc='best')
 plt.tight_layout()
 f.savefig('figures/cdf_bio_MC1000.png')
+f.savefig('figures/cdf_bio_MC1000.pdf')
 
 plt.show()
 

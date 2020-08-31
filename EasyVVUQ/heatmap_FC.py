@@ -53,11 +53,6 @@ markers = []
 for i in range(n_runs):
     IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
     IC_ex_max[i] = data.IC_ex_max[i*L]
-    # use a different marker for values of IC_prev_avg_max below IC_capacity
-    if IC_prev_avg_max[i] <= IC_capacity:
-    	markers.append('^')
-    else:
-    	markers.append('.')
 
 params = list(my_sampler.vary.get_keys())
 # Save parameters values used in the simulations
@@ -72,7 +67,10 @@ for run in info:
 
 f = plt.figure('heatmap',figsize=[12,6])
 ax_p = f.add_subplot(121, xlabel='intervention_effect', ylabel='uptake')
-im_p = ax_p.scatter(x=intervention_effect, y=uptake, c=IC_prev_avg_max, marker=markers, cmap='plasma')
+im_p = ax_p.scatter(x=intervention_effect[np.where(IC_prev_avg_max <= IC_capacity)], y=uptake[np.where(IC_prev_avg_max <= IC_capacity)], \
+	c='black')
+im_p = ax_p.scatter(x=intervention_effect[np.where(IC_prev_avg_max > IC_capacity)], y=uptake[np.where(IC_prev_avg_max > IC_capacity)], \
+	c=IC_prev_avg_max[np.where(IC_prev_avg_max > IC_capacity)], cmap='plasma')
 f.colorbar(im_p, ax=ax_p)
 
 ax_p.set_xticks([0.2, 0.35, 0.5])

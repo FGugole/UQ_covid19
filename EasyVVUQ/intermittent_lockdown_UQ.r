@@ -62,9 +62,9 @@ param_main <- within(param_sim, {
                         shape = 1,
                         scale = exp(log(5) - lgamma(1 + 1 / 1)))
   
-  trace_prob_E <- c(rep(0, 34))
-  trace_rate_I <- c(rep(0, 34))
-  trace_contact_reduction <- c(rep(0, 34))
+  trace_prob_E <- c(rep(0, 35))
+  trace_rate_I <- c(rep(0, 35))
+  trace_contact_reduction <- c(rep(0, 35))
 
   temp_storage <- "RAM"
   aggregate <- "population"
@@ -76,9 +76,9 @@ param_main <- within(param_sim, {
 #######################################################################################
 # Running an individual simulation for the Flattening the Curve strategy using virsim #
 #######################################################################################
-intervention_t = cumsum(c(0, 10, 7, 53, rep(c(lock_length, lift_length),15) ))
-intervention_effect = c(1, .3, .15, .25, rep(c(lock_effect, 1),15) )
-intervention_uptake = rep(uptake, length(intervention_t))
+intervention_t <- cumsum(c(0, 10, 7, 53, 30, rep(c(lift_length, lock_length),15) ))
+intervention_effect <- c(1, .3, .15, .25, 1, rep(c(lock_effect, 1),15) )
+intervention_uptake <- rep(uptake, length(intervention_t))
 
 # Select a random seed per each realization (using the system time)
 #initial_seed <- as.integer(Sys.time())

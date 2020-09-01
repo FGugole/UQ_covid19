@@ -105,7 +105,7 @@ phased_opening <- do.call(what = virsim,
                                     intervention_effect = param_temp$intervention_effect,
                                     sc_isolation_effect = param_temp$sc_isolation_effect)))
 
-phased_opening_data = aggregate_output(phased_opening$monitor)
+phased_opening_data <- aggregate_output(phased_opening$monitor)
 phased_opening_data[, c("IC_inc", "IC_prev") :=
                   gen_derived_outcome(inc = inc, time = time)]
 

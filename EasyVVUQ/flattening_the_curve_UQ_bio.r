@@ -88,9 +88,9 @@ param_main <- within(param_sim, {
 # Running an individual simulation for the Flattening the Curve strategy using virsim #
 #######################################################################################
 
-intervention_t = cumsum(c(0, 10, 7, 53, 30))
-intervention_effect = c(1, .3, .15, .25, int_effect)
-intervention_uptake = rep(uptake, length(intervention_t))
+intervention_t <- cumsum(c(0, 10, 7, 53, 30))
+intervention_effect <- c(1, .3, .15, .25, int_effect)
+intervention_uptake <- rep(uptake, length(intervention_t))
 
 # Select a random seed per each realization (using the system time)
 #initial_seed <- as.integer(Sys.time())
@@ -106,7 +106,7 @@ flat_curve <- do.call(what = virsim,
                                     intervention_effect = intervention_effect,
                                     efoi = 50 / 365 / param_main$n_agent)))
 
-flat_curve_data = aggregate_output(flat_curve$monitor)
+flat_curve_data <- aggregate_output(flat_curve$monitor)
 flat_curve_data[, c("IC_inc", "IC_prev") :=
                   gen_derived_outcome(inc = inc, time = time)]
 

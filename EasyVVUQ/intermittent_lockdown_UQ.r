@@ -93,7 +93,7 @@ intermittent_lock <- do.call(what = virsim,
                                     intervention_uptake = intervention_uptake,
                                     intervention_effect = intervention_effect)))
 
-intermittent_lock_data = aggregate_output(intermittent_lock$monitor)
+intermittent_lock_data <- aggregate_output(intermittent_lock$monitor)
 intermittent_lock_data[, c("IC_inc", "IC_prev") :=
                   gen_derived_outcome(inc = inc, time = time)]
 

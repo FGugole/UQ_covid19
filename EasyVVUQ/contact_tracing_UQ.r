@@ -74,13 +74,13 @@ param_main <- within(param_sim, {
 ##################################################################################
 
 # Define the parameters
-intervention_t = cumsum(c(0, 10, 7, 53, 30))
-intervention_effect = c(1, .3, .15, .25, 1)
-intervention_uptake = rep(1, 5)
+intervention_t <- cumsum(c(0, 10, 7, 53, 30))
+intervention_effect <- c(1, .3, .15, .25, 1)
+intervention_uptake <- rep(1, 5)
 
-trace_prob_E = c(rep(0, 4), trace_E)
-trace_rate_I = c(rep(0, 4), trace_I)
-trace_contact_reduction = c(rep(0, 4), contact_red)
+trace_prob_E <- c(rep(0, 4), trace_E)
+trace_rate_I <- c(rep(0, 4), trace_I)
+trace_contact_reduction <- c(rep(0, 4), contact_red)
 
 # Select a random seed per each realization (using the system time)
 #initial_seed <- as.integer(Sys.time())
@@ -99,7 +99,7 @@ contact_tracing <- do.call(what = virsim,
                                          trace_contact_reduction = trace_contact_reduction,
                                          efoi = 50 / 365 / param_main$n_agent)))
 
-contact_tracing_data = aggregate_output(contact_tracing$monitor)
+contact_tracing_data <- aggregate_output(contact_tracing$monitor)
 contact_tracing_data[, c("IC_inc", "IC_prev") :=
                        gen_derived_outcome(inc = inc, time = time)]
 

@@ -113,7 +113,7 @@ my_campaign.add_app(name="sc",
 vary = {
     "seed": cp.DiscreteUniform(2**14, 2**16),
     "lockdown_effect": cp.Beta(alpha=14, beta=42),
-    "lockdown_length": cp.Gamma(shape=30, scale=2),
+    "lockdown_length": cp.Gamma(shape=20, scale=2),
     "lift_length": cp.Gamma(shape=15, scale=1),
     "uptake": cp.Beta(alpha=16, beta=2),
     # "Rzero": cp.Gamma(shape=100,scale=.025),

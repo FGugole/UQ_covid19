@@ -116,10 +116,10 @@ vary = {
     "lockdown_length": cp.Gamma(shape=20, scale=2),
     "lift_length": cp.Gamma(shape=15, scale=1),
     "uptake": cp.Beta(alpha=16, beta=2),
-    # "Rzero": cp.Gamma(shape=100,scale=.025),
-    # "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
-    # "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
-    # "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
+    "Rzero": cp.Gamma(shape=100,scale=.025),
+    "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
+    "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
+    "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
 
 #my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 
@@ -139,12 +139,12 @@ my_campaign.populate_runs_dir()
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 cwd = os.getcwd()
-pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/intermittent_lockdown_UQ.r corona_in.json > output.txt ; cd .. '"
+pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/intermittent_lockdown_UQ_bio.r corona_in.json > output.txt ; cd .. '"
 print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
 
 #Save the Campaign
-my_campaign.save_state("campaign_state_IL.json")
+my_campaign.save_state("campaign_state_IL_bio.json")
 
 print('Job submission complete')
 

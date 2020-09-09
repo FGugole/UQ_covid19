@@ -119,6 +119,7 @@ ax_e.plot(t[15:-15], IC_ex_bio[15:-15,-n_burn-1], linestyle='--', lw=2, color='i
 # general settings
 ax_e.set_xticks([0, 150, 300, 450])
 ax_e.set_yticks([0, 1e4, 2e4, 3e4])
+ax_e.set_ylim([0, 3e4])
 
 plt.tight_layout()
 f.savefig('figures/QoIs_FC_MC1000_ranking.pdf')

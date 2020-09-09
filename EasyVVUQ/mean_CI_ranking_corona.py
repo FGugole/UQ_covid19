@@ -104,6 +104,7 @@ ax_p.plot(t[15:-15], IC_prev_avg_bio[15:-15,-n_burn-1], linestyle='--', lw=2, co
 ax_p.hlines(y=IC_capacity, xmin=15, xmax=L-15, linestyle=':', lw=2, color='darkorange', label='IC capacity')
 ax_p.set_xticks([0, 150, 300, 450])
 ax_p.set_yticks([0, 200, 400, 600])
+ax_p.set_ylim([0, 650])
 ax_p.legend(loc='best')
 
 ax_e = f.add_subplot(122, xlabel='time', ylabel='IC_ex')

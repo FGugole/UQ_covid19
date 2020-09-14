@@ -66,19 +66,20 @@ ax_ICp_max.set_ylim([-.1, 1.1])
 ax_ICe_max = f.add_subplot(122, title = 'IC_ex_max')
 ax_ICe_max.set_ylim([-.1, 1.1])
 
+colors = {'tab:blue':0, 'rab:orange':1, 'tab:green':2}
 idx = 0
 for param in params: 
     sobol_idx = sobols['IC_prev_avg_max'][param][200]
     low = results['conf_sobols_first']['IC_prev_avg_max'][param]['low'][200]
     high = results['conf_sobols_first']['IC_prev_avg_max'][param]['high'][200]
     yerr = np.array([low, high])
-    ax_ICp_max.errorbar(idx, sobol_idx, yerr=yerr.sort(), fmt='o')
+    ax_ICp_max.errorbar(idx, sobol_idx, yerr=yerr, fmt='o', ecolor=colors[idx])
     #
     sobol_idx = sobols['IC_ex_max'][param][200]
     low = results['conf_sobols_first']['IC_ex_max'][param]['low'][200]
     high = results['conf_sobols_first']['IC_ex_max'][param]['high'][200]
     yerr = np.array([low, high])
-    ax_ICe_max.errorbar(idx, sobol_idx, yerr=yerr.sort(), fmt='o')
+    ax_ICe_max.errorbar(idx, sobol_idx, yerr=yerr, fmt='o', ecolor=colors[idx])
     #
     idx += 1
     # print values to terminal

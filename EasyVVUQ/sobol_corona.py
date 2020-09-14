@@ -71,6 +71,10 @@ for param in params:
     ax_ICp_max.plot(idx, sobols['IC_prev_avg_max'][param][100], marker='o')
     ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][100], marker='o')
     idx += 1
+    # print values to terminal
+    print('Param = ',param)
+    print('Sobol index for IC_prev_avg_max = ', sobols['IC_prev_avg_max'][param][100])
+    print('Sobol index for IC_ex_max = ', sobols['IC_ex_max'][param][100])
 
 ax_ICp_max.set_xticks(np.arange(0, len(params), 1))
 ax_ICp_max.set_xticklabels(params, rotation=45)

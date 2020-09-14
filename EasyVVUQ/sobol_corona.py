@@ -68,13 +68,13 @@ ax_ICe_max.set_ylim([-.1, 1.1])
 
 idx = 0
 for param in params: 
-    ax_ICp_max.plot(idx, sobols['IC_prev_avg_max'][param][100], marker='o')
-    ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][100], marker='o')
+    ax_ICp_max.plot(idx, sobols['IC_prev_avg_max'][param][200], marker='o')
+    ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][200], marker='o')
     idx += 1
     # print values to terminal
     print('Param = ',param)
-    print('Sobol index for IC_prev_avg_max = ', sobols['IC_prev_avg_max'][param][100])
-    print('Sobol index for IC_ex_max = ', sobols['IC_ex_max'][param][100])
+    print('Sobol index for IC_prev_avg_max = ', sobols['IC_prev_avg_max'][param][200])
+    print('Sobol index for IC_ex_max = ', sobols['IC_ex_max'][param][200])
 
 ax_ICp_max.set_xticks(np.arange(0, len(params), 1))
 ax_ICp_max.set_xticklabels(params, rotation=45)
@@ -84,6 +84,18 @@ ax_ICe_max.set_xticklabels(params, rotation=45)
 plt.tight_layout()
 f.savefig('figures/Sobol_IC_max_FC.png')
 
+fig = plt.figure()
+ax = fig.add_subplot(111, ylim=[0,1])
+for i, param_name in enumerate(results['sobols_first']['IC_prev_avg_max']):
+    sobol_idx = results['sobols_first']['IC_prev_avg_max'][param_name]
+    low = results['conf_sobols_first']['IC_prev_avg_max'][param_name]['low']
+    high = results['conf_sobols_first']['IC_prev_avg_max'][param_name]['high']
+    yerr = np.array([sobol_idx - low, high - sobol_idx])
+    ax.errorbar(i, sobol_idx,
+                yerr=yerr,
+                fmt='*', color='b')
+plt.tight_layout()
+fig.savefig('figures/Sobol_FC_errorbar.png')
 plt.show()
 
 ### END OF CODE ###

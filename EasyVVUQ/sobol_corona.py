@@ -92,8 +92,11 @@ for param in params:
     low = results['conf_sobols_first']['IC_prev_avg_max'][param]['low'][200]
     high = results['conf_sobols_first']['IC_prev_avg_max'][param]['high'][200]
     yerr = np.array([sobol_idx-low, high-sobol_idx])
+    print(sobol_idx)
+    print(low)
+    print(high)
     print(yerr)
-    ax.errorbar(idx, sobol_idx, yerr=yerr)
+    ax.errorbar(idx, sobol_idx, yerr=yerr.sort())
     idx += 1
 
 plt.tight_layout()

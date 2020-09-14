@@ -44,4 +44,44 @@ qmc_analysis = uq.analysis.QMCAnalysis(sampler=my_sampler, qoi_cols=output_colum
 my_campaign.apply_analysis(qmc_analysis)
 
 results = my_campaign.get_last_analysis()
-print(results)
+#print(results)
+
+"""
+***************************
+* SOBOL 1st ORDER INDICES *
+***************************
+"""
+#first order Sobol indices and parameter names
+sobols = results['sobols_first']
+params = list(my_sampler.vary.get_keys())
+#print(params)
+
+time = np.arange(0, 550+1, 1)
+
+######################################################################
+f = plt.figure('Sobol_IC_max', figsize=[12, 6])
+ax_ICp_max = f.add_subplot(121, title = 'IC_prev_avg_max')
+ax_ICp_max.set_ylim([-.1, 1.1])
+
+ax_ICe_max = f.add_subplot(122, title = 'IC_ex_max')
+ax_ICe_max.set_ylim([-.1, 1.1])
+
+idx = 0
+for param in params: 
+    ax_ICp_max.plot(idx, sobols['IC_prev_avg_max'][param][100], marker='o')
+    ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][100], marker='o')
+    idx += 1
+
+ax_ICp_max.set_xticks(np.arange(0, len(params), 1))
+ax_ICp_max.set_xticklabels(params, rotation=45)
+ax_ICe_max.set_xticks(np.arange(0, len(params), 1))
+ax_ICe_max.set_xticklabels(params, rotation=45)
+#
+ax_ICi.legend(loc='best')
+#
+plt.tight_layout()
+f.savefig('figures/Sobol_IC_max.png')
+
+plt.show()
+
+### END OF CODE ###

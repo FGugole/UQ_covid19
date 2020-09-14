@@ -89,9 +89,10 @@ ax = fig.add_subplot(111, ylim=[0,1])
 idx = 0
 for param in params: 
     sobol_idx = sobols['IC_prev_avg_max'][param][200]
-    low = sobols['IC_prev_avg_max'][param]['low'][200]
-    high = sobols['IC_prev_avg_max'][param]['high'][200]
+    low = results['conf_sobols_first']['IC_prev_avg_max'][param]['low'][200]
+    high = results['conf_sobols_first']['IC_prev_avg_max'][param]['high'][200]
     yerr = np.array([sobol_idx-low, high-sobol_idx])
+    print(yerr)
     ax.errorbar(idx, sobol_idx, yerr=yerr)
     idx += 1
 

@@ -68,8 +68,18 @@ ax_ICe_max.set_ylim([-.1, 1.1])
 
 idx = 0
 for param in params: 
-    ax_ICp_max.plot(idx, sobols['IC_prev_avg_max'][param][200], marker='o')
-    ax_ICe_max.plot(idx, sobols['IC_ex_max'][param][200], marker='o')
+    sobol_idx = sobols['IC_prev_avg_max'][param][200]
+    low = results['conf_sobols_first']['IC_prev_avg_max'][param]['low'][200]
+    high = results['conf_sobols_first']['IC_prev_avg_max'][param]['high'][200]
+    yerr = np.array([low, high])
+    ax_ICp_max.errorbar(idx, sobol_idx, yerr=yerr.sort(), fmt='o')
+    #
+    sobol_idx = sobols['IC_ex_max'][param][200]
+    low = results['conf_sobols_first']['IC_ex_max'][param]['low'][200]
+    high = results['conf_sobols_first']['IC_ex_max'][param]['high'][200]
+    yerr = np.array([low, high])
+    ax_ICe_max.errorbar(idx, sobol_idx, yerr=yerr.sort(), fmt='o')
+    #
     idx += 1
     # print values to terminal
     print('Param = ',param)
@@ -84,23 +94,23 @@ ax_ICe_max.set_xticklabels(params, rotation=45)
 plt.tight_layout()
 f.savefig('figures/Sobol_IC_max_FC.png')
 
-fig = plt.figure()
-ax = fig.add_subplot(111, ylim=[0,1])
-idx = 0
-for param in params: 
-    sobol_idx = sobols['IC_prev_avg_max'][param][200]
-    low = results['conf_sobols_first']['IC_prev_avg_max'][param]['low'][200]
-    high = results['conf_sobols_first']['IC_prev_avg_max'][param]['high'][200]
-    yerr = np.array([sobol_idx-low, high-sobol_idx])
-    print(sobol_idx)
-    print(low)
-    print(high)
-    print(yerr)
-    ax.errorbar(idx, sobol_idx, yerr=yerr.sort(), fmt='o')
-    idx += 1
+# fig = plt.figure()
+# ax = fig.add_subplot(111, ylim=[0,1])
+# idx = 0
+# for param in params: 
+#     sobol_idx = sobols['IC_prev_avg_max'][param][200]
+#     low = results['conf_sobols_first']['IC_prev_avg_max'][param]['low'][200]
+#     high = results['conf_sobols_first']['IC_prev_avg_max'][param]['high'][200]
+#     yerr = np.array([low, high])
+#     print(sobol_idx)
+#     # print(low)
+#     # print(high)
+#     # print(yerr)
+#     ax.errorbar(idx, sobol_idx, yerr=yerr.sort(), fmt='o')
+#     idx += 1
 
-plt.tight_layout()
-fig.savefig('figures/Sobol_FC_errorbar.png')
+# plt.tight_layout()
+# fig.savefig('figures/Sobol_FC_errorbar.png')
 plt.show()
 
 ### END OF CODE ###

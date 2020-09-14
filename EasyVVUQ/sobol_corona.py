@@ -86,14 +86,15 @@ f.savefig('figures/Sobol_IC_max_FC.png')
 
 fig = plt.figure()
 ax = fig.add_subplot(111, ylim=[0,1])
-for i, param_name in enumerate(results['sobols_first']['IC_prev_avg_max']):
-    sobol_idx = results['sobols_first']['IC_prev_avg_max'][param_name]
-    low = results['conf_sobols_first']['IC_prev_avg_max'][param_name]['low']
-    high = results['conf_sobols_first']['IC_prev_avg_max'][param_name]['high']
-    yerr = np.array([sobol_idx - low, high - sobol_idx])
-    ax.errorbar(i, sobol_idx,
-                yerr=yerr,
-                fmt='*', color='b')
+idx = 0
+for param in params: 
+	sobol_idx = sobols['IC_prev_avg_max'][param][200]
+	low = sobols['IC_prev_avg_max'][param]['low'][200]
+	high = sobols['IC_prev_avg_max'][param]['high'][200]
+	yerr = np.array([sobol_idx-low, high-sobol_idx])
+	ax.errorbar(idx, sobol_idx, yerr=yerr)
+    idx += 1
+
 plt.tight_layout()
 fig.savefig('figures/Sobol_FC_errorbar.png')
 plt.show()

@@ -77,10 +77,8 @@ ax_ICp_max.set_xticklabels(params, rotation=45)
 ax_ICe_max.set_xticks(np.arange(0, len(params), 1))
 ax_ICe_max.set_xticklabels(params, rotation=45)
 #
-ax_ICi.legend(loc='best')
-#
 plt.tight_layout()
-f.savefig('figures/Sobol_IC_max.png')
+f.savefig('figures/Sobol_IC_max_FC.png')
 
 plt.show()
 

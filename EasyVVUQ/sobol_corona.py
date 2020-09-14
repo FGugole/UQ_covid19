@@ -96,7 +96,7 @@ for param in params:
     print(low)
     print(high)
     print(yerr)
-    ax.errorbar(idx, sobol_idx, yerr=yerr.sort())
+    ax.errorbar(idx, sobol_idx, yerr=yerr.sort(), fmt='o')
     idx += 1
 
 plt.tight_layout()

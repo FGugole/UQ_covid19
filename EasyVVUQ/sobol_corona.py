@@ -59,11 +59,10 @@ params = list(my_sampler.vary.get_keys())
 time = np.arange(0, 550+1, 1)
 
 ######################################################################
-#colors = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple']
-sobol_idx_ICp = np.zeros((1,len(params)), dtype='float')
+sobol_idx_ICp = np.zeros((len(params)), dtype='float')
 yerr_ICp = np.zeros((2,len(params)), dtype='float')
 
-sobol_idx_ICe = np.zeros((1,len(params)), dtype='float')
+sobol_idx_ICe = np.zeros((len(params)), dtype='float')
 yerr_ICe = np.zeros((2,len(params)), dtype='float')
 
 idx = 0
@@ -94,8 +93,8 @@ ax_ICp_max.set_ylim([-.1, 1.1])
 ax_ICe_max = f.add_subplot(122, title = 'IC_ex_max')
 ax_ICe_max.set_ylim([-.1, 1.1])
 
-ax_ICp_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICp, yerr=yerr_ICp, fmt='o')#, ecolor=colors[idx])
-ax_ICe_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICe, yerr=yerr_ICe, fmt='o')#, ecolor=colors[idx])
+ax_ICp_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICp, yerr=yerr_ICp, fmt='o', elinewidth=2)
+ax_ICe_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICe, yerr=yerr_ICe, fmt='o', elinewidth=2)
 
 ax_ICp_max.set_xticks(np.arange(0, len(params), 1))
 ax_ICp_max.set_xticklabels(params, rotation=45)

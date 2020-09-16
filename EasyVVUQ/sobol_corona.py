@@ -7,9 +7,6 @@ __license__= "LGPL"
 import numpy as np
 import easyvvuq as uq
 import os
-#import matplotlib as mpl
-#mpl.use('Agg')
-#from matplotlib import ticker
 import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 20})
 plt.rcParams['figure.figsize'] = 8,6
@@ -93,8 +90,10 @@ ax_ICp_max.set_ylim([-.1, 1.1])
 ax_ICe_max = f.add_subplot(122, title = 'IC_ex_max')
 ax_ICe_max.set_ylim([-.1, 1.1])
 
-ax_ICp_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICp, yerr=yerr_ICp, fmt='o', elinewidth=2)
-ax_ICe_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICe, yerr=yerr_ICe, fmt='o', elinewidth=2)
+ax_ICp_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICp, yerr=yerr_ICp, \
+    fmt='o', elinewidth=2, color='teal')
+ax_ICe_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICe, yerr=yerr_ICe, \
+    fmt='o', elinewidth=2, color='teal')
 
 ax_ICp_max.set_xticks(np.arange(0, len(params), 1))
 ax_ICp_max.set_xticklabels(params, rotation=45)
@@ -104,23 +103,6 @@ ax_ICe_max.set_xticklabels(params, rotation=45)
 plt.tight_layout()
 f.savefig('figures/Sobol_IC_max_FC.png')
 
-# fig = plt.figure()
-# ax = fig.add_subplot(111, ylim=[0,1])
-# idx = 0
-# for param in params: 
-#     sobol_idx = sobols['IC_prev_avg_max'][param][200]
-#     low = results['conf_sobols_first']['IC_prev_avg_max'][param]['low'][200]
-#     high = results['conf_sobols_first']['IC_prev_avg_max'][param]['high'][200]
-#     yerr = np.array([low, high])
-#     print(sobol_idx)
-#     # print(low)
-#     # print(high)
-#     # print(yerr)
-#     ax.errorbar(idx, sobol_idx, yerr=yerr.sort(), fmt='o')
-#     idx += 1
-
-# plt.tight_layout()
-# fig.savefig('figures/Sobol_FC_errorbar.png')
 plt.show()
 
 ### END OF CODE ###

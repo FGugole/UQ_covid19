@@ -73,9 +73,9 @@ param_main <- within(param_sim, {
   verbose <- FALSE # turn off printing of progress to console
 })
 
-#######################################################################################
-# Running an individual simulation for the Flattening the Curve strategy using virsim #
-#######################################################################################
+#################################################################################
+# Running an individual simulation for the Phased Opening strategy using virsim #
+#################################################################################
 
 param_temp <- gen_phased_lift(intervention_start = 15,
                               init_lockdown_dur = 60,

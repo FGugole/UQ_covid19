@@ -73,9 +73,9 @@ param_main <- within(param_sim, {
   verbose <- FALSE # turn off printing of progress to console
 })
 
-#######################################################################################
-# Running an individual simulation for the Flattening the Curve strategy using virsim #
-#######################################################################################
+########################################################################################
+# Running an individual simulation for the Intermittent Lockdown strategy using virsim #
+########################################################################################
 intervention_t <- cumsum(c(0, 10, 7, 53, 30, 25, rep(c(lock_length, lift_length),10) ))
 intervention_effect <- c(1, .3, .15, .25, rep(c(1, lock_effect),11) )
 intervention_uptake <- rep(uptake, length(intervention_t))

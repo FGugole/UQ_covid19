@@ -1,7 +1,7 @@
 # Prep ----
 rm(list = ls())
 
-remotes::install_gitlab("luccoffeng/virsim")
+# remotes::install_gitlab("luccoffeng/virsim")
 
 library(virsim)
 library(ggplot2)

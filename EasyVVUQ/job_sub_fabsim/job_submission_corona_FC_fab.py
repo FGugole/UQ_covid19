@@ -12,7 +12,7 @@ import fabsim3_cmd_api as fab
 config = 'virsim'
 script = 'virsim_FC'
 machine = 'eagle_vecma'
-workdir = '/home/plgrid/plggugole/VirsimCampaigns'#'/tmp'
+workdir = '/home/federica/Desktop/VirsimCampaigns'#'/tmp'
 
 #home dir of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
@@ -126,7 +126,7 @@ vary = {
     # "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
 
-sampler = uq.sampling.QMCSampler(vary, n_mc_samples=1e3)
+sampler = uq.sampling.QMCSampler(vary, n_mc_samples=1000)
 
 # Associate the sampler with the campaign
 campaign.set_sampler(sampler)

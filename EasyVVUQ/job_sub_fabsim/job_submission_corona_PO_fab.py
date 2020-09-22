@@ -12,7 +12,7 @@ import fabsim3_cmd_api as fab
 config = 'virsim'
 script = 'virsim_PO'
 machine = 'eagle_vecma'
-workdir = '/home/plgrid/plggugole/VirsimCampaigns'#'/tmp'
+workdir = '/home/federica/Desktop/VirsimCampaigns'#'/tmp'
 
 #home dir of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))

@@ -5,3 +5,5 @@ exec/.Rhistory
 exec/log.txt
 figures/*
 EasyVVUQ/nohup.out
+EasyVVUQ/job_sub_fabsim/*.json
+EasyVVUQ/job_sub_fabsim/__pycache__/*

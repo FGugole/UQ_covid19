@@ -12,13 +12,13 @@ import fabsim3_cmd_api as fab
 config = 'virsim'
 script = 'virsim_PO'
 machine = 'eagle_vecma'
-workdir = '/tmp'
+workdir = '/home/plgrid/plggugole/VirsimCampaigns'#'/tmp'
 
 #home dir of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
 
-# Set up a fresh campaign called "corona"
-campaign = uq.Campaign(name='corona', work_dir=workdir)
+# Set up a fresh campaign called "virsim_PO"
+campaign = uq.Campaign(name='virsim_PO', work_dir=workdir)
 
 # Define parameter space
 params = {

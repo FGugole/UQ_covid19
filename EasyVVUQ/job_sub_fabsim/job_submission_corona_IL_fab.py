@@ -9,7 +9,7 @@ import easyvvuq as uq
 import os, subprocess
 import fabsim3_cmd_api as fab
 
-config = 'virsim'
+config = 'virsim_IL'
 script = 'virsim_IL'
 machine = 'eagle_vecma'
 workdir = '/home/federica/Desktop/VirsimCampaigns'#'/tmp'
@@ -130,7 +130,7 @@ vary = {
 
 #sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 
 #                                   quadrature_rule='G', sparse=False)
-sampler = uq.sampling.QMCSampler(vary=vary, n_mc_samples=2)
+sampler = uq.sampling.MCSampler(vary=vary, n_mc_samples=2)
 
 # Associate the sampler with the campaign
 campaign.set_sampler(sampler)
@@ -139,6 +139,9 @@ campaign.set_sampler(sampler)
 campaign.draw_samples()
 campaign.populate_runs_dir()
 
+#Save the Campaign
+campaign.save_state("campaign_state_IL.json")
+
 # run the UQ ensemble
 fab.run_uq_ensemble(config, campaign.campaign_dir, script=script,
                     machine=machine, PilotJob = True)
@@ -146,19 +149,19 @@ fab.run_uq_ensemble(config, campaign.campaign_dir, script=script,
 #wait for job to complete
 # fab.wait(machine=machine)
 
-#wait for jobs to complete and check if all output files are retrieved 
-#from the remote machine
-fab.verify(config, campaign.campaign_dir, 
-            campaign._active_app_decoder.target_filename, 
-            machine=machine, PilotJob=True)
+# #wait for jobs to complete and check if all output files are retrieved 
+# #from the remote machine
+# fab.verify(config, campaign.campaign_dir, 
+#             campaign._active_app_decoder.target_filename, 
+#             machine=machine, PilotJob=True)
 
-#run the UQ ensemble
-fab.get_uq_samples(config, campaign.campaign_dir, sampler._n_samples,
-                   skip=0, machine='eagle_vecma')
-campaign.collate()
+# #run the UQ ensemble
+# fab.get_uq_samples(config, campaign.campaign_dir, sampler._n_samples,
+#                    skip=0, machine='eagle_vecma')
+# campaign.collate()
 
-#Save the Campaign
-campaign.save_state("campaign_state_IL.json")
+# #Save the Campaign
+# campaign.save_state("campaign_state_IL.json")
 
 print('Job submission complete')
 

@@ -17,24 +17,30 @@ import fabsim3_cmd_api as fab
 *****************
 """
 
-config = 'virsim'
-script = 'virsim_FC'
+config = 'virsim_IL'
+script = 'virsim_IL'
 machine = 'eagle_vecma'
-workdir = '/tmp'
+workdir = '/home/federica/Desktop/VirsimCampaigns'#'/tmp'
 
 # home directory of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-campaign = uq.Campaign(state_file = "campaign_state_CT.json", work_dir = workdir)
+campaign = uq.Campaign(state_file = "campaign_state_IL.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
 # get sampler and output columns from my_campaign object
 sampler = campaign._active_sampler
+# print(type(sampler._samples))
+# print(sampler._samples.shape)
 
 output_columns = campaign._active_app_decoder.output_columns
+
+fab.verify(config, campaign.campaign_dir, 
+            campaign._active_app_decoder.target_filename, 
+            machine=machine, PilotJob=True)
 
 fab.get_uq_samples(config, campaign.campaign_dir, sampler._n_samples,
                    skip=0, machine='eagle_vecma')
@@ -110,7 +116,7 @@ ax_ICe_max.set_xticks(np.arange(0, len(params), 1))
 ax_ICe_max.set_xticklabels(params, rotation=45)
 #
 plt.tight_layout()
-f.savefig('Sobol_IC_max_CT.png')
+f.savefig('figures/Sobol_IC_max_IL.png')
 
 plt.show()
 

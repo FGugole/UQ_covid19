@@ -11,13 +11,14 @@ import os, subprocess
 #home dir of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
 
-# Set up a fresh campaign called "corona"
-my_campaign = uq.Campaign(name='corona', work_dir='/tmp')
+# Set up a fresh campaign 
+workdir = '/export/scratch2/home/federica/'
+my_campaign = uq.Campaign(name='virsim_PO_bio_', work_dir=workdir)
 
 # Define parameter space
 params = {
     "seed": {
-        "type": "float",
+        "type": "integer",
         "min": 0,
         "max": 2**31,
         "default": 12345},
@@ -143,7 +144,7 @@ print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
 
 #Save the Campaign
-my_campaign.save_state("campaign_state_PO.json")
+my_campaign.save_state("campaign_state_PO_bio.json")
 
 print('Job submission complete')
 

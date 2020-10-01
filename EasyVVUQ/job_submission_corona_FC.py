@@ -11,13 +11,14 @@ import os, subprocess
 #home dir of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
 
-# Set up a fresh campaign called "corona"
-my_campaign = uq.Campaign(name='corona', work_dir='/tmp')
+# Set up a fresh campaign 
+workdir = '/export/scratch2/home/federica/'
+my_campaign = uq.Campaign(name='virsim_FC_bio_', work_dir=workdir)
 
 # Define parameter space
 params = {
     "seed": {
-        "type": "float",
+        "type": "integer",
         "min": 0,
         "max": 2**31,
         "default": 12345},
@@ -114,10 +115,10 @@ vary = {
     "seed": cp.DiscreteUniform(2**14, 2**16),
     "intervention_effect": cp.Beta(alpha=38, beta=70),
     "uptake": cp.Beta(alpha=16, beta=2),
-    # "Rzero": cp.Gamma(shape=100,scale=.025),
-    # "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
-    # "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
-    # "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
+    "Rzero": cp.Gamma(shape=100,scale=.025),
+    "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
+    "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
+    "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
 
 # Select the MC sampler
@@ -137,12 +138,12 @@ my_campaign.populate_runs_dir()
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 cwd = os.getcwd()
-pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ.r corona_in.json > output.txt ; cd .. '"
+pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ_bio.r corona_in.json > output.txt ; cd .. '"
 print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
 
 #Save the Campaign
-my_campaign.save_state("campaign_state_FC.json")
+my_campaign.save_state("campaign_state_FC_bio.json")
 
 print('Job submission complete')
 

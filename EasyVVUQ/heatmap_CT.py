@@ -116,7 +116,7 @@ for i in range(n_runs):
 * Heatmap for IC_prev_avg_max
 """
 f = plt.figure('heatmap_IC_prev',figsize=[12,12])
-ax_0 = f.add_subplot(221, ylabel='trace_contact_reduction')
+ax_0 = f.add_subplot(221, ylabel='Contact reduction \n of traced individuals')
 im_0 = ax_0.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,0] <= IC_capacity),0], \
     y=trace_contact_reduction_q[np.where(IC_prev_avg_max_q[:,0] <= IC_capacity),0], c='black')
 im_0 = ax_0.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,0] > IC_capacity),0], \
@@ -142,7 +142,7 @@ cbar_1.set_ticklabels(['200', '600', '1000'])
 ax_1.set_xticks([0, 2, 4])
 ax_1.set_yticks([0.4, 0.7, 1])
 
-ax_2 = f.add_subplot(223, xlabel='trace_rate_I', ylabel='trace_contact_reduction')
+ax_2 = f.add_subplot(223, xlabel='Rate per day of \n identified infected individuals', ylabel='Contact reduction \n of traced individuals')
 im_2 = ax_2.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,2] <= IC_capacity),2], \
     y=trace_contact_reduction_q[np.where(IC_prev_avg_max_q[:,2] <= IC_capacity),2], c='black')
 im_2 = ax_2.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,2] > IC_capacity),2], \
@@ -155,7 +155,7 @@ cbar_2.set_ticklabels(['200', '600', '1000'])
 ax_2.set_xticks([0, 2, 4])
 ax_2.set_yticks([0.4, 0.7, 1])
 
-ax_3 = f.add_subplot(224, xlabel='trace_rate_I')
+ax_3 = f.add_subplot(224, xlabel='Rate per day of \n identified infected individuals')
 im_3 = ax_3.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,3] <= IC_capacity),3], \
     y=trace_contact_reduction_q[np.where(IC_prev_avg_max_q[:,3] <= IC_capacity),3], c='black')
 im_3 = ax_3.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,3] > IC_capacity),3], \
@@ -175,7 +175,7 @@ f.savefig('figures/heatmap_CT_IC_prev.png')
 * Heatmap for IC_ex_max
 """
 f = plt.figure('heatmap_IC_ex',figsize=[12,12])
-ax_0 = f.add_subplot(221, ylabel='trace_contact_reduction')
+ax_0 = f.add_subplot(221, ylabel='Contact reduction \n of traced individuals')
 im_0 = ax_0.scatter(x=trace_rate_I_q[np.where(IC_ex_max_q[:,0] == 0),0], \
     y=trace_contact_reduction_q[np.where(IC_ex_max_q[:,0] == 0),0], c='black')
 im_0 = ax_0.scatter(x=trace_rate_I_q[np.where(IC_ex_max_q[:,0] > 0),0], \
@@ -201,7 +201,7 @@ cbar_1.set_ticklabels(['20000', '40000', '60000'])
 ax_1.set_xticks([0, 2, 4])
 ax_1.set_yticks([0.4, 0.7, 1])
 
-ax_2 = f.add_subplot(223, xlabel='trace_rate_I', ylabel='trace_contact_reduction')
+ax_2 = f.add_subplot(223, xlabel='Rate per day of \n identified infected individuals', ylabel='Contact reduction \n of traced individuals')
 im_2 = ax_2.scatter(x=trace_rate_I_q[np.where(IC_ex_max_q[:,2] == 0),2], \
     y=trace_contact_reduction_q[np.where(IC_ex_max_q[:,2] == 0),2], c='black')
 im_2 = ax_2.scatter(x=trace_rate_I_q[np.where(IC_ex_max_q[:,2] > 0),2], \
@@ -214,7 +214,7 @@ cbar_2.set_ticklabels(['20000', '40000', '60000'])
 ax_2.set_xticks([0, 2, 4])
 ax_2.set_yticks([0.4, 0.7, 1])
 
-ax_3 = f.add_subplot(224, xlabel='trace_rate_I')
+ax_3 = f.add_subplot(224, xlabel='Rate per day of \n identified infected individuals')
 im_3 = ax_3.scatter(x=trace_rate_I_q[np.where(IC_ex_max_q[:,3] == 0),3], \
     y=trace_contact_reduction_q[np.where(IC_ex_max_q[:,3] == 0),3], c='black')
 im_3 = ax_3.scatter(x=trace_rate_I_q[np.where(IC_ex_max_q[:,3] > 0),3], \

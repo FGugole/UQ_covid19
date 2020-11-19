@@ -116,7 +116,7 @@ for i in range(n_runs):
 * Heatmap for IC_prev_avg_max
 """
 f = plt.figure('heatmap_IC_prev',figsize=[12,12])
-ax_0 = f.add_subplot(221, ylabel='uptake')
+ax_0 = f.add_subplot(221, ylabel='Uptake by the population')
 im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,0] <= IC_capacity),0], \
     y=uptake_q[np.where(IC_prev_avg_max_q[:,0] <= IC_capacity),0], c='black')
 im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,0] > IC_capacity),0], \
@@ -140,7 +140,7 @@ cbar_1.set_ticklabels(['200', '350', '500', '650'])
 ax_1.set_xticks([0.2, 0.4])
 ax_1.set_yticks([.5, .75, 1])
 
-ax_2 = f.add_subplot(223, xlabel='pl_intervention_effect_hi', ylabel='uptake')
+ax_2 = f.add_subplot(223, xlabel='Effect of intervention \n where not yet lifted', ylabel='Uptake by the population')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,2] <= IC_capacity),2], \
     y=uptake_q[np.where(IC_prev_avg_max_q[:,2] <= IC_capacity),2], c='black')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,2] > IC_capacity),2], \
@@ -152,7 +152,7 @@ cbar_2.set_ticklabels(['200', '350', '500', '650'])
 ax_2.set_xticks([0.2, 0.4])
 ax_2.set_yticks([.5, .75, 1])
 
-ax_3 = f.add_subplot(224, xlabel='pl_intervention_effect_hi')
+ax_3 = f.add_subplot(224, xlabel='Effect of intervention \n where not yet lifted')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,3] <= IC_capacity),3], \
     y=uptake_q[np.where(IC_prev_avg_max_q[:,3] <= IC_capacity),3], c='black')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,3] > IC_capacity),3], \
@@ -171,7 +171,7 @@ f.savefig('figures/heatmap_PO_IC_prev.png')
 * Heatmap for IC_ex_max
 """
 f = plt.figure('heatmap_IC_ex',figsize=[12,12])
-ax_0 = f.add_subplot(221, ylabel='uptake')
+ax_0 = f.add_subplot(221, ylabel='Uptake by the population')
 im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,0] == 0),0], \
     y=uptake_q[np.where(IC_ex_max_q[:,0] == 0),0], c='black')
 im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,0] > 0),0], \
@@ -195,7 +195,7 @@ cbar_1.set_ticklabels(['10000', '20000', '30000', '40000'])
 ax_1.set_xticks([0.2, 0.4])
 ax_1.set_yticks([.5, .75, 1])
 
-ax_2 = f.add_subplot(223, xlabel='pl_intervention_effect_hi', ylabel='uptake')
+ax_2 = f.add_subplot(223, xlabel='Effect of intervention \n where not yet lifted', ylabel='Uptake by the population')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,2] == 0),2], \
     y=uptake_q[np.where(IC_ex_max_q[:,2] == 0),2], c='black')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,2] > 0),2], \
@@ -207,7 +207,7 @@ cbar_2.set_ticklabels(['10000', '20000', '30000', '40000'])
 ax_2.set_xticks([0.2, 0.4])
 ax_2.set_yticks([.5, .75, 1])
 
-ax_3 = f.add_subplot(224, xlabel='pl_intervention_effect_hi')
+ax_3 = f.add_subplot(224, xlabel='Effect of intervention \n where not yet lifted')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,3] == 0),3], \
     y=uptake_q[np.where(IC_ex_max_q[:,3] == 0),3], c='black')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,3] > 0),3], \

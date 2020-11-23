@@ -12,7 +12,7 @@ import fabsim3_cmd_api as fab
 config = 'virsim'
 script = 'virsim_FC'
 machine = 'eagle_vecma'
-workdir = '/home/federica/Desktop/VirsimCampaigns'#'/tmp'
+workdir = '/ufs/federica/Desktop/VirsimCampaigns'#'/tmp'
 
 #home dir of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
@@ -97,7 +97,7 @@ params = {
         "default": "output.csv"}}
 
 output_filename = params["out_file"]["default"]
-output_columns = ["S","E","I","R","IC_inc","IC_prev","IC_prev_avg","IC_prev_avg_max","IC_ex","IC_ex_max"]
+output_columns = ["IC_prev_avg_max","IC_ex_max"]
 
 encoder = uq.encoders.GenericEncoder(
     template_fname= HOME + '/corona.template',
@@ -106,7 +106,8 @@ encoder = uq.encoders.GenericEncoder(
 decoder = uq.decoders.SimpleCSV(target_filename=output_filename,
                                 output_columns=output_columns,
                                 header=0)
-collater = uq.collate.AggregateSamples(average=False)
+# collater = uq.collate.AggregateSamples(average=False)
+collater = uq.collate.AggregateHDF5()
 
 # Add the SC app (automatically set as current app)
 campaign.add_app(name="sc",
@@ -126,8 +127,7 @@ vary = {
     # "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
 
-#sampler = uq.sampling.MCSampler(vary, n_mc_samples=1000)
-my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e3)
+sampler = uq.sampling.MCSampler(vary, n_mc_samples=20)
 
 # Associate the sampler with the campaign
 campaign.set_sampler(sampler)
@@ -136,11 +136,11 @@ campaign.draw_samples()
 campaign.populate_runs_dir()
 
 #Save the Campaign
-campaign.save_state("campaign_state_FC_nobio.json")
+campaign.save_state("campaign_state_FC.json")
 
 # run the UQ ensemble
 fab.run_uq_ensemble(config, campaign.campaign_dir, script=script,
-                    machine=machine, PilotJob = True)
+                    machine=machine, PJ=True)
 
 #wait for job to complete
 # fab.wait(machine=machine)

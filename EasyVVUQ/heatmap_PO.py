@@ -140,7 +140,7 @@ cbar_1.set_ticklabels(['200', '350', '500', '650'])
 ax_1.set_xticks([0.2, 0.4])
 ax_1.set_yticks([.5, .75, 1])
 
-ax_2 = f.add_subplot(223, xlabel='Effect of intervention \n where not yet lifted', ylabel='Uptake by the population')
+ax_2 = f.add_subplot(223, xlabel='Relative level of transmission \n where still in lockdown', ylabel='Uptake by the population')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,2] <= IC_capacity),2], \
     y=uptake_q[np.where(IC_prev_avg_max_q[:,2] <= IC_capacity),2], c='black')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,2] > IC_capacity),2], \
@@ -152,7 +152,7 @@ cbar_2.set_ticklabels(['200', '350', '500', '650'])
 ax_2.set_xticks([0.2, 0.4])
 ax_2.set_yticks([.5, .75, 1])
 
-ax_3 = f.add_subplot(224, xlabel='Effect of intervention \n where not yet lifted')
+ax_3 = f.add_subplot(224, xlabel='Relative level of transmission \n where still in lockdown')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,3] <= IC_capacity),3], \
     y=uptake_q[np.where(IC_prev_avg_max_q[:,3] <= IC_capacity),3], c='black')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,3] > IC_capacity),3], \

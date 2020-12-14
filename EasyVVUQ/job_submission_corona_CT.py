@@ -13,7 +13,7 @@ HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Set up a fresh campaign 
 workdir = '/export/scratch2/home/federica/'
-my_campaign = uq.Campaign(name='virsim_CT_nobio_', work_dir=workdir)
+my_campaign = uq.Campaign(name='virsim_CT_bio_', work_dir=workdir)
 
 # Define parameter space
 params = {
@@ -92,23 +92,19 @@ params = {
         "default": "output.csv"}}
     
 output_filename = params["out_file"]["default"]
-output_columns = ["S","E","I","R","IC_inc","IC_prev","IC_prev_avg","IC_prev_avg_max","IC_ex","IC_ex_max"]
+output_columns = ["IC_prev_avg_max","IC_ex_max"]
 
 encoder = uq.encoders.GenericEncoder(
     template_fname= HOME + '/corona.template',
     delimiter='$',
     target_filename='corona_in.json')
 decoder = uq.decoders.SimpleCSV(target_filename=output_filename,
-                                output_columns=output_columns,
-                                header=0)
-collater = uq.collate.AggregateSamples(average=False)
+                                output_columns=output_columns)
 
-# Add the SC app (automatically set as current app)
-my_campaign.add_app(name="sc",
+my_campaign.add_app(name='mc',
                     params=params,
                     encoder=encoder,
-                    decoder=decoder,
-                    collater=collater) 
+                    decoder=decoder) 
 
 # Create the sampler
 vary = {
@@ -116,15 +112,13 @@ vary = {
     "trace_prob_E": cp.Beta(alpha=2, beta=4),
     "trace_rate_I": cp.Gamma(shape=2, scale=.4),
     "trace_contact_reduction": cp.Beta(alpha=10, beta=2),
-    # "Rzero": cp.Gamma(shape=100,scale=.025),
-    # "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
-    # "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
-    # "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
+    "Rzero": cp.Gamma(shape=100,scale=.025),
+    "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
+    "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
+    "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
 
-#my_sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 
-#                                   quadrature_rule='G', sparse=False)
-my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e3)
+my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e2)
 
 # Associate the sampler with the campaign
 my_campaign.set_sampler(my_sampler)
@@ -134,17 +128,17 @@ my_campaign.draw_samples()
 
 my_campaign.populate_runs_dir()
 
-#Run execution sequentially 
-#my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
+# Save the campaign
+my_campaign.save_state('campaign_state_CT_bio_1e2.json')
+
+# Run execution sequentially 
+#my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ_bio.r corona_in.json', interpret='Rscript'))
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 cwd = os.getcwd()
-pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/contact_tracing_UQ.r corona_in.json > output.txt ; cd .. '"
+pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 4 'cd {{}} ; Rscript {cwd}/contact_tracing_UQ_bio.r corona_in.json > output.txt ; cd .. '"
 print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
-
-#Save the Campaign
-my_campaign.save_state("campaign_state_CT_nobio.json")
 
 print('Job submission complete')
 

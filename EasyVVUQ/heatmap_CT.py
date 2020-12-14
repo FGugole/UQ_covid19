@@ -24,53 +24,44 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_CT_MC1000.json", work_dir = "/tmp")
+workdir = '/export/scratch2/home/federica'
+my_campaign = uq.Campaign(state_file = "campaign_state_CT_nobio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 my_sampler = my_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 my_campaign.collate()
 # get full dataset of data
 data = my_campaign.get_collation_result()
 #print(data.columns)
-
-L = 551 
+ 
 IC_capacity = 109
 
-n_runs = 1000
+trace_prob_E = data['trace_prob_E',0] 
+trace_prob_E = trace_prob_E.to_numpy()
 
-trace_prob_E = np.zeros(n_runs,dtype='float')
-trace_rate_I = np.zeros(n_runs,dtype='float')
-trace_contact_reduction = np.zeros(n_runs,dtype='float')
+trace_rate_I = data['trace_rate_I',0] 
+trace_rate_I = trace_rate_I.to_numpy()
 
-IC_prev_avg_max = np.zeros(n_runs,dtype='float')
-IC_ex_max = np.zeros(n_runs,dtype='float')
+trace_contact_reduction = data['trace_contact_reduction',0] 
+trace_contact_reduction = trace_contact_reduction.to_numpy()
 
-for i in range(n_runs):
-    IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
-    IC_ex_max[i] = data.IC_ex_max[i*L]
+IC_prev_avg_max = data['IC_prev_avg_max',0] 
+IC_prev_avg_max = IC_prev_avg_max.to_numpy()
 
-params = list(my_sampler.vary.get_keys())
-# Save parameters values used in the simulations
-cnt = 0
-info = my_campaign.list_runs()
-for run in info:
-    trace_prob_E[cnt] = run[1]['params']['trace_prob_E']
-    trace_rate_I[cnt] = run[1]['params']['trace_rate_I']
-    trace_contact_reduction[cnt] = run[1]['params']['trace_contact_reduction']
-    cnt += 1
-#     print(run[0])
-#     print(run[1]['params'])
+IC_ex_max = data['IC_ex_max',0] 
+IC_ex_max = IC_ex_max.to_numpy()
+
+n_runs = len(IC_ex_max)
+#print('n_runs = ', n_runs)
 
 q_trace_prob_E = np.quantile(trace_prob_E,[0, 0.25, 0.5, 0.75, 1])
-# print('q_prob_E=',q_prob_E)
 
-# Take slabs of data corresponding to the quartiles of uptake
+# Take slabs of data corresponding to the quartiles of trace_prob_E
 trace_rate_I_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 trace_contact_reduction_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 IC_prev_avg_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
@@ -127,7 +118,7 @@ cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([200, 600, 1000])
 cbar_0.set_ticklabels(['200', '600', '1000'])
 ax_0.set_xticks([0, 2, 4])
-ax_0.set_yticks([0.4, 0.7, 1])
+ax_0.set_yticks([0.4, 0.6, 0.8, 1])
 
 ax_1 = f.add_subplot(222)
 im_1 = ax_1.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,1] <= IC_capacity),1], \
@@ -140,7 +131,7 @@ cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([200, 600, 1000])
 cbar_1.set_ticklabels(['200', '600', '1000'])
 ax_1.set_xticks([0, 2, 4])
-ax_1.set_yticks([0.4, 0.7, 1])
+ax_1.set_yticks([0.4, 0.6, 0.8, 1])
 
 ax_2 = f.add_subplot(223, xlabel='Rate per day of \n identified infected individuals', ylabel='Contact reduction \n of traced individuals')
 im_2 = ax_2.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,2] <= IC_capacity),2], \
@@ -153,7 +144,7 @@ cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([200, 600, 1000])
 cbar_2.set_ticklabels(['200', '600', '1000'])
 ax_2.set_xticks([0, 2, 4])
-ax_2.set_yticks([0.4, 0.7, 1])
+ax_2.set_yticks([0.4, 0.6, 0.8, 1])
 
 ax_3 = f.add_subplot(224, xlabel='Rate per day of \n identified infected individuals')
 im_3 = ax_3.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,3] <= IC_capacity),3], \
@@ -166,10 +157,10 @@ cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([200, 600, 1000])
 cbar_3.set_ticklabels(['200', '600', '1000'])
 ax_3.set_xticks([0, 2, 4])
-ax_3.set_yticks([0.4, 0.7, 1])
+ax_3.set_yticks([0.4, 0.6, 0.8, 1])
 
 plt.tight_layout()
-f.savefig('figures/heatmap_CT_IC_prev.png')
+f.savefig('figures/heatmap_CT_IC_prev_1e2.png')
 
 """
 * Heatmap for IC_ex_max
@@ -186,7 +177,7 @@ cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([2e4, 4e4, 6e4])
 cbar_0.set_ticklabels(['20000', '40000', '60000'])
 ax_0.set_xticks([0, 2, 4])
-ax_0.set_yticks([0.4, 0.7, 1])
+ax_0.set_yticks([0.4, 0.6, 0.8, 1])
 
 ax_1 = f.add_subplot(222)
 im_1 = ax_1.scatter(x=trace_rate_I_q[np.where(IC_ex_max_q[:,1] == 0),1], \
@@ -199,7 +190,7 @@ cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([2e4, 4e4, 6e4])
 cbar_1.set_ticklabels(['20000', '40000', '60000'])
 ax_1.set_xticks([0, 2, 4])
-ax_1.set_yticks([0.4, 0.7, 1])
+ax_1.set_yticks([0.4, 0.6, 0.8, 1])
 
 ax_2 = f.add_subplot(223, xlabel='Rate per day of \n identified infected individuals', ylabel='Contact reduction \n of traced individuals')
 im_2 = ax_2.scatter(x=trace_rate_I_q[np.where(IC_ex_max_q[:,2] == 0),2], \
@@ -212,7 +203,7 @@ cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([2e4, 4e4, 6e4])
 cbar_2.set_ticklabels(['20000', '40000', '60000'])
 ax_2.set_xticks([0, 2, 4])
-ax_2.set_yticks([0.4, 0.7, 1])
+ax_2.set_yticks([0.4, 0.6, 0.8, 1])
 
 ax_3 = f.add_subplot(224, xlabel='Rate per day of \n identified infected individuals')
 im_3 = ax_3.scatter(x=trace_rate_I_q[np.where(IC_ex_max_q[:,3] == 0),3], \
@@ -225,10 +216,10 @@ cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([2e4, 4e4, 6e4])
 cbar_3.set_ticklabels(['20000', '40000', '60000'])
 ax_3.set_xticks([0, 2, 4])
-ax_3.set_yticks([0.4, 0.7, 1])
+ax_3.set_yticks([0.4, 0.6, 0.8, 1])
 
 plt.tight_layout()
-f.savefig('figures/heatmap_CT_IC_ex.png')
+f.savefig('figures/heatmap_CT_IC_ex_1e2.png')
 
 """
 * 3D plots *
@@ -282,7 +273,7 @@ ax_e.zaxis.labelpad = 5
 ax_e.view_init(azim=-30)
 
 plt.tight_layout()
-f.savefig('figures/heatmap_CT_MC1000.png')
+f.savefig('figures/heatmap_CT_1e2.png')
 
 plt.show()
 

@@ -1,7 +1,7 @@
 # Prep ----
 rm(list = ls())
 
-#remotes::install_gitlab("luccoffeng/virsim")
+remotes::install_gitlab("luccoffeng/virsim")
 
 library(virsim)
 library(ggplot2)
@@ -95,11 +95,7 @@ trace_prob_E <- c(rep(0, 4), trace_E)
 trace_rate_I <- c(rep(0, 4), trace_I)
 trace_contact_reduction <- c(rep(0, 4), contact_red)
 
-# Select a random seed per each realization (using the system time)
-#initial_seed <- as.integer(Sys.time())
-# take the last 5 digits of the initial seed
-#the_seed <- initial_seed %% 1e5
-# set the seed
+# Set the seed
 set.seed(rnd_seed)
 
 contact_tracing <- do.call(what = virsim,
@@ -123,11 +119,8 @@ L <- length(contact_tracing_data$IC_prev)
 IC_prev_avg <- vector(mode="numeric", length=L)
 
 avg_window <- 30
-# for (i in 1:L){
-#   IC_prev_avg[i] <- mean(contact_tracing_data$IC_prev[i:min(i+avg_window-1,L)])
-# }
 IC_prev_avg <- ma(x=contact_tracing_data$IC_prev,order=avg_window)
-#IC_prev_avg <- na.omit(IC_prev_avg)
+
 contact_tracing_data[, "IC_prev_avg"] <- IC_prev_avg
 contact_tracing_data[, "IC_prev_avg_max"] <- max(na.omit(IC_prev_avg))
 

@@ -1,7 +1,7 @@
 # Prep ----
 rm(list = ls())
 
-#remotes::install_gitlab("luccoffeng/virsim")
+remotes::install_gitlab("luccoffeng/virsim")
 
 library(virsim)
 library(ggplot2)
@@ -104,11 +104,8 @@ param_temp <- gen_phased_lift(intervention_start = 15,
                               uptake = uptake,
                               sc_isolation_effect = 0.5,
                               lockdown_isol = FALSE)
-# Select a random seed per each realization (using the system time)
-#initial_seed <- as.integer(Sys.time())
-# take the last 5 digits of the initial seed
-#the_seed <- initial_seed %% 1e5
-# set the seed
+
+# Set the seed
 set.seed(rnd_seed)
 
 phased_opening <- do.call(what = virsim,
@@ -129,11 +126,8 @@ L <- length(phased_opening_data$IC_prev)
 IC_prev_avg <- vector(mode="numeric", length=L)
 
 avg_window <- 30
-#for (i in 1:L){
-#  IC_prev_avg[i] <- mean(phased_opening_data$IC_prev[i:min(i+avg_window-1,L)])
-#}
 IC_prev_avg <- ma(x=phased_opening_data$IC_prev,order=avg_window)
-#IC_prev_avg <- na.omit(IC_prev_avg)
+
 phased_opening_data[, "IC_prev_avg"] <- IC_prev_avg
 phased_opening_data[, "IC_prev_avg_max"] <- max(na.omit(IC_prev_avg))
 

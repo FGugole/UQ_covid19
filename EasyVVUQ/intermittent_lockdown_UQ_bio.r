@@ -1,7 +1,7 @@
 # Prep ----
 rm(list = ls())
 
-#remotes::install_gitlab("luccoffeng/virsim")
+remotes::install_gitlab("luccoffeng/virsim")
 
 library(virsim)
 library(ggplot2)
@@ -93,11 +93,7 @@ intervention_t <- cumsum(c(0, 10, 7, 53, 30, 25, rep(c(lock_length, lift_length)
 intervention_effect <- c(1, .3, .15, .25, rep(c(1, lock_effect),11) )
 intervention_uptake <- rep(uptake, length(intervention_t))
 
-# Select a random seed per each realization (using the system time)
-#initial_seed <- as.integer(Sys.time())
-# take the last 5 digits of the initial seed
-#the_seed <- initial_seed %% 1e5
-# set the seed
+# Set the seed
 set.seed(rnd_seed)
 
 intermittent_lock <- do.call(what = virsim,
@@ -117,11 +113,8 @@ L <- length(intermittent_lock_data$IC_prev)
 IC_prev_avg <- vector(mode="numeric", length=L)
 
 avg_window <- 30
-#for (i in 1:L){
-#  IC_prev_avg[i] <- mean(intermittent_lock_data$IC_prev[i:min(i+avg_window-1,L)])
-#}
 IC_prev_avg <- ma(x=intermittent_lock_data$IC_prev,order=avg_window)
-#IC_prev_avg <- na.omit(IC_prev_avg)
+
 intermittent_lock_data[, "IC_prev_avg"] <- IC_prev_avg
 intermittent_lock_data[, "IC_prev_avg_max"] <- max(na.omit(IC_prev_avg))
 

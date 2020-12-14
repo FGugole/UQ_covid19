@@ -1,7 +1,7 @@
 # Prep ----
 rm(list = ls())
 
-remotes::install_gitlab("luccoffeng/virsim")
+#remotes::install_gitlab("luccoffeng/virsim")
 
 library(virsim)
 library(ggplot2)
@@ -139,9 +139,12 @@ for (i in 2:L){
 intermittent_lock_data[, "IC_ex"] <- IC_excess
 intermittent_lock_data[, "IC_ex_max"] <- max(IC_excess)
 
+QoI <- data.frame("IC_prev_avg_max"=max(na.omit(IC_prev_avg)), "IC_ex_max"=max(IC_excess))
+
 #############################
 # Write results to csv file #
 #############################
-write.csv(x=intermittent_lock_data, file=output_filename, row.names=FALSE)
+#write.csv(x=intermittent_lock_data, file=output_filename, row.names=FALSE)
+write.csv(x=QoI, file=output_filename, row.names=FALSE)
 
 ### END OF CODE ###

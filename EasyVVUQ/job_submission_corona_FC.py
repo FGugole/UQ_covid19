@@ -92,23 +92,19 @@ params = {
         "default": "output.csv"}}
     
 output_filename = params["out_file"]["default"]
-output_columns = ["S","E","I","R","IC_inc","IC_prev","IC_prev_avg","IC_prev_avg_max","IC_ex","IC_ex_max"]
+output_columns = ["IC_prev_avg_max","IC_ex_max"]
 
 encoder = uq.encoders.GenericEncoder(
     template_fname= HOME + '/corona.template',
     delimiter='$',
     target_filename='corona_in.json')
 decoder = uq.decoders.SimpleCSV(target_filename=output_filename,
-                                output_columns=output_columns,
-                                header=0)
-collater = uq.collate.AggregateSamples(average=False)
+                                output_columns=output_columns)
 
-# Add the SC app (automatically set as current app)
-my_campaign.add_app(name="sc",
+my_campaign.add_app(name="mc",
                     params=params,
                     encoder=encoder,
-                    decoder=decoder,
-                    collater=collater) 
+                    decoder=decoder)
 
 # Create the sampler
 vary = {
@@ -122,8 +118,7 @@ vary = {
 }
 
 # Select the MC sampler
-my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e3)
-# my_sampler = uq.sampling.QMCSampler(vary=vary, n_mc_samples=200)
+my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e2)
 
 # Associate the sampler with the campaign
 my_campaign.set_sampler(my_sampler)
@@ -133,17 +128,17 @@ my_campaign.draw_samples()
 
 my_campaign.populate_runs_dir()
 
-#Run execution sequentially 
+# Save the campaign
+my_campaign.save_state('campaign_state_FC_bio_1e2.json')
+
+# Run execution sequentially 
 #my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 cwd = os.getcwd()
-pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 8 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ_bio.r corona_in.json > output.txt ; cd .. '"
+pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 4 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ_bio.r corona_in.json > output.txt ; cd .. '"
 print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
-
-#Save the Campaign
-my_campaign.save_state("campaign_state_FC_bio.json")
 
 print('Job submission complete')
 

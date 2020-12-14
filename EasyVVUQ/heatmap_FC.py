@@ -39,10 +39,7 @@ my_campaign.collate()
 data = my_campaign.get_collation_result()
 #print(data.columns)
 
-L = 551 
 IC_capacity = 109
-
-n_runs = 1000
 
 intervention_effect = data['intervention_effect',0] 
 intervention_effect = intervention_effect.to_numpy()

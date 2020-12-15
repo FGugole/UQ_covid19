@@ -17,20 +17,19 @@ plt.rcParams['figure.figsize'] = 12,9
 * Load data *
 *************
 """
-workdir = '/home/federica/Desktop/VirsimCampaigns'#'/tmp'
+workdir = '/export/scratch2/home/federica/'
 
 # home directory of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the FC campaign without biology
-FC_campaign = uq.Campaign(state_file = "campaign_state_FC_nobio.json", work_dir = workdir)
+FC_campaign = uq.Campaign(state_file = "campaign_state_FC_nobio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', FC_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 FC_sampler = FC_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 FC_campaign.collate()
@@ -39,14 +38,13 @@ FC_data = FC_campaign.get_collation_result()
 #print(FC_data.columns)
 
 # Reload the CT campaign without biology
-CT_campaign = uq.Campaign(state_file = "campaign_state_CT_nobio.json", work_dir = workdir)
+CT_campaign = uq.Campaign(state_file = "campaign_state_CT_nobio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', CT_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 CT_sampler = CT_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 CT_campaign.collate()
@@ -55,14 +53,13 @@ CT_data = CT_campaign.get_collation_result()
 #print(CT_data.columns)
 
 # Reload the IL campaign without biology
-IL_campaign = uq.Campaign(state_file = "campaign_state_IL_nobio.json", work_dir = workdir)
+IL_campaign = uq.Campaign(state_file = "campaign_state_IL_nobio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', IL_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 IL_sampler = IL_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 IL_campaign.collate()
@@ -71,14 +68,13 @@ IL_data = IL_campaign.get_collation_result()
 #print(IL_data.columns)
 
 # Reload the PO campaign without biology
-PO_campaign = uq.Campaign(state_file = "campaign_state_PO_nobio.json", work_dir = workdir)
+PO_campaign = uq.Campaign(state_file = "campaign_state_PO_nobio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', PO_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 PO_sampler = PO_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 PO_campaign.collate()
@@ -89,14 +85,13 @@ PO_data = PO_campaign.get_collation_result()
 ###############################################################################################
 
 # Reload the FC campaign with biology
-FC_bio_campaign = uq.Campaign(state_file = "campaign_state_FC_bio.json", work_dir = workdir)
+FC_bio_campaign = uq.Campaign(state_file = "campaign_state_FC_bio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', FC_bio_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 FC_bio_sampler = FC_bio_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 FC_bio_campaign.collate()
@@ -105,14 +100,13 @@ FC_bio_data = FC_bio_campaign.get_collation_result()
 #print(FC_bio_data.columns)
 
 # Reload the CT campaign with biology
-CT_bio_campaign = uq.Campaign(state_file = "campaign_state_CT_bio.json", work_dir = workdir)
+CT_bio_campaign = uq.Campaign(state_file = "campaign_state_CT_bio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', CT_bio_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 CT_bio_sampler = CT_bio_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 CT_bio_campaign.collate()
@@ -121,14 +115,13 @@ CT_bio_data = CT_bio_campaign.get_collation_result()
 #print(CT_bio_data.columns)
 
 # Reload the IL campaign with biology
-IL_bio_campaign = uq.Campaign(state_file = "campaign_state_IL_bio.json", work_dir = workdir)
+IL_bio_campaign = uq.Campaign(state_file = "campaign_state_IL_bio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', IL_bio_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 IL_bio_sampler = IL_bio_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 IL_bio_campaign.collate()
@@ -137,14 +130,13 @@ IL_bio_data = IL_bio_campaign.get_collation_result()
 #print(IL_bio_data.columns)
 
 # Reload the PO campaign with biology
-PO_bio_campaign = uq.Campaign(state_file = "campaign_state_PO_bio.json", work_dir = workdir)
+PO_bio_campaign = uq.Campaign(state_file = "campaign_state_PO_bio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', PO_bio_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 PO_bio_sampler = PO_bio_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 PO_bio_campaign.collate()
@@ -159,68 +151,86 @@ PO_bio_data = PO_bio_campaign.get_collation_result()
 * Empirical CDF of QoIs *
 *************************
 """
-L = 551 
+
+# without bio
+FC_IC_prev_avg_max = FC_data['IC_prev_avg_max', 0] #np.zeros(n_runs,dtype='float')
+FC_IC_prev_avg_max = FC_IC_prev_avg_max.to_numpy()
+FC_IC_ex_max = FC_data['IC_ex_max', 0] #np.zeros(n_runs,dtype='float')
+FC_IC_ex_max = FC_IC_ex_max.to_numpy()
+
+CT_IC_prev_avg_max = CT_data['IC_prev_avg_max', 0] #np.zeros(n_runs,dtype='float')
+CT_IC_prev_avg_max = CT_IC_prev_avg_max.to_numpy()
+CT_IC_ex_max = CT_data['IC_ex_max', 0] #np.zeros(n_runs,dtype='float')
+CT_IC_ex_max = CT_IC_ex_max.to_numpy()
+
+IL_IC_prev_avg_max = IL_data['IC_prev_avg_max', 0] #np.zeros(n_runs,dtype='float')
+IL_IC_prev_avg_max = IL_IC_prev_avg_max.to_numpy()
+IL_IC_ex_max = IL_data['IC_ex_max', 0] #np.zeros(n_runs,dtype='float')
+IL_IC_ex_max = IL_IC_ex_max.to_numpy()
+
+PO_IC_prev_avg_max = PO_data['IC_prev_avg_max', 0] #np.zeros(n_runs,dtype='float')
+PO_IC_prev_avg_max = PO_IC_prev_avg_max.to_numpy()
+PO_IC_ex_max = PO_data['IC_ex_max', 0] #np.zeros(n_runs,dtype='float')
+PO_IC_ex_max = PO_IC_ex_max.to_numpy()
+
+# with bio
+FC_IC_prev_avg_max_bio = FC_bio_data['IC_prev_avg_max', 0] #np.zeros(n_runs,dtype='float')
+FC_IC_prev_avg_max_bio = FC_IC_prev_avg_max_bio.to_numpy()
+FC_IC_ex_max_bio = FC_bio_data['IC_ex_max', 0] #np.zeros(n_runs,dtype='float')
+FC_IC_ex_max_bio = FC_IC_ex_max_bio.to_numpy()
+
+CT_IC_prev_avg_max_bio = CT_bio_data['IC_prev_avg_max', 0] #np.zeros(n_runs,dtype='float')
+CT_IC_prev_avg_max_bio = CT_IC_prev_avg_max_bio.to_numpy()
+CT_IC_ex_max_bio = CT_bio_data['IC_ex_max', 0] #np.zeros(n_runs,dtype='float')
+CT_IC_ex_max_bio = CT_IC_ex_max_bio.to_numpy()
+
+IL_IC_prev_avg_max_bio = IL_bio_data['IC_prev_avg_max', 0] #np.zeros(n_runs,dtype='float')
+IL_IC_prev_avg_max_bio = IL_IC_prev_avg_max_bio.to_numpy()
+IL_IC_ex_max_bio = IL_bio_data['IC_ex_max', 0] #np.zeros(n_runs,dtype='float')
+IL_IC_ex_max_bio = IL_IC_ex_max_bio.to_numpy()
+
+PO_IC_prev_avg_max_bio = PO_bio_data['IC_prev_avg_max', 0] #np.zeros(n_runs,dtype='float')
+PO_IC_prev_avg_max_bio = PO_IC_prev_avg_max_bio.to_numpy()
+PO_IC_ex_max_bio = PO_bio_data['IC_ex_max', 0] #np.zeros(n_runs,dtype='float')
+PO_IC_ex_max_bio = PO_IC_ex_max_bio.to_numpy()
+
+# parameters for DKW confidence interval
 IC_capacity = 109
 
-n_runs = 1000
+n_runs = len(FC_IC_prev_avg_max)
+#print('n_runs = ', n_runs)
 
 alpha_DKW = 0.05
 eps_DKW = np.sqrt( np.log(2/alpha_DKW) / (2*n_runs) )
 
-# without bio
-FC_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
-FC_IC_ex_max = np.zeros(n_runs,dtype='float')
+# for i in range(n_runs):
+#     # without bio
+#     # FC
+#     FC_IC_prev_avg_max[i] = FC_data.IC_prev_avg_max[i*L]
+#     FC_IC_ex_max[i] = FC_data.IC_ex_max[i*L]
+#     # CT
+#     CT_IC_prev_avg_max[i] = CT_data.IC_prev_avg_max[i*L]
+#     CT_IC_ex_max[i] = CT_data.IC_ex_max[i*L]
+#     # IL
+#     IL_IC_prev_avg_max[i] = IL_data.IC_prev_avg_max[i*L]
+#     IL_IC_ex_max[i] = IL_data.IC_ex_max[i*L]
+#     # PO
+#     PO_IC_prev_avg_max[i] = PO_data.IC_prev_avg_max[i*L]
+#     PO_IC_ex_max[i] = PO_data.IC_ex_max[i*L]
 
-CT_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
-CT_IC_ex_max = np.zeros(n_runs,dtype='float')
-
-IL_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
-IL_IC_ex_max = np.zeros(n_runs,dtype='float')
-
-PO_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
-PO_IC_ex_max = np.zeros(n_runs,dtype='float')
-
-# with bio
-FC_IC_prev_avg_max_bio = np.zeros(n_runs,dtype='float')
-FC_IC_ex_max_bio = np.zeros(n_runs,dtype='float')
-
-CT_IC_prev_avg_max_bio = np.zeros(n_runs,dtype='float')
-CT_IC_ex_max_bio = np.zeros(n_runs,dtype='float')
-
-IL_IC_prev_avg_max_bio = np.zeros(n_runs,dtype='float')
-IL_IC_ex_max_bio = np.zeros(n_runs,dtype='float')
-
-PO_IC_prev_avg_max_bio = np.zeros(n_runs,dtype='float')
-PO_IC_ex_max_bio = np.zeros(n_runs,dtype='float')
-
-for i in range(n_runs):
-    # without bio
-    # FC
-    FC_IC_prev_avg_max[i] = FC_data.IC_prev_avg_max[i*L]
-    FC_IC_ex_max[i] = FC_data.IC_ex_max[i*L]
-    # CT
-    CT_IC_prev_avg_max[i] = CT_data.IC_prev_avg_max[i*L]
-    CT_IC_ex_max[i] = CT_data.IC_ex_max[i*L]
-    # IL
-    IL_IC_prev_avg_max[i] = IL_data.IC_prev_avg_max[i*L]
-    IL_IC_ex_max[i] = IL_data.IC_ex_max[i*L]
-    # PO
-    PO_IC_prev_avg_max[i] = PO_data.IC_prev_avg_max[i*L]
-    PO_IC_ex_max[i] = PO_data.IC_ex_max[i*L]
-
-    # with bio
-    # FC
-    FC_IC_prev_avg_max_bio[i] = FC_bio_data.IC_prev_avg_max[i*L]
-    FC_IC_ex_max_bio[i] = FC_bio_data.IC_ex_max[i*L]
-    # CT
-    CT_IC_prev_avg_max_bio[i] = CT_bio_data.IC_prev_avg_max[i*L]
-    CT_IC_ex_max_bio[i] = CT_bio_data.IC_ex_max[i*L]
-    # IL
-    IL_IC_prev_avg_max_bio[i] = IL_bio_data.IC_prev_avg_max[i*L]
-    IL_IC_ex_max_bio[i] = IL_bio_data.IC_ex_max[i*L]
-    # PO
-    PO_IC_prev_avg_max_bio[i] = PO_bio_data.IC_prev_avg_max[i*L]
-    PO_IC_ex_max_bio[i] = PO_bio_data.IC_ex_max[i*L]
+#     # with bio
+#     # FC
+#     FC_IC_prev_avg_max_bio[i] = FC_bio_data.IC_prev_avg_max[i*L]
+#     FC_IC_ex_max_bio[i] = FC_bio_data.IC_ex_max[i*L]
+#     # CT
+#     CT_IC_prev_avg_max_bio[i] = CT_bio_data.IC_prev_avg_max[i*L]
+#     CT_IC_ex_max_bio[i] = CT_bio_data.IC_ex_max[i*L]
+#     # IL
+#     IL_IC_prev_avg_max_bio[i] = IL_bio_data.IC_prev_avg_max[i*L]
+#     IL_IC_ex_max_bio[i] = IL_bio_data.IC_ex_max[i*L]
+#     # PO
+#     PO_IC_prev_avg_max_bio[i] = PO_bio_data.IC_prev_avg_max[i*L]
+#     PO_IC_ex_max_bio[i] = PO_bio_data.IC_ex_max[i*L]
 
 FC_IC_prev_avg_max.sort()
 FC_IC_ex_max.sort()
@@ -273,7 +283,7 @@ ax_p_bio.step(PO_IC_prev_avg_max_bio,p,lw=2,color='lightseagreen',label='PO')
 ax_p_bio.step(PO_IC_prev_avg_max_bio,p+eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 ax_p_bio.step(PO_IC_prev_avg_max_bio,p-eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 #
-ax_p_bio.axvline(x=IC_capacity,lw=2,linestyle=':',color='black')#,label='IC capacity')
+ax_p_bio.axvline(x=IC_capacity,lw=2,linestyle=':',color='black')
 # general settings
 ax_p_bio.set_xscale('log')
 # ax_p.set_xticks([3e2, 1e3])
@@ -303,7 +313,6 @@ ax_e_bio.step(PO_IC_ex_max_bio,p-eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 #
 # general settings
 ax_e_bio.set_xscale('log')
-#ax_e.get_xaxis().set_major_formatter(ScalarFormatter())
 ax_e_bio.get_xaxis().get_major_formatter().labelOnlyBase = False
 ax_e_bio.get_xaxis().set_minor_formatter(NullFormatter())
 ax_e_bio.set_xlim([1e1, 1e5])
@@ -313,8 +322,6 @@ ax_e_bio.set_yticks([0, 0.5, 1])
 leg = ax_p_bio.legend(loc='upper left')
 leg.get_frame().set_linewidth(0.0)
 leg.get_frame().set_facecolor('none')
-# ax_e_bio.legend(loc='upper center')
-# plt.legend(frameon=False)
 plt.tight_layout()
 
 ax_p = f.add_subplot(223, xlabel='Maximum of patients in IC', ylabel='Without biological \n uncertainties \n \n Probability')
@@ -335,7 +342,7 @@ ax_p.step(PO_IC_prev_avg_max,p,lw=2,color='lightseagreen',label='PO')
 ax_p.step(PO_IC_prev_avg_max,p+eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 ax_p.step(PO_IC_prev_avg_max,p-eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 #
-ax_p.axvline(x=IC_capacity,lw=2,linestyle=':',color='black')#,label='IC capacity')
+ax_p.axvline(x=IC_capacity,lw=2,linestyle=':',color='black')
 # general settings
 ax_p.set_xscale('log')
 # ax_p.set_xticks([3e2, 1e3])
@@ -366,17 +373,16 @@ ax_e.step(PO_IC_ex_max,p-eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 # general settings
 ax_e.set_xscale('log')
 # ax_e.set_xticks([1e4, 6e4])
-#ax_e.get_xaxis().set_major_formatter(ScalarFormatter())
 ax_e.get_xaxis().get_major_formatter().labelOnlyBase = False
 ax_e.get_xaxis().set_minor_formatter(NullFormatter())
 ax_e.set_xlim([1e1, 1e5])
 ax_e.set_xticks([1e1, 1e3, 1e5])
 ax_e.set_yticks([0, 0.5, 1])
 
-# ax_p.legend(loc='upper center')
 plt.tight_layout()
-# f.savefig('figures/cdfs.png')
-f.savefig('figures/cdfs.eps')
+
+f.savefig('figures/cdfs.png')
+# f.savefig('figures/cdfs.eps')
 
 plt.show()
 

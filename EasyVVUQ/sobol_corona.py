@@ -20,7 +20,8 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_FC_Sobol.json", work_dir = "/tmp")
+workdir = '/export/scratch2/home/federica/'
+my_campaign = uq.Campaign(state_file = "campaign_state_PO_MC20.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -41,21 +42,17 @@ qmc_analysis = uq.analysis.QMCAnalysis(sampler=my_sampler, qoi_cols=output_colum
 my_campaign.apply_analysis(qmc_analysis)
 
 results = my_campaign.get_last_analysis()
-#print(results)
+#print(dir(results))
 
 """
 ***************************
 * SOBOL 1st ORDER INDICES *
 ***************************
 """
-#first order Sobol indices and parameter names
-sobols = results['sobols_first']
+# Get parameter names
 params = list(my_sampler.vary.get_keys())
 #print(params)
 
-time = np.arange(0, 550+1, 1)
-
-######################################################################
 sobol_idx_ICp = np.zeros((len(params)), dtype='float')
 yerr_ICp = np.zeros((2,len(params)), dtype='float')
 
@@ -65,23 +62,30 @@ yerr_ICe = np.zeros((2,len(params)), dtype='float')
 idx = 0
 for param in params: 
     #
-    sobol_idx = sobols['IC_prev_avg_max'][param][200]
+    sobol_idx = results.sobols_first('IC_prev_avg_max', param)
     sobol_idx_ICp[idx] = sobol_idx
-    low = results['conf_sobols_first']['IC_prev_avg_max'][param]['low'][200]
-    high = results['conf_sobols_first']['IC_prev_avg_max'][param]['high'][200]
+    low = results._get_sobols_first_conf('IC_prev_avg_max', param)[0]
+    high = results._get_sobols_first_conf('IC_prev_avg_max', param)[1]
     yerr_ICp[:,idx] = [sobol_idx-low, high-sobol_idx]
     #
-    sobol_idx = sobols['IC_ex_max'][param][200]
+    sobol_idx = results.sobols_first('IC_ex_max', param)
     sobol_idx_ICe[idx] = sobol_idx
-    low = results['conf_sobols_first']['IC_ex_max'][param]['low'][200]
-    high = results['conf_sobols_first']['IC_ex_max'][param]['high'][200]
+    low = results._get_sobols_first_conf('IC_ex_max', param)[0]
+    high = results._get_sobols_first_conf('IC_ex_max', param)[1]
     yerr_ICe[:,idx] = [sobol_idx-low, high-sobol_idx]
     #
     idx += 1
+
     # print values to terminal
-    print('Param = ',param)
-    print('Sobol index for IC_prev_avg_max = ', sobols['IC_prev_avg_max'][param][200])
-    print('Sobol index for IC_ex_max = ', sobols['IC_ex_max'][param][200])
+    print('Param = ', param)
+    print('Sobol index for IC_prev_avg_max = ', results.sobols_first('IC_prev_avg_max', param))
+    print('Sobol index for IC_ex_max = ', results.sobols_first('IC_ex_max', param))
+
+'''
+********
+* Plot *
+********
+'''
 
 f = plt.figure('Sobol_IC_max', figsize=[12, 6])
 ax_ICp_max = f.add_subplot(121, title = 'IC_prev_avg_max')
@@ -101,7 +105,7 @@ ax_ICe_max.set_xticks(np.arange(0, len(params), 1))
 ax_ICe_max.set_xticklabels(params, rotation=45)
 #
 plt.tight_layout()
-f.savefig('figures/Sobol_IC_max_FC.png')
+f.savefig('figures/Sobols_PO.png')
 
 plt.show()
 

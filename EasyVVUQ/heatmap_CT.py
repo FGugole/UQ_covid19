@@ -24,7 +24,7 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-workdir = '/export/scratch2/home/federica'
+workdir = '/export/scratch2/home/federica/'
 my_campaign = uq.Campaign(state_file = "campaign_state_CT_nobio_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
@@ -160,7 +160,7 @@ ax_3.set_xticks([0, 2, 4])
 ax_3.set_yticks([0.4, 0.6, 0.8, 1])
 
 plt.tight_layout()
-f.savefig('figures/heatmap_CT_IC_prev_1e2.png')
+f.savefig('figures/heatmap_CT_IC_prev.png')
 
 """
 * Heatmap for IC_ex_max
@@ -219,7 +219,7 @@ ax_3.set_xticks([0, 2, 4])
 ax_3.set_yticks([0.4, 0.6, 0.8, 1])
 
 plt.tight_layout()
-f.savefig('figures/heatmap_CT_IC_ex_1e2.png')
+f.savefig('figures/heatmap_CT_IC_ex.png')
 
 """
 * 3D plots *
@@ -273,7 +273,7 @@ ax_e.zaxis.labelpad = 5
 ax_e.view_init(azim=-30)
 
 plt.tight_layout()
-f.savefig('figures/heatmap_CT_1e2.png')
+f.savefig('figures/heatmap_CT.png')
 
 plt.show()
 

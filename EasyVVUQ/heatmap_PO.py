@@ -24,14 +24,14 @@ plt.rcParams['figure.figsize'] = 8,6
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-my_campaign = uq.Campaign(state_file = "campaign_state_PO_MC1000.json", work_dir = "/tmp")
+workdir = '/export/scratch2/home/federica/'
+my_campaign = uq.Campaign(state_file = "campaign_state_PO_1e2.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
-# get sampler and output columns from my_campaign object
+# get sampler from my_campaign object
 my_sampler = my_campaign._active_sampler
-#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 my_campaign.collate()
@@ -39,38 +39,29 @@ my_campaign.collate()
 data = my_campaign.get_collation_result()
 #print(data.columns)
 
-L = 551 
 IC_capacity = 109
 
-n_runs = 1000
+pl_intervention_effect_hi = data['lockdown_effect',0] 
+pl_intervention_effect_hi = pl_intervention_effect_hi.to_numpy()
 
-pl_intervention_effect_hi = np.zeros(n_runs,dtype='float')
-phase_interval = np.zeros(n_runs,dtype='float')
-uptake = np.zeros(n_runs,dtype='float')
+phase_interval = data['phase_interval',0] 
+phase_interval = phase_interval.to_numpy()
 
-IC_prev_avg_max = np.zeros(n_runs,dtype='float')
-IC_ex_max = np.zeros(n_runs,dtype='float')
+uptake = data['uptake',0] 
+uptake = uptake.to_numpy()
 
-for i in range(n_runs):
-    IC_prev_avg_max[i] = data.IC_prev_avg_max[i*L]
-    IC_ex_max[i] = data.IC_ex_max[i*L]
+IC_prev_avg_max = data['IC_prev_avg_max',0] 
+IC_prev_avg_max = IC_prev_avg_max.to_numpy()
 
-params = list(my_sampler.vary.get_keys())
-# Save parameters values used in the simulations
-cnt = 0
-info = my_campaign.list_runs()
-for run in info:
-    pl_intervention_effect_hi[cnt] = run[1]['params']['lockdown_effect']
-    phase_interval[cnt] = run[1]['params']['phase_interval']
-    uptake[cnt] = run[1]['params']['uptake']
-    cnt += 1
-#     print(run[0])
-#     print(run[1]['params'])
+IC_ex_max = data['IC_ex_max',0] 
+IC_ex_max = IC_ex_max.to_numpy()
+
+n_runs = len(IC_ex_max)
+#print('n_runs = ', n_runs)
 
 q_phase_interval = np.quantile(phase_interval,[0, 0.25, 0.5, 0.75, 1])
-# print('q_uptake=',q_uptake)
 
-# Take slabs of data corresponding to the quartiles of uptake
+# Take slabs of data corresponding to the quartiles of phase_interval
 pl_intervention_effect_hi_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 uptake_q = np.zeros((np.int(n_runs/4),4),dtype='float')
 IC_prev_avg_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
@@ -125,8 +116,8 @@ im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,0
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([200, 350, 500, 650])
 cbar_0.set_ticklabels(['200', '350', '500', '650'])
-ax_0.set_xticks([0.2, 0.4])
-ax_0.set_yticks([0.5, 0.75, 1])
+ax_0.set_xticks([0.2, 0.3, 0.4])
+ax_0.set_yticks([0.6, 0.8, 1])
 
 ax_1 = f.add_subplot(222)
 im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,1] <= IC_capacity),1], \
@@ -137,8 +128,8 @@ im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,1
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([200, 350, 500, 650])
 cbar_1.set_ticklabels(['200', '350', '500', '650'])
-ax_1.set_xticks([0.2, 0.4])
-ax_1.set_yticks([.5, .75, 1])
+ax_1.set_xticks([0.2, 0.3, 0.4])
+ax_1.set_yticks([0.6, 0.8, 1])
 
 ax_2 = f.add_subplot(223, xlabel='Relative level of transmission \n where still in lockdown', ylabel='Uptake by the population')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,2] <= IC_capacity),2], \
@@ -149,8 +140,8 @@ im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,2
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([200, 350, 500, 650])
 cbar_2.set_ticklabels(['200', '350', '500', '650'])
-ax_2.set_xticks([0.2, 0.4])
-ax_2.set_yticks([.5, .75, 1])
+ax_2.set_xticks([0.2, 0.3, 0.4])
+ax_2.set_yticks([0.6, 0.8, 1])
 
 ax_3 = f.add_subplot(224, xlabel='Relative level of transmission \n where still in lockdown')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,3] <= IC_capacity),3], \
@@ -161,8 +152,8 @@ im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,3
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([200, 350, 500, 650])
 cbar_3.set_ticklabels(['200', '350', '500', '650'])
-ax_3.set_xticks([0.2, 0.4])
-ax_3.set_yticks([.5, .75, 1])
+ax_3.set_xticks([0.2, 0.3, 0.4])
+ax_3.set_yticks([0.6, 0.8, 1])
 
 plt.tight_layout()
 f.savefig('figures/heatmap_PO_IC_prev.png')
@@ -180,8 +171,8 @@ im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,0] > 0)
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([1e4, 2e4, 3e4, 4e4])
 cbar_0.set_ticklabels(['10000', '20000', '30000', '40000'])
-ax_0.set_xticks([0.2, 0.4])
-ax_0.set_yticks([.5, .75, 1])
+ax_0.set_xticks([0.2, 0.3, 0.4])
+ax_0.set_yticks([0.6, 0.8, 1])
 
 ax_1 = f.add_subplot(222)
 im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,1] == 0),1], \
@@ -192,8 +183,8 @@ im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,1] > 0)
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([1e4, 2e4, 3e4, 4e4])
 cbar_1.set_ticklabels(['10000', '20000', '30000', '40000'])
-ax_1.set_xticks([0.2, 0.4])
-ax_1.set_yticks([.5, .75, 1])
+ax_1.set_xticks([0.2, 0.3, 0.4])
+ax_1.set_yticks([0.6, 0.8, 1])
 
 ax_2 = f.add_subplot(223, xlabel='Effect of intervention \n where not yet lifted', ylabel='Uptake by the population')
 im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,2] == 0),2], \
@@ -204,8 +195,8 @@ im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,2] > 0)
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([1e4, 2e4, 3e4, 4e4])
 cbar_2.set_ticklabels(['10000', '20000', '30000', '40000'])
-ax_2.set_xticks([0.2, 0.4])
-ax_2.set_yticks([.5, .75, 1])
+ax_2.set_xticks([0.2, 0.3, 0.4])
+ax_2.set_yticks([0.6, 0.8, 1])
 
 ax_3 = f.add_subplot(224, xlabel='Effect of intervention \n where not yet lifted')
 im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,3] == 0),3], \
@@ -216,8 +207,8 @@ im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_ex_max_q[:,3] > 0)
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([1e4, 2e4, 3e4, 4e4])
 cbar_3.set_ticklabels(['10000', '20000', '30000', '40000'])
-ax_3.set_xticks([0.2, 0.4])
-ax_3.set_yticks([.5, .75, 1])
+ax_3.set_xticks([0.2, 0.3, 0.4])
+ax_3.set_yticks([0.6, 0.8, 1])
 
 plt.tight_layout()
 f.savefig('figures/heatmap_PO_IC_ex.png')
@@ -270,7 +261,7 @@ ax_e.zaxis.labelpad = 15
 ax_e.view_init(azim=60)
 
 plt.tight_layout()
-f.savefig('figures/heatmap_PO_MC1000.png')
+f.savefig('figures/heatmap_PO.png')
 
 plt.show()
 

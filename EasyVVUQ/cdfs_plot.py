@@ -335,8 +335,8 @@ ax_e.set_yticks([0, 0.5, 1])
 
 plt.tight_layout()
 
-f.savefig('figures/cdfs.png')
-# f.savefig('figures/cdfs.eps')
+#f.savefig('figures/cdfs.png')
+f.savefig('figures/cdfs.eps')
 
 plt.show()
 

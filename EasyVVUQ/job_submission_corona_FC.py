@@ -13,7 +13,7 @@ HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Set up a fresh campaign 
 workdir = '/export/scratch2/home/federica/'
-my_campaign = uq.Campaign(name='virsim_FC_bio_', work_dir=workdir)
+my_campaign = uq.Campaign(name='virsim_FC_nobio_', work_dir=workdir)
 
 # Define parameter space
 params = {
@@ -110,11 +110,7 @@ my_campaign.add_app(name="mc",
 vary = {
     "seed": cp.DiscreteUniform(2**14, 2**16),
     "intervention_effect": cp.Beta(alpha=38, beta=70),
-    "uptake": cp.Beta(alpha=16, beta=2),
-    "Rzero": cp.Gamma(shape=100,scale=.025),
-    "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
-    "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
-    "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
+    "uptake": cp.Beta(alpha=16, beta=2)
 }
 
 # Select the MC sampler
@@ -129,14 +125,14 @@ my_campaign.draw_samples()
 my_campaign.populate_runs_dir()
 
 # Save the campaign
-my_campaign.save_state('campaign_state_FC_bio_1e2.json')
+my_campaign.save_state('campaign_state_FC_nobio.json')
 
 # Run execution sequentially 
 #my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('flattening_the_curve_UQ.r corona_in.json', interpret='Rscript'))
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 cwd = os.getcwd()
-pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 4 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ_bio.r corona_in.json > output.txt ; cd .. '"
+pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 4 'cd {{}} ; Rscript {cwd}/flattening_the_curve_UQ.r corona_in.json > output.txt ; cd .. '"
 print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
 

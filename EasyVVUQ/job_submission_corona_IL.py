@@ -112,11 +112,7 @@ vary = {
     "lockdown_effect": cp.Beta(alpha=14, beta=42),
     "lockdown_length": cp.Gamma(shape=20, scale=2),
     "lift_length": cp.Gamma(shape=15, scale=1),
-    "uptake": cp.Beta(alpha=16, beta=2),
-    #"Rzero": cp.Gamma(shape=100,scale=.025),
-    #"duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
-    #"shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
-    #"intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
+    "uptake": cp.Beta(alpha=16, beta=2)
 }
  
 my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e2)
@@ -130,7 +126,7 @@ my_campaign.draw_samples()
 my_campaign.populate_runs_dir()
 
 # Save the campaign
-my_campaign.save_state('campaign_state_IL_1e2.json')
+my_campaign.save_state('campaign_state_IL_nobio.json')
 
 # Run execution sequentially 
 #my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('intermittent_lockdown_UQ.r corona_in.json', interpret='Rscript'))

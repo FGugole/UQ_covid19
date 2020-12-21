@@ -1,23 +1,23 @@
 # Requirements
 * Python 3.6+
- * chaospy
- * [easyvvuq](https://github.com/UCL-CCS/EasyVVUQ)
- * numpy
- * os
- * pandas
- * matplotlib
- * mpl_toolkits.mplot3d
- * subprocess
+  * chaospy
+  * [easyvvuq](https://github.com/UCL-CCS/EasyVVUQ)
+  * numpy
+  * os
+  * pandas
+  * matplotlib
+  * mpl_toolkits.mplot3d
+  * subprocess
 
 * R 3.6.0+
- * data.table
- * devtools
- * forecast
- * ggplot2
- * Rcpp
- * remotes
- * rjson
- * usethis
+  * data.table
+  * devtools
+  * forecast
+  * ggplot2
+  * Rcpp
+  * remotes
+  * rjson
+  * usethis
  
 
 # Files

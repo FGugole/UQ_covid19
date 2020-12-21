@@ -21,11 +21,12 @@ plt.rcParams['figure.figsize'] = 8,6
 # home directory of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
 
+workdir = '/export/scratch2/home/federica/'
 ###################
 # Contact Tracing #
 ###################
 # Reload the campaign
-CT_campaign = uq.Campaign(state_file = "campaign_state_CT_MC1000.json", work_dir = "/tmp")
+CT_campaign = uq.Campaign(state_file = "campaign_state_CT_nobio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', CT_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -39,7 +40,7 @@ IC_prev_avg_max_CT = data_CT['IC_prev_avg_max',0]
 IC_prev_avg_max_CT = IC_prev_avg_max_CT.to_numpy()
 
 IC_ex_max_CT = data_CT['IC_ex_max',0] 
-IC_ex_max_CT = IC_ex_max.to_numpy()
+IC_ex_max_CT = IC_ex_max_CT.to_numpy()
 
 n_runs = len(IC_prev_avg_max_CT)
 
@@ -83,7 +84,7 @@ f_CT.savefig('figures/cdf_CT_comparison.png')
 # Flattening the curve #
 ########################
 # Reload the campaign
-# FC_campaign = uq.Campaign(state_file = "campaign_state_FC_MC100.json", work_dir = "/tmp")
+# FC_campaign = uq.Campaign(state_file = "campaign_state_FC_nobio.json", work_dir = workdir)
 # print('========================================================')
 # print('Reloaded campaign', FC_campaign.campaign_dir.split('/')[-1])
 # print('========================================================')
@@ -134,7 +135,7 @@ f_CT.savefig('figures/cdf_CT_comparison.png')
 # Phased Opening #
 ##################
 # Reload the campaign
-PO_campaign = uq.Campaign(state_file = "campaign_state_PO_MC1000.json", work_dir = "/tmp")
+PO_campaign = uq.Campaign(state_file = "campaign_state_PO_nobio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', PO_campaign.campaign_dir.split('/')[-1])
 print('========================================================')

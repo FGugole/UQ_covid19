@@ -93,7 +93,7 @@ To start the job submission process for e.g. Contact Tracing without biology-rel
 ### corona.template
 The job submission procedure creates input files with the sampled values for each run in the campaign. In order for these data to be written correctly 
 and in an easy to read format, a template as to be provided `corona.template`. Here every parameter listed in the `params` dictionary has to be 
-included followed by a space-holder for the corresponding sampled value, e.g. 
+included followed by a space-holder (indicated by the symbol `$`) for the corresponding sampled value, e.g. 
 `{"outfile": "$out_file", "seed": "$seed",...}`
 
 ## The R-scripts
@@ -126,7 +126,7 @@ The script `cdf_post_proc_corona.py` compares the cdf of a selected strategy (Co
 with and without biology-related uncertainties. By changing the names of the campaign states to be loaded, the user can compare the cdfs 
 of other strategies too.
 
-The code `cdfs_plot` instead creates the plot of the cdfs for all strategies with and without biology-related uncertainties (i.e. 8 empirical cdfs).
+The code `cdfs_plot.py` instead creates the plot of the cdfs for all strategies with and without biology-related uncertainties (i.e. 8 empirical cdfs).
 
 The campaigns meant to provide the data for this analysis have to be excuted using the `RandomSampler` of the EasyVVUQ library.
 

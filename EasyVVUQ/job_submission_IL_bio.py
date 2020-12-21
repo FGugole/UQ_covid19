@@ -13,7 +13,7 @@ HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Set up a fresh campaign 
 workdir = '/export/scratch2/home/federica/'
-my_campaign = uq.Campaign(name='virsim_IL_bio_', work_dir=workdir)
+campaign = uq.Campaign(name='virsim_IL_bio_', work_dir=workdir)
 
 # Define parameter space
 params = {
@@ -101,7 +101,7 @@ encoder = uq.encoders.GenericEncoder(
 decoder = uq.decoders.SimpleCSV(target_filename=output_filename,
                                 output_columns=output_columns)
 
-my_campaign.add_app(name="mc",
+campaign.add_app(name="mc",
                     params=params,
                     encoder=encoder,
                     decoder=decoder)
@@ -119,25 +119,25 @@ vary = {
     "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
  
-my_sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e2)
+sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e2)
 
 # Associate the sampler with the campaign
-my_campaign.set_sampler(my_sampler)
+campaign.set_sampler(sampler)
 
 # Will draw all (of the finite set of samples)
-my_campaign.draw_samples()
+campaign.draw_samples()
 
-my_campaign.populate_runs_dir()
+campaign.populate_runs_dir()
 
 # Save the campaign
-my_campaign.save_state('campaign_state_IL_bio.json')
+campaign.save_state('campaign_state_IL_bio.json')
 
 # Run execution sequentially 
-#my_campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('intermittent_lockdown_UQ_bio.r corona_in.json', interpret='Rscript'))
+#campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('intermittent_lockdown_UQ_bio.r corona_in.json', interpret='Rscript'))
 
 # Run execution in parallel without Fabsim (using gnu parallel)
 cwd = os.getcwd()
-pcmd = f"ls -d {my_campaign.campaign_dir}/runs/Run_* | parallel -j 4 'cd {{}} ; Rscript {cwd}/intermittent_lockdown_UQ_bio.r corona_in.json > output.txt ; cd .. '"
+pcmd = f"ls -d {campaign.campaign_dir}/runs/Run_* | parallel -j 4 'cd {{}} ; Rscript {cwd}/intermittent_lockdown_UQ_bio.r corona_in.json > output.txt ; cd .. '"
 print('Parallel run command: ',pcmd)
 subprocess.call(pcmd,shell=True)
 

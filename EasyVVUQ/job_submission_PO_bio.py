@@ -118,7 +118,11 @@ vary = {
     "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
 
+# For estimation of the cdf and heatmap
 sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e2)
+
+# For the computation of the Sobol indices
+# sampler = uq.sampling.MCSampler(vary=vary, n_mc_samples=100)
 
 # Associate the sampler with the campaign
 campaign.set_sampler(sampler)

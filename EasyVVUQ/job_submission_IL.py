@@ -18,7 +18,7 @@ campaign = uq.Campaign(name='virsim_IL_nobio_', work_dir=workdir)
 # Define parameter space
 params = {
     "seed": {
-        "type": "integer",
+        "type": "integer", # set to "float" when using MCSampler
         "min": 0,
         "max": 2**31,
         "default": 12345},
@@ -115,7 +115,11 @@ vary = {
     "uptake": cp.Beta(alpha=16, beta=2)
 }
  
+# For estimation of the cdf and heatmap
 sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e2)
+
+# For the computation of the Sobol indices
+# sampler = uq.sampling.MCSampler(vary=vary, n_mc_samples=100)
 
 # Associate the sampler with the campaign
 campaign.set_sampler(sampler)

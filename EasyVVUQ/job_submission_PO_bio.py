@@ -18,7 +18,7 @@ campaign = uq.Campaign(name='virsim_PO_bio_', work_dir=workdir)
 # Define parameter space
 params = {
     "seed": {
-        "type": "integer",
+        "type": "integer", # set to "float" when using MCSampler
         "min": 0,
         "max": 2**31,
         "default": 12345},

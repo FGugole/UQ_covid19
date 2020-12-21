@@ -35,23 +35,16 @@ CT_campaign.collate()
 # get full dataset of data
 data_CT = CT_campaign.get_collation_result()
 
-L = 551
-n_runs = 1000
+IC_prev_avg_max_CT = data_CT['IC_prev_avg_max',0] 
+IC_prev_avg_max_CT = IC_prev_avg_max_CT.to_numpy()
 
-IC_prev_avg_max_CT = np.zeros(n_runs,dtype='float')
-IC_ex_max_CT = np.zeros(n_runs,dtype='float')
-IC_prev_max_CT = np.zeros(n_runs,dtype='float')
+IC_ex_max_CT = data_CT['IC_ex_max',0] 
+IC_ex_max_CT = IC_ex_max.to_numpy()
 
-for i in range(n_runs):
-    IC_prev_avg_max_CT[i] = data_CT.IC_prev_avg_max[i*L]
-    IC_ex_max_CT[i] = data_CT.IC_ex_max[i*L]
-    IC_prev_max_CT[i] = max(data_CT.IC_prev[i*L:(i+1)*L])
+n_runs = len(IC_prev_avg_max_CT)
 
 IC_prev_avg_max_CT.sort()
 IC_ex_max_CT.sort()
-IC_prev_max_CT.sort()
-
-#print(IC_prev_max_CT)
 
 p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 
@@ -100,12 +93,11 @@ f_CT.savefig('figures/cdf_CT_comparison.png')
 # # get full dataset of data
 # data_FC = FC_campaign.get_collation_result()
 
-# IC_prev_avg_max_FC = np.zeros(n_runs,dtype='float')
-# IC_ex_max_FC = np.zeros(n_runs,dtype='float')
+# IC_prev_avg_max_FC = data_FC['IC_prev_avg_max',0] 
+# IC_prev_avg_max_FC = IC_prev_avg_max_FC.to_numpy()
 
-# for i in range(n_runs):
-#     IC_prev_avg_max_FC[i] = data_FC.IC_prev_avg_max[i*L]
-#     IC_ex_max_FC[i] = data_FC.IC_ex_max[i*L]
+# IC_ex_max_FC = data['IC_ex_max',0] 
+# IC_ex_max_FC = IC_ex_max_FC.to_numpy()
 
 # IC_prev_avg_max_FC.sort()
 # IC_ex_max_FC.sort()
@@ -152,20 +144,14 @@ PO_campaign.collate()
 # get full dataset of data
 data_PO = PO_campaign.get_collation_result()
 
-IC_prev_avg_max_PO = np.zeros(n_runs,dtype='float')
-IC_ex_max_PO = np.zeros(n_runs,dtype='float')
-IC_prev_max_PO = np.zeros(n_runs,dtype='float')
+IC_prev_avg_max_PO = data_PO['IC_prev_avg_max',0] 
+IC_prev_avg_max_PO = IC_prev_avg_max_PO.to_numpy()
 
-for i in range(n_runs):
-    IC_prev_avg_max_PO[i] = data_PO.IC_prev_avg_max[i*L]
-    IC_ex_max_PO[i] = data_PO.IC_ex_max[i*L]
-    IC_prev_max_PO[i] = max(data_PO.IC_prev[i*L:(i+1)*L])
+IC_ex_max_PO = data_PO['IC_ex_max',0] 
+IC_ex_max_PO = IC_ex_max_PO.to_numpy()
 
 IC_prev_avg_max_PO.sort()
 IC_ex_max_PO.sort()
-IC_prev_max_PO.sort()
-
-#print(IC_prev_max_PO)
 
 #################################
 # Load data from UQLab campaign #

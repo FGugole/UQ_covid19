@@ -70,7 +70,7 @@ for param in params:
     high = results._get_sobols_first_conf('IC_prev_avg_max', param)[1]
     yerr_ICp[:,idx] = [sobol_idx-low, high-sobol_idx]
 
-    print('Sobol index for IC_prev_avg_max = ', sobol_idx)#results.sobols_first('IC_prev_avg_max', param))
+    print('Sobol index for IC_prev_avg_max = ', sobol_idx)
     print('95% CI lower bound = ', low)
     print('95% CI upper bound = ', high)
 
@@ -83,7 +83,7 @@ for param in params:
     #
     idx += 1
 
-    print('Sobol index for IC_ex_max = ', sobol_idx)#results.sobols_first('IC_ex_max', param))
+    print('Sobol index for IC_ex_max = ', sobol_idx)
     print('95% CI lower bound = ', low)
     print('95% CI upper bound = ', high)
 

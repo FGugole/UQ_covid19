@@ -61,12 +61,19 @@ yerr_ICe = np.zeros((2,len(params)), dtype='float')
 
 idx = 0
 for param in params: 
+    # print values to terminal
+    print('Param = ', param)
     #
     sobol_idx = results.sobols_first('IC_prev_avg_max', param)
     sobol_idx_ICp[idx] = sobol_idx
     low = results._get_sobols_first_conf('IC_prev_avg_max', param)[0]
     high = results._get_sobols_first_conf('IC_prev_avg_max', param)[1]
     yerr_ICp[:,idx] = [sobol_idx-low, high-sobol_idx]
+
+    print('Sobol index for IC_prev_avg_max = ', sobol_idx)#results.sobols_first('IC_prev_avg_max', param))
+    print('95% CI lower bound = ', low)
+    print('95% CI upper bound = ', high)
+
     #
     sobol_idx = results.sobols_first('IC_ex_max', param)
     sobol_idx_ICe[idx] = sobol_idx
@@ -76,10 +83,9 @@ for param in params:
     #
     idx += 1
 
-    # print values to terminal
-    print('Param = ', param)
-    print('Sobol index for IC_prev_avg_max = ', results.sobols_first('IC_prev_avg_max', param))
-    print('Sobol index for IC_ex_max = ', results.sobols_first('IC_ex_max', param))
+    print('Sobol index for IC_ex_max = ', sobol_idx)#results.sobols_first('IC_ex_max', param))
+    print('95% CI lower bound = ', low)
+    print('95% CI upper bound = ', high)
 
 '''
 ********

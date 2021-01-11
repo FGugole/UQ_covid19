@@ -25,18 +25,18 @@ HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
 workdir = '/export/scratch2/home/federica/'
-my_campaign = uq.Campaign(state_file = "campaign_state_CT_nobio_1e2.json", work_dir = workdir)
+campaign = uq.Campaign(state_file = "campaign_state_CT_nobio_1e2.json", work_dir = workdir)
 print('========================================================')
-print('Reloaded campaign', my_campaign.campaign_dir.split('/')[-1])
+print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')
 
 # get sampler from my_campaign object
-my_sampler = my_campaign._active_sampler
+sampler = campaign._active_sampler
 
 # collate output
-my_campaign.collate()
+campaign.collate()
 # get full dataset of data
-data = my_campaign.get_collation_result()
+data = campaign.get_collation_result()
 #print(data.columns)
  
 IC_capacity = 109

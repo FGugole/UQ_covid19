@@ -109,13 +109,13 @@ campaign.add_app(name='mc',
 # Create the sampler
 vary = {
     "seed": cp.DiscreteUniform(2**14, 2**16),
-    "trace_prob_E": cp.Beta(alpha=2, beta=4),
-    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
+    "trace_prob_E": cp.Beta(alpha=2, beta=6),
+    "trace_rate_I": cp.Gamma(shape=2, scale=.2),
     "trace_contact_reduction": cp.Beta(alpha=10, beta=2)
 }
 
 # For estimation of the cdf and heatmap
-sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e2)
+sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e3)
 
 # For the computation of the Sobol indices
 # sampler = uq.sampling.MCSampler(vary=vary, n_mc_samples=100)
@@ -129,7 +129,7 @@ campaign.draw_samples()
 campaign.populate_runs_dir()
 
 # Save the campaign
-campaign.save_state('campaign_state_CT_nobio.json')
+campaign.save_state('campaign_state_CT_nobio_1k.json')
 
 # Run execution sequentially 
 #campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ.r corona_in.json', interpret='Rscript'))

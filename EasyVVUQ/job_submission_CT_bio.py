@@ -119,7 +119,7 @@ vary = {
 }
 
 # For estimation of the cdf and heatmap
-sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e2)
+sampler = uq.sampling.RandomSampler(vary=vary, max_num=1e3)
 
 # For the computation of the Sobol indices
 # sampler = uq.sampling.MCSampler(vary=vary, n_mc_samples=100)
@@ -133,7 +133,7 @@ campaign.draw_samples()
 campaign.populate_runs_dir()
 
 # Save the campaign
-campaign.save_state('campaign_state_CT_bio.json')
+campaign.save_state('campaign_state_CT_bio_1k.json')
 
 # Run execution sequentially 
 #campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ_bio.r corona_in.json', interpret='Rscript'))

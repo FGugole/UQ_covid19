@@ -133,7 +133,7 @@ campaign.draw_samples()
 campaign.populate_runs_dir()
 
 # Save the campaign
-campaign.save_state('campaign_state_CT_bio_1k.json')
+campaign.save_state('campaign_state_CT_bio.json')
 
 # Run execution sequentially 
 #campaign.apply_for_each_run_dir(uq.actions.ExecuteLocal('contact_tracing_UQ_bio.r corona_in.json', interpret='Rscript'))

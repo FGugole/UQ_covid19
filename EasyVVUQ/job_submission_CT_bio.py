@@ -109,8 +109,8 @@ campaign.add_app(name='mc',
 # Create the sampler
 vary = {
     "seed": cp.DiscreteUniform(2**14, 2**16),
-    "trace_prob_E": cp.Beta(alpha=2, beta=4),
-    "trace_rate_I": cp.Gamma(shape=2, scale=.4),
+    "trace_prob_E": cp.Beta(alpha=2, beta=6),
+    "trace_rate_I": cp.Gamma(shape=2, scale=.2),
     "trace_contact_reduction": cp.Beta(alpha=10, beta=2),
     "Rzero": cp.Gamma(shape=100,scale=.025),
     "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 

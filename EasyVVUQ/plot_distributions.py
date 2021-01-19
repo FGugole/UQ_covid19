@@ -13,9 +13,9 @@ plt.rcParams.update({'font.size': 20})
 plt.rcParams['figure.figsize'] = 8,6
 
 # Contact tracing
-beta_tpE = cp.Beta(alpha=2, beta=4)
+beta_tpE = cp.Beta(alpha=2, beta=6)
 beta_tcr = cp.Beta(alpha=10, beta=2)
-gamma_trI = cp.Gamma(shape=2, scale=.4)
+gamma_trI = cp.Gamma(shape=2, scale=.2)
 
 x_CT = np.linspace(0, 1.5, 151)
 

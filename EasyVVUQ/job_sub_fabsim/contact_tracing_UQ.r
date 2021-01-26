@@ -137,7 +137,7 @@ QoI <- data.frame("IC_prev_avg_max"=max(na.omit(IC_prev_avg)), "IC_ex_max"=max(I
 #############################
 # Write results to csv file #
 #############################
-write.csv(x=contact_tracing_data, file=output_filename, row.names=FALSE)
-#write.csv(x=QoI, file=output_filename, row.names=FALSE)
+#write.csv(x=contact_tracing_data, file=output_filename, row.names=FALSE)
+write.csv(x=QoI, file=output_filename, row.names=FALSE)
 
 ### END OF CODE ###

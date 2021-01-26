@@ -12,7 +12,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 20})
-plt.rcParams['figure.figsize'] = 8,6
+plt.rcParams['figure.figsize'] = 8,5
 import fabsim3_cmd_api as fab
 """
 *****************
@@ -23,7 +23,7 @@ import fabsim3_cmd_api as fab
 config = 'virsim'
 script = 'virsim_FC'
 machine = 'eagle_vecma'
-workdir = '/ufs/federica/Desktop/VirsimCampaigns'#'/tmp'
+workdir = '/export/scratch1/federica/VirsimCampaigns'
 
 # home directory of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
@@ -39,10 +39,10 @@ sampler = campaign._active_sampler
 # print(type(sampler._samples))
 # print(sampler._samples.shape)
 
-# output_columns = campaign._active_app_decoder.output_columns
+output_columns = campaign._active_app_decoder.output_columns
 
 #Manually specify a subset of the output QoIs, is faster
-output_columns = ["IC_prev_avg_max", "IC_ex_max"]
+#output_columns = ["IC_prev_avg_max", "IC_ex_max"]
 
 fab.verify(config, campaign.campaign_dir, 
             campaign._active_app_decoder.target_filename, 
@@ -59,13 +59,13 @@ data = campaign.get_collation_result()
 
 # Post-processing analysis
 qmc_analysis = uq.analysis.QMCAnalysis(sampler=sampler, qoi_cols=output_columns)
-# campaign.apply_analysis(qmc_analysis)
+campaign.apply_analysis(qmc_analysis)
 
 #manually execute analyse, such that we can supply output_index=-1, only using the last entry
 #of the 551 points as QoI
-results = qmc_analysis.analyse(data, output_index=-1)
+#results = qmc_analysis.analyse(data, output_index=-1)
 
-# results = campaign.get_last_analysis()
+results = campaign.get_last_analysis()
 #print(results)
 
 """
@@ -74,11 +74,8 @@ results = qmc_analysis.analyse(data, output_index=-1)
 ***************************
 """
 #first order Sobol indices and parameter names
-sobols = results['sobols_first']
 params = list(sampler.vary.get_keys())
 #print(params)
-
-#time = np.arange(0, 550+1, 1)
 
 ######################################################################
 sobol_idx_ICp = np.zeros((len(params)), dtype='float')
@@ -89,29 +86,31 @@ yerr_ICe = np.zeros((2,len(params)), dtype='float')
 
 idx = 0
 for param in params: 
+    # print values to terminal
+    print('Param = ', param)
     #
-    sobol_idx = sobols['IC_prev_avg_max'][param]
+    sobol_idx = results.sobols_first('IC_prev_avg_max',param)
     sobol_idx_ICp[idx] = sobol_idx
-    low = results['conf_sobols_first']['IC_prev_avg_max'][param]['low']
-    high = results['conf_sobols_first']['IC_prev_avg_max'][param]['high']
+    low = results._get_sobols_first_conf('IC_prev_avg_max',param)[0]
+    high = results._get_sobols_first_conf('IC_prev_avg_max',param)[1]
     yerr_ICp[:,idx] = [sobol_idx-low, high-sobol_idx]
+
+    print('Sobol index for IC_prev_avg_max = ', sobol_idx)
+    print('95% CI lower bound = ', low)
+    print('95% CI upper bound = ', upper)
+
     #
-    sobol_idx = sobols['IC_ex_max'][param]
+    sobol_idx = results.sobols('IC_ex_max',param)
     sobol_idx_ICe[idx] = sobol_idx
-    low = results['conf_sobols_first']['IC_ex_max'][param]['low']
-    high = results['conf_sobols_first']['IC_ex_max'][param]['high']
+    low = results._get_sobols_first_conf('IC_ex_max',param)[0]
+    high = results._get_sobols_first_conf('IC_ex_max',param)[1]
     yerr_ICe[:,idx] = [sobol_idx-low, high-sobol_idx]
     #
     idx += 1
-    # print values to terminal
-    print('Param = ',param)
-    print('Sobol index for IC_prev_avg_max = ', sobols['IC_prev_avg_max'][param])
-    print('95% CI lower bound = ', results['conf_sobols_first']['IC_prev_avg_max'][param]['low'])
-    print('95% CI upper bound = ', results['conf_sobols_first']['IC_prev_avg_max'][param]['high'])
 
-    print('Sobol index for IC_ex_max = ', sobols['IC_ex_max'][param])
-    print('95% CI lower bound = ', results['conf_sobols_first']['IC_ex_max'][param]['low'])
-    print('95% CI upper bound = ', results['conf_sobols_first']['IC_ex_max'][param]['high'])
+    print('Sobol index for IC_ex_max = ', sobol_idx)
+    print('95% CI lower bound = ', low)
+    print('95% CI upper bound = ', high)
 
 f = plt.figure('Sobol_IC_max', figsize=[12,7])
 ax_ICp_max = f.add_subplot(121, title = 'Maximum of patients in IC')

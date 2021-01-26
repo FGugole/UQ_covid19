@@ -12,7 +12,7 @@ import fabsim3_cmd_api as fab
 config = 'virsim_PO'
 script = 'virsim_PO'
 machine = 'eagle_vecma'
-workdir = '/ufs/federica/Desktop/VirsimCampaigns'#'/tmp'
+workdir = '/export/scratch1/federica/VirsimCampaigns'
 
 #home dir of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
@@ -104,17 +104,13 @@ encoder = uq.encoders.GenericEncoder(
     delimiter='$',
     target_filename='corona_in.json')
 decoder = uq.decoders.SimpleCSV(target_filename=output_filename,
-                                output_columns=output_columns,
-                                header=0)
-# collater = uq.collate.AggregateSamples(average=False)
-collater = uq.collate.AggregateHDF5()
+                                output_columns=output_columns)
 
 # Add the SC app (automatically set as current app)
 campaign.add_app(name="sc",
                     params=params,
                     encoder=encoder,
-                    decoder=decoder,
-                    collater=collater) 
+                    decoder=decoder) 
 
 # Create the sampler
 vary = {
@@ -130,7 +126,7 @@ vary = {
 
 #sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 
 #                                   quadrature_rule='G', sparse=False)
-sampler = uq.sampling.MCSampler(vary=vary, n_mc_samples=10000)
+sampler = uq.sampling.MCSampler(vary=vary, n_mc_samples=2000)
 
 # Associate the sampler with the campaign
 campaign.set_sampler(sampler)

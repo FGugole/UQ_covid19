@@ -12,7 +12,7 @@ import fabsim3_cmd_api as fab
 config = 'virsim_IL'
 script = 'virsim_IL'
 machine = 'eagle_vecma'
-workdir = '/ufs/federica/Desktop/VirsimCampaigns'#'/tmp'
+workdir = '/export/scratch1/federica/VirsimCampaigns'
 
 #home dir of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
@@ -104,17 +104,13 @@ encoder = uq.encoders.GenericEncoder(
     delimiter='$',
     target_filename='corona_in.json')
 decoder = uq.decoders.SimpleCSV(target_filename=output_filename,
-                                output_columns=output_columns,
-                                header=0)
-# collater = uq.collate.AggregateSamples(average=False)
-collater = uq.collate.AggregateHDF5()
+                                output_columns=output_columns)
 
 # Add the SC app (automatically set as current app)
 campaign.add_app(name="sc",
                     params=params,
                     encoder=encoder,
-                    decoder=decoder,
-                    collater=collater) 
+                    decoder=decoder) 
 
 # Create the sampler
 vary = {
@@ -122,15 +118,13 @@ vary = {
     "lockdown_effect": cp.Beta(alpha=14, beta=42),
     "lockdown_length": cp.Gamma(shape=20, scale=2),
     "lift_length": cp.Gamma(shape=15, scale=1),
-    "uptake": cp.Beta(alpha=16, beta=2),
+    "uptake": cp.Beta(alpha=16, beta=2)
     # "Rzero": cp.Gamma(shape=100,scale=.025),
     # "duration_infectiousness": cp.Gamma(shape=25,scale=.2), 
     # "shape_exposed_time": cp.Gamma(shape=17.5,scale=1),
     # "intervention_effect_var_inv": cp.Gamma(shape=2,scale=.05)
 }
 
-#sampler = uq.sampling.SCSampler(vary=vary, polynomial_order=3, 
-#                                   quadrature_rule='G', sparse=False)
 sampler = uq.sampling.MCSampler(vary=vary, n_mc_samples=2000)
 
 # Associate the sampler with the campaign

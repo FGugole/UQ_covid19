@@ -25,7 +25,7 @@ HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
 workdir = '/export/scratch2/home/federica/'
-campaign = uq.Campaign(state_file = "campaign_state_CT_nobio_1e2.json", work_dir = workdir)
+campaign = uq.Campaign(state_file = "campaign_state_CT_nobio_1k.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -117,7 +117,7 @@ im_0 = ax_0.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,0] > IC_capaci
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([200, 600, 1000])
 cbar_0.set_ticklabels(['200', '600', '1000'])
-ax_0.set_xticks([0, 2, 4])
+ax_0.set_xticks([0, 1, 2, 3])
 ax_0.set_yticks([0.4, 0.6, 0.8, 1])
 
 ax_1 = f.add_subplot(222)
@@ -130,7 +130,7 @@ im_1 = ax_1.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,1] > IC_capaci
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([200, 600, 1000])
 cbar_1.set_ticklabels(['200', '600', '1000'])
-ax_1.set_xticks([0, 2, 4])
+ax_1.set_xticks([0, 1, 2, 3])
 ax_1.set_yticks([0.4, 0.6, 0.8, 1])
 
 ax_2 = f.add_subplot(223, xlabel='Rate per day of \n identified infected individuals', ylabel='Contact reduction \n of traced individuals')
@@ -143,7 +143,7 @@ im_2 = ax_2.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,2] > IC_capaci
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([200, 600, 1000])
 cbar_2.set_ticklabels(['200', '600', '1000'])
-ax_2.set_xticks([0, 2, 4])
+ax_2.set_xticks([0, 1, 2, 3])
 ax_2.set_yticks([0.4, 0.6, 0.8, 1])
 
 ax_3 = f.add_subplot(224, xlabel='Rate per day of \n identified infected individuals')
@@ -156,7 +156,7 @@ im_3 = ax_3.scatter(x=trace_rate_I_q[np.where(IC_prev_avg_max_q[:,3] > IC_capaci
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([200, 600, 1000])
 cbar_3.set_ticklabels(['200', '600', '1000'])
-ax_3.set_xticks([0, 2, 4])
+ax_3.set_xticks([0, 1, 2, 3])
 ax_3.set_yticks([0.4, 0.6, 0.8, 1])
 
 plt.tight_layout()

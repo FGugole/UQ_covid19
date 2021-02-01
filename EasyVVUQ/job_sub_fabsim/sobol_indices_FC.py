@@ -29,7 +29,7 @@ workdir = '/export/scratch1/federica/VirsimCampaigns'
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-campaign = uq.Campaign(state_file = "campaign_state_FC.json", work_dir = workdir)
+campaign = uq.Campaign(state_file = "campaign_state_FC_MC2k.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -48,8 +48,8 @@ fab.verify(config, campaign.campaign_dir,
             campaign._active_app_decoder.target_filename, 
             machine=machine, PJ=True)
 
-fab.get_uq_samples(config, campaign.campaign_dir, sampler._n_samples,
-                    skip=0, machine='eagle_vecma')
+fab.get_uq_samples(config, campaign.campaign_dir, sampler.n_samples(),
+                    skip=0, machine=machine)
 
 # collate output
 campaign.collate()
@@ -97,7 +97,7 @@ for param in params:
 
     print('Sobol index for IC_prev_avg_max = ', sobol_idx)
     print('95% CI lower bound = ', low)
-    print('95% CI upper bound = ', upper)
+    print('95% CI upper bound = ', high)
 
     #
     sobol_idx = results.sobols('IC_ex_max',param)

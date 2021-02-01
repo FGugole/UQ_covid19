@@ -28,7 +28,7 @@ workdir = '/export/scratch1/federica/VirsimCampaigns'
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
-campaign = uq.Campaign(state_file = "campaign_state_PO.json", work_dir = workdir)
+campaign = uq.Campaign(state_file = "campaign_state_PO_MC2k.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')

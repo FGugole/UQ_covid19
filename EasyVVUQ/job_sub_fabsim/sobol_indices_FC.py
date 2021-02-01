@@ -100,7 +100,7 @@ for param in params:
     print('95% CI upper bound = ', high)
 
     #
-    sobol_idx = results.sobols('IC_ex_max',param)
+    sobol_idx = results.sobols_first('IC_ex_max',param)
     sobol_idx_ICe[idx] = sobol_idx
     low = results._get_sobols_first_conf('IC_ex_max',param)[0]
     high = results._get_sobols_first_conf('IC_ex_max',param)[1]

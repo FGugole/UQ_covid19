@@ -15,7 +15,6 @@ plt.rcParams['figure.figsize'] = 8,5
 import fabsim3_cmd_api as fab
 
 class bcolors:
-    """to color the instructions in the console"""
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'

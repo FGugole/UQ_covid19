@@ -10,6 +10,18 @@ import os
 import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 20})
 plt.rcParams['figure.figsize'] = 8,6
+
+class bcolors:
+    """to color the instructions in the console"""
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 """
 *****************
 * VVUQ ANALYSES *
@@ -62,7 +74,7 @@ yerr_ICe = np.zeros((2,len(params)), dtype='float')
 idx = 0
 for param in params: 
     # print values to terminal
-    print('Param = ', param)
+    print(bcolors.OKBLUE + 'Param = ' + param + bcolors.ENDC)
     #
     sobol_idx = results.sobols_first('IC_prev_avg_max', param)
     sobol_idx_ICp[idx] = sobol_idx

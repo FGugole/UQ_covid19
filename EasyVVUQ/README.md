@@ -1,7 +1,7 @@
 # Requirements
-* Python 3.6+
+* Python 3.6+ 
   * chaospy
-  * [easyvvuq](https://github.com/UCL-CCS/EasyVVUQ)
+  * [easyvvuq](https://github.com/UCL-CCS/EasyVVUQ) v0.8 (use `pip3 install easyvvuq==0.8` to install the specific version)
   * numpy
   * os
   * pandas

@@ -62,10 +62,10 @@ n_runs = len(IC_ex_max)
 q_trace_prob_E = np.quantile(trace_prob_E,[0, 0.25, 0.5, 0.75, 1])
 
 # Take slabs of data corresponding to the quartiles of trace_prob_E
-trace_rate_I_q = np.zeros((np.int(n_runs/4),4),dtype='float')
-trace_contact_reduction_q = np.zeros((np.int(n_runs/4),4),dtype='float')
-IC_prev_avg_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
-IC_ex_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
+trace_rate_I_q = np.zeros((int(n_runs/4),4),dtype='float')
+trace_contact_reduction_q = np.zeros((int(n_runs/4),4),dtype='float')
+IC_prev_avg_max_q = np.zeros((int(n_runs/4),4),dtype='float')
+IC_ex_max_q = np.zeros((int(n_runs/4),4),dtype='float')
 
 cnt0 = 0; cnt1 = 0; cnt2 = 0; cnt3=0
 

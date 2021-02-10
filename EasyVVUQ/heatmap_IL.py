@@ -84,7 +84,7 @@ ax_e.set_xticks([0.1, 0.2, 0.3, 0.4])
 ax_e.set_yticks([0.6, 0.8, 1.0])
 
 plt.tight_layout()
-f.savefig('figures/heatmap_IL_MC1000.png')
+f.savefig('figures/heatmap_IL_MC1000.pdf')
 
 plt.show()
 

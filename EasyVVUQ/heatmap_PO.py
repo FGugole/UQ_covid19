@@ -62,10 +62,10 @@ n_runs = len(IC_ex_max)
 q_phase_interval = np.quantile(phase_interval,[0, 0.25, 0.5, 0.75, 1])
 
 # Take slabs of data corresponding to the quartiles of phase_interval
-pl_intervention_effect_hi_q = np.zeros((np.int(n_runs/4),4),dtype='float')
-uptake_q = np.zeros((np.int(n_runs/4),4),dtype='float')
-IC_prev_avg_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
-IC_ex_max_q = np.zeros((np.int(n_runs/4),4),dtype='float')
+pl_intervention_effect_hi_q = np.zeros((int(n_runs/4),4),dtype='float')
+uptake_q = np.zeros((int(n_runs/4),4),dtype='float')
+IC_prev_avg_max_q = np.zeros((int(n_runs/4),4),dtype='float')
+IC_ex_max_q = np.zeros((int(n_runs/4),4),dtype='float')
 
 cnt0 = 0; cnt1 = 0; cnt2 = 0; cnt3=0
 
@@ -261,7 +261,7 @@ ax_e.zaxis.labelpad = 15
 ax_e.view_init(azim=60)
 
 plt.tight_layout()
-f.savefig('figures/heatmap_PO.png')
+f.savefig('figures/heatmap_PO.pdf')
 
 plt.show()
 

@@ -104,25 +104,24 @@ for param in params:
 ********
 '''
 
-f = plt.figure('Sobol_IC_max', figsize=[12, 6])
-ax_ICp_max = f.add_subplot(121, title = 'IC_prev_avg_max')
-ax_ICp_max.set_ylim([-.1, 1.1])
+f = plt.figure('Sobol_IC_max', figsize=[8,5])
+ax = f.add_subplot(111, title = 'IL')
+ax.invert_yaxis()
+ax.set_xlim([-.1, 1.1])
 
-ax_ICe_max = f.add_subplot(122, title = 'IC_ex_max')
-ax_ICe_max.set_ylim([-.1, 1.1])
+ax.barh(np.arange(0, len(params), 1), sobol_idx_ICp, xerr=err_ICp, linewidth=2, \
+    color=['mediumaquamarine','lightskyblue','lightskyblue','lightskyblue', 'lightsalmon'], \
+    ecolor=['lightseagreen','cornflowerblue','cornflowerblue','cornflowerblue','salmon'], \
+    height=0.6)
 
-ax_ICp_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICp, yerr=yerr_ICp, \
-    fmt='o', elinewidth=2, color='teal')
-ax_ICe_max.errorbar(np.arange(0, len(params), 1), sobol_idx_ICe, yerr=yerr_ICe, \
-    fmt='o', elinewidth=2, color='teal')
+labels = ['seed', 'lock_effect', 'lock_length', 'lift_length', 'uptake']
 
-ax_ICp_max.set_xticks(np.arange(0, len(params), 1))
-ax_ICp_max.set_xticklabels(params, rotation=45)
-ax_ICe_max.set_xticks(np.arange(0, len(params), 1))
-ax_ICe_max.set_xticklabels(params, rotation=45)
-#
+ax.set_xticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
+ax.set_yticks(np.arange(0, len(labels), 1))
+ax.set_yticklabels(labels)
+
 plt.tight_layout()
-f.savefig('figures/Sobols_PO.png')
+f.savefig('figures/Sobol_IL.pdf')
 
 plt.show()
 

@@ -84,14 +84,14 @@ for i in range(n_runs2plot):
 ax0.hlines(y=IC_capacity, xmin=0, xmax=L, lw=2, ls=':', color='black')
 ax1.hlines(y=IC_capacity, xmin=0, xmax=L, lw=2, ls=':', color='black')
 
-ax0.set_ylim([0, 500])
+ax0.set_ylim([0, 400])
 ax0.set_yticks([0, 200, 400])
-ax1.set_ylim([0, 500])
+ax1.set_ylim([0, 400])
 ax1.set_yticks([0, 200, 400])
 
 ax2.set_yticks([0, 10000, 20000])
 
 plt.tight_layout()
-fig.savefig('figures/QoIs_test.pdf')
+fig.savefig('figures/QoIs.pdf')
 
 plt.show()

@@ -86,7 +86,7 @@ ax_ILPO.plot(x_IL_length,gamma_liftlength.pdf(x_IL_length),lw=2,label='Lift peri
 ax_ILPO.plot(x_IL_length,gamma_phase_interval.pdf(x_IL_length),lw=2,label='Intervention interval')
 ax_ILPO.set_xticks([0, 30, 60, 90])
 ax_ILPO.set_ylim([0, 0.11])
-ax_ILPO.set_yticks([0.0, .1])
+ax_ILPO.set_yticks([0.0, .05, .1])
 
 ax_ILPO.legend(loc='upper right')
 
@@ -105,7 +105,7 @@ ax_sh = f.add_subplot(326, xlabel='x')
 ax_sh.plot(x_exposed_time,gamma_exposed_time.pdf(x_exposed_time),lw=2,label='Shape param. of exposed time distr.')
 ax_sh.set_xticks([0, 20, 40])
 ax_sh.set_ylim([0.0, 0.12])
-ax_sh.set_yticks([0.0, .1])
+ax_sh.set_yticks([0.0, .05, .1])
 
 ax_sh.legend(loc='upper center')
 

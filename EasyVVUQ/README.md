@@ -132,8 +132,8 @@ Execute this script by typing on terminal `> python3 cdfs_plot.py`.
 The campaigns meant to provide the data for this analysis have to be excuted using the `RandomSampler` of the EasyVVUQ library.
 
 ### Sobol indices
-The first order Sobol indices are computed with the script `sobol_indices.py`. By selecting different campaign states, the Sobol indices of all 
-strategies can be computed. Execute this script by typing on terminal `> python3 sobol_indices.py`.
+The first order Sobol indices are computed with the scripts `sobol_indices_*.py`. By selecting different campaign states, the Sobol indices of all 
+strategies can be computed. Execute this script by typing on terminal, e.g., `> python3 sobol_indices_IL.py`.
 
 To compute the Sobol indices via the Saltelli algorithm, it is necessary to apply the `QMCAnalysis` object of the EasyVVUQ library. 
 Note that `QMCAnalysis` will work only if the campaign used the `MCSampler` (or the `QMCSampler` although the latter is not of interest here) 
@@ -145,7 +145,7 @@ campaign.apply_analysis(qmc_analysis)
 
 results = campaign.get_last_analysis()
 ```
-The first order Sobol indices can be retrieved with `results.sobols_first()`.
+The first order Sobol indices can be retrieved with `results.sobols_first()` and their respective confidence intervals with `results._get_sobols_first_conf(name_QoI, name_param)`. Similar functions are available also for the total Sobol indices.
 
 ### Heatmap
 For each strategy considered there is the corresponding Python3 script generating the heatmap: `heatmap_FC.py` corresponds to Flattening the Curve, 

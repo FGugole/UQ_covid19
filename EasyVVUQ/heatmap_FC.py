@@ -24,7 +24,7 @@ HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the campaign
 workdir = '/export/scratch2/home/federica/'
-campaign = uq.Campaign(state_file = "campaign_state_FC_bio_1e2.json", work_dir = workdir)
+campaign = uq.Campaign(state_file = "campaign_state_FC_nobio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', campaign.campaign_dir.split('/')[-1])
 print('========================================================')

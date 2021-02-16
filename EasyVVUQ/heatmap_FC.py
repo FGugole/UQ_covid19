@@ -56,7 +56,7 @@ IC_ex_max = IC_ex_max.to_numpy()
 # Plot
 
 f = plt.figure('heatmap',figsize=[12,6])
-ax_p = f.add_subplot(121, xlabel='Effect of intervention', ylabel='Uptake by the population')
+ax_p = f.add_subplot(121, xlabel='Level of transmission \n allowed by intervention', ylabel='Uptake by the population')
 im_p = ax_p.scatter(x=intervention_effect[np.where(IC_prev_avg_max <= IC_capacity)], y=uptake[np.where(IC_prev_avg_max <= IC_capacity)], \
 	c='black')
 im_p = ax_p.scatter(x=intervention_effect[np.where(IC_prev_avg_max > IC_capacity)], y=uptake[np.where(IC_prev_avg_max > IC_capacity)], \
@@ -68,7 +68,7 @@ cbar_p.set_ticklabels(['150', '250', '350', '450'])
 ax_p.set_xticks([0.25, 0.35, 0.45])
 ax_p.set_yticks([0.6, 0.8, 1.0])
 
-ax_e = f.add_subplot(122, xlabel='Effect of intervention')
+ax_e = f.add_subplot(122, xlabel='Level of transmission \n allowed by intervention')
 im_e = ax_e.scatter(x=intervention_effect[np.where(IC_ex_max == 0)], y=uptake[np.where(IC_ex_max == 0)], \
 	c='black')
 im_e = ax_e.scatter(x=intervention_effect[np.where(IC_ex_max > 0)], y=uptake[np.where(IC_ex_max > 0)], \

@@ -111,7 +111,7 @@ ax.set_xlim([-.1, 1.1])
 
 ax.barh(np.arange(0, len(params), 1), sobol_idx_ICp, xerr=err_ICp, linewidth=2, \
     color=['mediumaquamarine','lightsalmon','lightskyblue'], \
-    ecolor=['lightseagreen','salmon','cornflowerblue'], \
+    ecolor=['teal','indianred','royalblue'], \
     height=0.6)
 
 ax.set_xticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])

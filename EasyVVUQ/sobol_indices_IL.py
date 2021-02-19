@@ -110,8 +110,8 @@ ax.invert_yaxis()
 ax.set_xlim([-.1, 1.1])
 
 ax.barh(np.arange(0, len(params), 1), sobol_idx_ICp, xerr=err_ICp, linewidth=2, \
-    color=['mediumaquamarine','lightskyblue','lightskyblue','lightskyblue', 'lightsalmon'], \
-    ecolor=['lightseagreen','cornflowerblue','cornflowerblue','cornflowerblue','salmon'], \
+    color=['mediumaquamarine','lightskyblue','mediumaquamarine','mediumaquamarine', 'lightsalmon'], \
+    ecolor=['teal','royalblue','teal','teal','indianred'], \
     height=0.6)
 
 labels = ['seed', 'lock_effect', 'lock_length', 'lift_length', 'uptake']

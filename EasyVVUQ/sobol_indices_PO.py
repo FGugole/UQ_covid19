@@ -111,7 +111,7 @@ ax.set_xlim([-.1, 1.1])
 
 ax.barh(np.arange(0, len(params), 1), sobol_idx_ICp, xerr=err_ICp, linewidth=2, \
     color=['mediumaquamarine','lightsalmon','lightskyblue','lightsalmon'], \
-    ecolor=['lightseagreen','salmon','cornflowerblue','salmon'], \
+    ecolor=['teal','indianred','royalblue','indianred'], \
     height=0.6)
 
 labels = ['seed', 'pl_intervention_effect_hi', 'intervention_lift_interval', 'uptake']

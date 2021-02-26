@@ -8,6 +8,7 @@ import numpy as np
 import easyvvuq as uq
 import os
 import matplotlib.pyplot as plt
+import pandas as pd
 from matplotlib.ticker import ScalarFormatter, NullFormatter
 plt.rcParams.update({'font.size': 18, 'legend.fontsize': 15})
 plt.rcParams['figure.figsize'] = 12,9
@@ -17,13 +18,13 @@ plt.rcParams['figure.figsize'] = 12,9
 * Load data *
 *************
 """
-workdir = '/export/scratch2/home/federica/'
+workdir = '/home/federica/Desktop/VirsimCampaigns'#'/tmp'
 
 # home directory of this file    
 HOME = os.path.abspath(os.path.dirname(__file__))
 
 # Reload the FC campaign without biology
-FC_campaign = uq.Campaign(state_file = "campaign_state_FC_nobio_1e2.json", work_dir = workdir)
+FC_campaign = uq.Campaign(state_file = "campaign_state_FC_nobio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', FC_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -34,9 +35,8 @@ FC_campaign.collate()
 FC_data = FC_campaign.get_collation_result()
 #print(FC_data.columns)
 
-
 # Reload the CT campaign without biology
-CT_campaign = uq.Campaign(state_file = "campaign_state_CT_nobio_1e2.json", work_dir = workdir)
+CT_campaign = uq.Campaign(state_file = "campaign_state_CT_nobio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', CT_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -47,9 +47,8 @@ CT_campaign.collate()
 CT_data = CT_campaign.get_collation_result()
 #print(CT_data.columns)
 
-
 # Reload the IL campaign without biology
-IL_campaign = uq.Campaign(state_file = "campaign_state_IL_nobio_1e2.json", work_dir = workdir)
+IL_campaign = uq.Campaign(state_file = "campaign_state_IL_nobio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', IL_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -60,9 +59,8 @@ IL_campaign.collate()
 IL_data = IL_campaign.get_collation_result()
 #print(IL_data.columns)
 
-
 # Reload the PO campaign without biology
-PO_campaign = uq.Campaign(state_file = "campaign_state_PO_nobio_1e2.json", work_dir = workdir)
+PO_campaign = uq.Campaign(state_file = "campaign_state_PO_nobio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', PO_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -76,7 +74,7 @@ PO_data = PO_campaign.get_collation_result()
 ###############################################################################################
 
 # Reload the FC campaign with biology
-FC_bio_campaign = uq.Campaign(state_file = "campaign_state_FC_bio_1e2.json", work_dir = workdir)
+FC_bio_campaign = uq.Campaign(state_file = "campaign_state_FC_bio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', FC_bio_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -87,9 +85,8 @@ FC_bio_campaign.collate()
 FC_bio_data = FC_bio_campaign.get_collation_result()
 #print(FC_bio_data.columns)
 
-
 # Reload the CT campaign with biology
-CT_bio_campaign = uq.Campaign(state_file = "campaign_state_CT_bio_1e2.json", work_dir = workdir)
+CT_bio_campaign = uq.Campaign(state_file = "campaign_state_CT_bio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', CT_bio_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
@@ -100,12 +97,15 @@ CT_bio_campaign.collate()
 CT_bio_data = CT_bio_campaign.get_collation_result()
 #print(CT_bio_data.columns)
 
-
 # Reload the IL campaign with biology
-IL_bio_campaign = uq.Campaign(state_file = "campaign_state_IL_bio_1e2.json", work_dir = workdir)
+IL_bio_campaign = uq.Campaign(state_file = "campaign_state_IL_bio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', IL_bio_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
+
+# get sampler and output columns from my_campaign object
+IL_bio_sampler = IL_bio_campaign._active_sampler
+#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 IL_bio_campaign.collate()
@@ -113,12 +113,15 @@ IL_bio_campaign.collate()
 IL_bio_data = IL_bio_campaign.get_collation_result()
 #print(IL_bio_data.columns)
 
-
 # Reload the PO campaign with biology
-PO_bio_campaign = uq.Campaign(state_file = "campaign_state_PO_bio_1e2.json", work_dir = workdir)
+PO_bio_campaign = uq.Campaign(state_file = "campaign_state_PO_bio.json", work_dir = workdir)
 print('========================================================')
 print('Reloaded campaign', PO_bio_campaign.campaign_dir.split('/')[-1])
 print('========================================================')
+
+# get sampler and output columns from my_campaign object
+PO_bio_sampler = PO_bio_campaign._active_sampler
+#output_columns = my_campaign._active_app_decoder.output_columns
 
 # collate output
 PO_bio_campaign.collate()
@@ -133,64 +136,74 @@ PO_bio_data = PO_bio_campaign.get_collation_result()
 * Empirical CDF of QoIs *
 *************************
 """
-
-# without bio
-FC_IC_prev_avg_max = FC_data['IC_prev_avg_max', 0] 
-FC_IC_prev_avg_max = FC_IC_prev_avg_max.to_numpy()
-FC_IC_ex_max = FC_data['IC_ex_max', 0] 
-FC_IC_ex_max = FC_IC_ex_max.to_numpy()
-
-CT_IC_prev_avg_max = CT_data['IC_prev_avg_max', 0] 
-CT_IC_prev_avg_max = CT_IC_prev_avg_max.to_numpy()
-CT_IC_ex_max = CT_data['IC_ex_max', 0] 
-CT_IC_ex_max = CT_IC_ex_max.to_numpy()
-
-IL_IC_prev_avg_max = IL_data['IC_prev_avg_max', 0] 
-IL_IC_prev_avg_max = IL_IC_prev_avg_max.to_numpy()
-IL_IC_ex_max = IL_data['IC_ex_max', 0] 
-IL_IC_ex_max = IL_IC_ex_max.to_numpy()
-
-PO_IC_prev_avg_max = PO_data['IC_prev_avg_max', 0] 
-PO_IC_prev_avg_max = PO_IC_prev_avg_max.to_numpy()
-PO_IC_ex_max = PO_data['IC_ex_max', 0] 
-PO_IC_ex_max = PO_IC_ex_max.to_numpy()
-
-# with bio
-FC_IC_prev_avg_max_bio = FC_bio_data['IC_prev_avg_max', 0] 
-FC_IC_prev_avg_max_bio = FC_IC_prev_avg_max_bio.to_numpy()
-FC_IC_ex_max_bio = FC_bio_data['IC_ex_max', 0] 
-FC_IC_ex_max_bio = FC_IC_ex_max_bio.to_numpy()
-
-CT_IC_prev_avg_max_bio = CT_bio_data['IC_prev_avg_max', 0] 
-CT_IC_prev_avg_max_bio = CT_IC_prev_avg_max_bio.to_numpy()
-CT_IC_ex_max_bio = CT_bio_data['IC_ex_max', 0] 
-CT_IC_ex_max_bio = CT_IC_ex_max_bio.to_numpy()
-
-IL_IC_prev_avg_max_bio = IL_bio_data['IC_prev_avg_max', 0] 
-IL_IC_prev_avg_max_bio = IL_IC_prev_avg_max_bio.to_numpy()
-IL_IC_ex_max_bio = IL_bio_data['IC_ex_max', 0] 
-IL_IC_ex_max_bio = IL_IC_ex_max_bio.to_numpy()
-
-PO_IC_prev_avg_max_bio = PO_bio_data['IC_prev_avg_max', 0] 
-PO_IC_prev_avg_max_bio = PO_IC_prev_avg_max_bio.to_numpy()
-PO_IC_ex_max_bio = PO_bio_data['IC_ex_max', 0] 
-PO_IC_ex_max_bio = PO_IC_ex_max_bio.to_numpy()
-
-# parameters for DKW confidence interval
+L = 551 
 IC_capacity = 109
 
-n_runs = len(FC_IC_prev_avg_max)
-#print('n_runs = ', n_runs)
+n_runs = 1000
 
 alpha_DKW = 0.05
 eps_DKW = np.sqrt( np.log(2/alpha_DKW) / (2*n_runs) )
 
-# Sort values in increasing order
+# without bio
+FC_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
+FC_IC_ex_max = np.zeros(n_runs,dtype='float')
+
+# CT_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
+# CT_IC_ex_max = np.zeros(n_runs,dtype='float')
+
+IL_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
+IL_IC_ex_max = np.zeros(n_runs,dtype='float')
+
+PO_IC_prev_avg_max = np.zeros(n_runs,dtype='float')
+PO_IC_ex_max = np.zeros(n_runs,dtype='float')
+
+# with bio
+FC_IC_prev_avg_max_bio = np.zeros(n_runs,dtype='float')
+FC_IC_ex_max_bio = np.zeros(n_runs,dtype='float')
+
+# CT_IC_prev_avg_max_bio = np.zeros(n_runs,dtype='float')
+# CT_IC_ex_max_bio = np.zeros(n_runs,dtype='float')
+
+IL_IC_prev_avg_max_bio = np.zeros(n_runs,dtype='float')
+IL_IC_ex_max_bio = np.zeros(n_runs,dtype='float')
+
+PO_IC_prev_avg_max_bio = np.zeros(n_runs,dtype='float')
+PO_IC_ex_max_bio = np.zeros(n_runs,dtype='float')
+
+for i in range(n_runs):
+    # without bio
+    # FC
+    FC_IC_prev_avg_max[i] = FC_data.IC_prev_avg_max[i*L]
+    FC_IC_ex_max[i] = FC_data.IC_ex_max[i*L]
+    # # CT
+    # CT_IC_prev_avg_max[i] = CT_data.IC_prev_avg_max[i*L]
+    # CT_IC_ex_max[i] = CT_data.IC_ex_max[i*L]
+    # IL
+    IL_IC_prev_avg_max[i] = IL_data.IC_prev_avg_max[i*L]
+    IL_IC_ex_max[i] = IL_data.IC_ex_max[i*L]
+    # PO
+    PO_IC_prev_avg_max[i] = PO_data.IC_prev_avg_max[i*L]
+    PO_IC_ex_max[i] = PO_data.IC_ex_max[i*L]
+
+    # with bio
+    # FC
+    FC_IC_prev_avg_max_bio[i] = FC_bio_data.IC_prev_avg_max[i*L]
+    FC_IC_ex_max_bio[i] = FC_bio_data.IC_ex_max[i*L]
+    # # CT
+    # CT_IC_prev_avg_max_bio[i] = CT_bio_data.IC_prev_avg_max[i*L]
+    # CT_IC_ex_max_bio[i] = CT_bio_data.IC_ex_max[i*L]
+    # IL
+    IL_IC_prev_avg_max_bio[i] = IL_bio_data.IC_prev_avg_max[i*L]
+    IL_IC_ex_max_bio[i] = IL_bio_data.IC_ex_max[i*L]
+    # PO
+    PO_IC_prev_avg_max_bio[i] = PO_bio_data.IC_prev_avg_max[i*L]
+    PO_IC_ex_max_bio[i] = PO_bio_data.IC_ex_max[i*L]
+
 FC_IC_prev_avg_max.sort()
 FC_IC_ex_max.sort()
 
-CT_IC_prev_avg_max.sort()
-CT_IC_ex_max.sort()
+# CT_IC_prev_avg_max.sort()
+# CT_IC_ex_max.sort()
 
 IL_IC_prev_avg_max.sort()
 IL_IC_ex_max.sort()
@@ -201,8 +214,8 @@ PO_IC_ex_max.sort()
 FC_IC_prev_avg_max_bio.sort()
 FC_IC_ex_max_bio.sort()
 
-CT_IC_prev_avg_max_bio.sort()
-CT_IC_ex_max_bio.sort()
+# CT_IC_prev_avg_max_bio.sort()
+# CT_IC_ex_max_bio.sort()
 
 IL_IC_prev_avg_max_bio.sort()
 IL_IC_ex_max_bio.sort()
@@ -219,7 +232,7 @@ p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 """
 
 f = plt.figure('cdfs',figsize=[12,7])
-ax_p_bio = f.add_subplot(221, ylabel='With biological \n uncertainties \n \n Probability')
+ax_p_bio = f.add_subplot(221, ylabel='All uncertainties \n \n Probability')
 # with biology
 ax_p_bio.step(FC_IC_prev_avg_max_bio,p,lw=2,color='orchid',label='FC')
 ax_p_bio.step(FC_IC_prev_avg_max_bio,p+eps_DKW,lw=1,color='plum',ls='--')
@@ -237,7 +250,7 @@ ax_p_bio.step(PO_IC_prev_avg_max_bio,p,lw=2,color='lightseagreen',label='PO')
 ax_p_bio.step(PO_IC_prev_avg_max_bio,p+eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 ax_p_bio.step(PO_IC_prev_avg_max_bio,p-eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 #
-ax_p_bio.axvline(x=IC_capacity,lw=2,linestyle=':',color='black')
+ax_p_bio.axvline(x=IC_capacity,lw=2,linestyle=':',color='black')#,label='IC capacity')
 # general settings
 ax_p_bio.set_xscale('log')
 # ax_p.set_xticks([3e2, 1e3])
@@ -267,6 +280,7 @@ ax_e_bio.step(PO_IC_ex_max_bio,p-eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 #
 # general settings
 ax_e_bio.set_xscale('log')
+#ax_e.get_xaxis().set_major_formatter(ScalarFormatter())
 ax_e_bio.get_xaxis().get_major_formatter().labelOnlyBase = False
 ax_e_bio.get_xaxis().set_minor_formatter(NullFormatter())
 ax_e_bio.set_xlim([1e1, 1e5])
@@ -276,10 +290,12 @@ ax_e_bio.set_yticks([0, 0.5, 1])
 leg = ax_p_bio.legend(loc='upper left')
 leg.get_frame().set_linewidth(0.0)
 leg.get_frame().set_facecolor('none')
+# ax_e_bio.legend(loc='upper center')
+# plt.legend(frameon=False)
 plt.tight_layout()
 
 ax_p = f.add_subplot(223, xlabel='Maximum of patients in IC \n per million capita', \
-	ylabel='Without biological \n uncertainties \n \n Probability')
+    ylabel='Only seed and \n policy-related uncertainties \n \n Probability')
 # without biology
 ax_p.step(FC_IC_prev_avg_max,p,lw=2,color='orchid',label='FC')
 ax_p.step(FC_IC_prev_avg_max,p+eps_DKW,lw=1,color='plum',ls='--')
@@ -297,7 +313,7 @@ ax_p.step(PO_IC_prev_avg_max,p,lw=2,color='lightseagreen',label='PO')
 ax_p.step(PO_IC_prev_avg_max,p+eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 ax_p.step(PO_IC_prev_avg_max,p-eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 #
-ax_p.axvline(x=IC_capacity,lw=2,linestyle=':',color='black')
+ax_p.axvline(x=IC_capacity,lw=2,linestyle=':',color='black')#,label='IC capacity')
 # general settings
 ax_p.set_xscale('log')
 # ax_p.set_xticks([3e2, 1e3])
@@ -328,12 +344,14 @@ ax_e.step(PO_IC_ex_max,p-eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 # general settings
 ax_e.set_xscale('log')
 # ax_e.set_xticks([1e4, 6e4])
+#ax_e.get_xaxis().set_major_formatter(ScalarFormatter())
 ax_e.get_xaxis().get_major_formatter().labelOnlyBase = False
 ax_e.get_xaxis().set_minor_formatter(NullFormatter())
 ax_e.set_xlim([1e1, 1e5])
 ax_e.set_xticks([1e1, 1e3, 1e5])
 ax_e.set_yticks([0, 0.5, 1])
 
+# ax_p.legend(loc='upper center')
 plt.tight_layout()
 
 f.savefig('figures/cdfs.pdf')

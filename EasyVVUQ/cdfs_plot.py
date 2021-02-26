@@ -219,7 +219,7 @@ p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 """
 
 f = plt.figure('cdfs',figsize=[12,7])
-ax_p_bio = f.add_subplot(221, ylabel='With biological \n uncertainties \n \n Probability')
+ax_p_bio = f.add_subplot(221, ylabel='All uncertainties \n \n Probability')
 # with biology
 ax_p_bio.step(FC_IC_prev_avg_max_bio,p,lw=2,color='orchid',label='FC')
 ax_p_bio.step(FC_IC_prev_avg_max_bio,p+eps_DKW,lw=1,color='plum',ls='--')
@@ -279,7 +279,7 @@ leg.get_frame().set_facecolor('none')
 plt.tight_layout()
 
 ax_p = f.add_subplot(223, xlabel='Maximum of patients in IC \n per million capita', \
-	ylabel='Without biological \n uncertainties \n \n Probability')
+	ylabel='Only seed and \n policy-related uncertainties \n \n Probability')
 # without biology
 ax_p.step(FC_IC_prev_avg_max,p,lw=2,color='orchid',label='FC')
 ax_p.step(FC_IC_prev_avg_max,p+eps_DKW,lw=1,color='plum',ls='--')

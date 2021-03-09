@@ -220,7 +220,7 @@ p = np.arange(start=1,stop=n_runs+1,step=1)/n_runs
 
 f = plt.figure('cdfs',figsize=[12,7])
 ax_p_bio = f.add_subplot(221, ylabel='All uncertainties \n \n Probability')
-# with biology
+# with non-policy-related
 ax_p_bio.step(FC_IC_prev_avg_max_bio,p,lw=2,color='orchid',label='FC')
 ax_p_bio.step(FC_IC_prev_avg_max_bio,p+eps_DKW,lw=1,color='plum',ls='--')
 ax_p_bio.step(FC_IC_prev_avg_max_bio,p-eps_DKW,lw=1,color='plum',ls='--')
@@ -247,8 +247,12 @@ ax_p_bio.get_xaxis().set_minor_formatter(NullFormatter())
 ax_p_bio.set_xticks([1e1, 1e2, 1e3])
 ax_p_bio.set_yticks([0, 0.5, 1])
 
+leg = ax_p_bio.legend(loc='upper left')
+leg.get_frame().set_linewidth(0.0)
+leg.get_frame().set_facecolor('none')
+
 ax_e_bio = f.add_subplot(222)
-# with biology
+# with non-policy-related
 ax_e_bio.step(FC_IC_ex_max_bio,p,lw=2,color='orchid')
 ax_e_bio.step(FC_IC_ex_max_bio,p+eps_DKW,lw=1,color='plum',ls='--')
 ax_e_bio.step(FC_IC_ex_max_bio,p-eps_DKW,lw=1,color='plum',ls='--')
@@ -269,18 +273,13 @@ ax_e_bio.step(PO_IC_ex_max_bio,p-eps_DKW,lw=1,color='mediumaquamarine',ls='--')
 ax_e_bio.set_xscale('log')
 ax_e_bio.get_xaxis().get_major_formatter().labelOnlyBase = False
 ax_e_bio.get_xaxis().set_minor_formatter(NullFormatter())
-ax_e_bio.set_xlim([1e1, 1e5])
-ax_e_bio.set_xticks([1e1, 1e3, 1e5])
+ax_e_bio.set_xlim([1e0, 1e5])
+ax_e_bio.set_xticks([1e0, 1e1, 1e2, 1e3, 1e4, 1e5])
 ax_e_bio.set_yticks([0, 0.5, 1])
-
-leg = ax_p_bio.legend(loc='upper left')
-leg.get_frame().set_linewidth(0.0)
-leg.get_frame().set_facecolor('none')
-plt.tight_layout()
 
 ax_p = f.add_subplot(223, xlabel='Maximum of patients in IC \n per million capita', \
 	ylabel='Only seed and \n policy-related uncertainties \n \n Probability')
-# without biology
+# without non-policy-related
 ax_p.step(FC_IC_prev_avg_max,p,lw=2,color='orchid',label='FC')
 ax_p.step(FC_IC_prev_avg_max,p+eps_DKW,lw=1,color='plum',ls='--')
 ax_p.step(FC_IC_prev_avg_max,p-eps_DKW,lw=1,color='plum',ls='--')
@@ -308,7 +307,7 @@ ax_p.set_xticks([1e1, 1e2, 1e3])
 ax_p.set_yticks([0, 0.5, 1])
 
 ax_e = f.add_subplot(224, xlabel='IC patient-days in excess \n per million capita')
-# without biology
+# without non-policy-related
 ax_e.step(FC_IC_ex_max,p,lw=2,color='orchid')
 ax_e.step(FC_IC_ex_max,p+eps_DKW,lw=1,color='plum',ls='--')
 ax_e.step(FC_IC_ex_max,p-eps_DKW,lw=1,color='plum',ls='--')
@@ -330,8 +329,8 @@ ax_e.set_xscale('log')
 # ax_e.set_xticks([1e4, 6e4])
 ax_e.get_xaxis().get_major_formatter().labelOnlyBase = False
 ax_e.get_xaxis().set_minor_formatter(NullFormatter())
-ax_e.set_xlim([1e1, 1e5])
-ax_e.set_xticks([1e1, 1e3, 1e5])
+ax_e.set_xlim([1e0, 1e5])
+ax_e.set_xticks([1e0, 1e1, 1e2, 1e3, 1e4, 1e5])
 ax_e.set_yticks([0, 0.5, 1])
 
 plt.tight_layout()

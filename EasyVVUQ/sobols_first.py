@@ -188,8 +188,8 @@ ax_FC.invert_yaxis()
 ax_FC.set_xlim([-.1, 1.1])
 
 ax_FC.barh(np.arange(0, len(FC_params), 1), FC_sobol_idx_ICp, xerr=FC_err_ICp, linewidth=2, \
-    color=['mediumaquamarine','lightsalmon','lightskyblue'], \
-    ecolor=['teal','indianred','royalblue'], \
+    color=['mediumaquamarine','lightskyblue','lightsalmon'], \
+    ecolor=['teal','royalblue','indianred'], \
     height=0.6)
 
 ax_FC.set_xticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
@@ -201,8 +201,8 @@ ax_CT.invert_yaxis()
 ax_CT.set_xlim([-.1, 1.1])
 
 ax_CT.barh(np.arange(0, len(CT_params), 1), CT_sobol_idx_ICp, xerr=CT_err_ICp, linewidth=2, \
-    color=['mediumaquamarine','lightskyblue','lightsalmon','lightskyblue'], \
-    ecolor=['teal','royalblue','indianred', 'royalblue'], \
+    color=['mediumaquamarine','lightskyblue','lightskyblue','lightskyblue'], \
+    ecolor=['teal','royalblue','royalblue', 'royalblue'], \
     height=0.6)
 
 ax_CT.set_xticks([0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
@@ -214,8 +214,8 @@ ax_IL.invert_yaxis()
 ax_IL.set_xlim([-.1, 1.1])
 
 ax_IL.barh(np.arange(0, len(IL_params), 1), IL_sobol_idx_ICp, xerr=IL_err_ICp, linewidth=2, \
-    color=['mediumaquamarine','lightskyblue','mediumaquamarine','mediumaquamarine', 'lightsalmon'], \
-    ecolor=['teal','royalblue','teal','teal','indianred'], \
+    color=['mediumaquamarine','lightskyblue','lightskyblue','lightskyblue', 'lightsalmon'], \
+    ecolor=['teal','royalblue','royalblue','royalblue','indianred'], \
     height=0.6)
 
 IL_labels = ['seed', 'lock_effect', 'lock_length', 'lift_length', 'uptake']
@@ -229,8 +229,8 @@ ax_PO.invert_yaxis()
 ax_PO.set_xlim([-.1, 1.1])
 
 ax_PO.barh(np.arange(0, len(PO_params), 1), PO_sobol_idx_ICp, xerr=PO_err_ICp, linewidth=2, \
-    color=['mediumaquamarine','lightsalmon','lightskyblue','lightsalmon'], \
-    ecolor=['teal','indianred','royalblue','indianred'], \
+    color=['mediumaquamarine','lightskyblue','lightskyblue','lightsalmon'], \
+    ecolor=['teal','royalblue','royalblue','indianred'], \
     height=0.6)
 
 PO_labels = ['seed', 'pl_intervention_effect_hi', 'intervention_lift_interval', 'uptake']

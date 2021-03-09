@@ -29,9 +29,10 @@ the GitHub repositories of FabSim3 and QCG-PJ for details about their installati
 ## Start a campaign
 `job_submission_*.py` starts an uncertainty quantification (UQ) campaign for a selected strategy: FC = Flattening the Curve, 
 CT = Contact Tracing, IL = Intermittent Lockdown, PO = Phased Opening. Scripts with the suffix `_bio` in the filename, e.g. 
-`job_submission_CT_bio.py`, include uncertainties also in biology-related parameter which are otherwise not considered. 
-The following holds for both the cases with or without biology-related uncertainties. I use code pieces from `job_submission_CT.py` 
-to explain the main structure of the job submission procedure.
+`job_submission_CT_bio.py`, include uncertainties also in non-policy-related parameter which are otherwise not considered 
+(apart from the random seed, which is never fixed). 
+The following holds for both the cases with or without non-policy-related uncertainties. Code pieces from `job_submission_CT.py` 
+are used to explain the main structure of the job submission procedure.
 
 After the necessary imports, a new campaign is initialized 
 ```python3

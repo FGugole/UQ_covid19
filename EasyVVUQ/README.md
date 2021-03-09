@@ -89,7 +89,7 @@ Finally the state of the campaign is saved in a `*.json` file
 campaign.save_state('campaign_state_CT_nobio.json')
 ```
 and the job is executed locally. The name of the campaign state has to be manually modified to ensure uniqueness and avoid overwriting.
-To start the job submission process for e.g. Contact Tracing without biology-related uncertainties, type on terminal `> python3 job_submission_corona_CT.py`.
+To start the job submission process for e.g. Contact Tracing without non-policy-related uncertainties, type on terminal `> python3 job_submission_corona_CT.py`.
 
 ### corona.template
 The job submission procedure creates input files with the sampled values for each run in the campaign. In order for these data to be written correctly 

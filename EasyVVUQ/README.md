@@ -146,7 +146,7 @@ campaign.apply_analysis(qmc_analysis)
 results = campaign.get_last_analysis()
 ```
 The first order Sobol indices can be retrieved with `results.sobols_first()` and their respective confidence intervals with `results._get_sobols_first_conf(name_QoI, name_param)`. Similar functions are available also for the total Sobol indices. 
-The script `sobols_total.py` computes the total Sobol indices and create the corresponding plot.
+The script `sobols_total.py` computes the total Sobol indices and creates the corresponding plot.
 
 ### Heatmap
 For each strategy considered there is the corresponding Python3 script generating the heatmap: `heatmap_FC.py` corresponds to Flattening the Curve, 

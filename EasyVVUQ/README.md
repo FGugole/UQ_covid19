@@ -122,11 +122,7 @@ data = campaign.get_collation_result()
 ```
 
 ### Cdf
-The script `cdf_bio_vs_nobio.py` compares the cdf of a selected strategy (Contact Tracing in the script here presented) in the cases 
-with and without biology-related uncertainties. By changing the names of the campaign states to be loaded, the user can compare the cdfs 
-of other strategies too. Execute this script by typing on terminal `> python3 cdf_bio_vs_nobio.py`.
-
-The code `cdfs_plot.py` instead creates the plot of the cdfs for all strategies with and without biology-related uncertainties (i.e. 8 empirical cdfs). 
+The code `cdfs_plot.py` creates the plot of the cdfs for all strategies with and without non-policy-related uncertainties (i.e. 8 empirical cdfs). 
 Execute this script by typing on terminal `> python3 cdfs_plot.py`.
 
 The campaigns meant to provide the data for this analysis have to be excuted using the `RandomSampler` of the EasyVVUQ library.

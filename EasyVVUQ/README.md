@@ -1,3 +1,11 @@
+This repository contains the Python and R codes used for the paper titled
+
+## "Uncertainty quantification and sensitivity analysis of COVID-19 exit strategies in an individual-based transmission model"
+
+Federica Gugole, Luc E. Coffeng, Wouter Edeling, Benjamin Sanderse, Sake J. de Vlas, Daan Crommelin
+
+federica.gugole@cwi.nl
+
 # Requirements
 * Python 3.6+ 
   * chaospy

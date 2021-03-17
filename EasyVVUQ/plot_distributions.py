@@ -111,7 +111,7 @@ ax_sh.legend(loc='upper center')
 
 plt.tight_layout()
 
-f.savefig('figures/distributions.pdf')
+f.savefig('figures/S1Fig_distributions.eps')
 
 plt.show()
 

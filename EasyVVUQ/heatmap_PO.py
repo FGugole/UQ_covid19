@@ -156,7 +156,7 @@ ax_3.set_xticks([0.2, 0.3, 0.4])
 ax_3.set_yticks([0.6, 0.8, 1])
 
 plt.tight_layout()
-f.savefig('figures/heatmap_PO_IC_prev.png')
+f.savefig('figures/Fig7_heatmap_PO_IC_prev.eps')
 
 """
 * Heatmap for IC_ex_max
@@ -211,7 +211,7 @@ ax_3.set_xticks([0.2, 0.3, 0.4])
 ax_3.set_yticks([0.6, 0.8, 1])
 
 plt.tight_layout()
-f.savefig('figures/heatmap_PO_IC_ex.png')
+f.savefig('figures/heatmap_PO_IC_ex.eps')
 
 """
 * 3D plots *
@@ -261,7 +261,7 @@ ax_e.zaxis.labelpad = 15
 ax_e.view_init(azim=60)
 
 plt.tight_layout()
-f.savefig('figures/heatmap_PO.pdf')
+f.savefig('figures/heatmap_PO.eps')
 
 plt.show()
 

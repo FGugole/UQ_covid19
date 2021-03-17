@@ -240,6 +240,6 @@ ax_PO.set_yticks(np.arange(0, len(PO_labels), 1))
 ax_PO.set_yticklabels(PO_labels)
 
 plt.tight_layout()
-f.savefig('figures/Sobols_total.pdf')
+f.savefig('figures/S2Fig_sobols_total.eps')
 
 plt.show()

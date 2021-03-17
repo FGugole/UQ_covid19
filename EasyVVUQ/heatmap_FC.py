@@ -81,7 +81,7 @@ ax_e.set_xticks([0.25, 0.35, 0.45])
 ax_e.set_yticks([0.6, 0.8, 1.0])
 
 plt.tight_layout()
-f.savefig('figures/heatmap_FC.pdf')
+f.savefig('figures/Fig4_heatmap_FC.eps')
 
 plt.show()
 

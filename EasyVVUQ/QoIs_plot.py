@@ -92,6 +92,6 @@ ax1.set_yticks([0, 200, 400])
 ax2.set_yticks([0, 10000, 20000])
 
 plt.tight_layout()
-fig.savefig('figures/Fig1_QoIs.pdf')
+fig.savefig('figures/Fig1_QoIs.eps')
 
 plt.show()

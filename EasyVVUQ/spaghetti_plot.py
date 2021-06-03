@@ -23,14 +23,14 @@ IC_capacity = 109
 
 n_runs = 100
 
-# store in a matrix the moving average of IC_prev (each column is a different simulation)
+# store in a matrix IC_prev such that each column is a different simulation
 IC_prev_avg = np.zeros((L,n_runs), dtype='float')
 for i in range(n_runs):
-    #IC_prev_avg[:,i] = np.copy(data.IC_prev.iloc[i*L:(i+1)*L].to_numpy())
-    IC_prev_avg[:,i] = data.IC_prev.iloc[i*L:(i+1)*L].rolling(window=30, center=True).mean()
+    IC_prev_avg[:,i] = np.copy(data.IC_prev.iloc[i*L:(i+1)*L].to_numpy())
+    #IC_prev_avg[:,i] = data.IC_prev.iloc[i*L:(i+1)*L].rolling(window=30, center=True).mean() # to store the moving average
 
 # store few individual realizations to plot
-runs2plot = [18, 7, 45, 27, 69]
+runs2plot = [13, 7, 45, 27, 69]
 IC_prev_avg_2plot = np.zeros((L,len(runs2plot)), dtype='float')
 for i in range(len(runs2plot)):
     IC_prev_avg_2plot[:,i] = np.copy(IC_prev_avg[:,runs2plot[i]])
@@ -39,7 +39,7 @@ for i in range(len(runs2plot)):
 IC_prev_avg.sort(axis=1)
 
 fig = plt.figure()
-ax = fig.add_subplot(111, ylabel='Moving average of the prevalent cases in IC per million capita', xlabel='Time (days)')
+ax = fig.add_subplot(111, ylabel='Prevalent cases in IC per million capita', xlabel='Time (days)')
 ax.set_xticks([0, 100, 200, 300, 400, 500])
 ax.set_yticks([0, 40, 80, 120, 160, 200])
 
@@ -52,6 +52,6 @@ ax.hlines(y=IC_capacity, xmin=0, xmax=L, lw=2, ls=':', color='black')
 
 plt.tight_layout()
 
-fig.savefig('figures/S5Fig_spaghetti_plot.eps')
+fig.savefig('figures/S3Fig_spaghetti_plot.eps')
 
 plt.show()

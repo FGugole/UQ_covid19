@@ -116,7 +116,7 @@ im_0 = ax_0.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,0
 cbar_0 = f.colorbar(im_0, ax=ax_0)
 cbar_0.set_ticks([200, 350, 500, 650])
 cbar_0.set_ticklabels(['200', '350', '500', '650'])
-ax_0.set_xticks([0.2, 0.3, 0.4])
+ax_0.set_xticks([0.1, 0.2, 0.3, 0.4, 0.5])
 ax_0.set_yticks([0.6, 0.8, 1])
 
 ax_1 = f.add_subplot(222)
@@ -128,7 +128,7 @@ im_1 = ax_1.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,1
 cbar_1 = f.colorbar(im_1, ax=ax_1)
 cbar_1.set_ticks([200, 350, 500, 650])
 cbar_1.set_ticklabels(['200', '350', '500', '650'])
-ax_1.set_xticks([0.2, 0.3, 0.4])
+ax_1.set_xticks([0.1, 0.2, 0.3, 0.4, 0.5])
 ax_1.set_yticks([0.6, 0.8, 1])
 
 ax_2 = f.add_subplot(223, xlabel='Relative level of transmission \n where still in lockdown', ylabel='Uptake by the population')
@@ -140,7 +140,7 @@ im_2 = ax_2.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,2
 cbar_2 = f.colorbar(im_2, ax=ax_2)
 cbar_2.set_ticks([200, 350, 500, 650])
 cbar_2.set_ticklabels(['200', '350', '500', '650'])
-ax_2.set_xticks([0.2, 0.3, 0.4])
+ax_2.set_xticks([0.1, 0.2, 0.3, 0.4, 0.5])
 ax_2.set_yticks([0.6, 0.8, 1])
 
 ax_3 = f.add_subplot(224, xlabel='Relative level of transmission \n where still in lockdown')
@@ -152,7 +152,7 @@ im_3 = ax_3.scatter(x=pl_intervention_effect_hi_q[np.where(IC_prev_avg_max_q[:,3
 cbar_3 = f.colorbar(im_3, ax=ax_3)
 cbar_3.set_ticks([200, 350, 500, 650])
 cbar_3.set_ticklabels(['200', '350', '500', '650'])
-ax_3.set_xticks([0.2, 0.3, 0.4])
+ax_3.set_xticks([0.1, 0.2, 0.3, 0.4, 0.5])
 ax_3.set_yticks([0.6, 0.8, 1])
 
 plt.tight_layout()

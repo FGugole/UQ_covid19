@@ -68,7 +68,7 @@ cbar_p = f.colorbar(im_p, ax=ax_p)
 cbar_p.set_ticks([200, 400, 600, 800])
 cbar_p.set_ticklabels(['200', '400', '600', '800'])
 
-ax_p.set_xticks([0.1, 0.2, 0.3, 0.4])
+ax_p.set_xticks([0.1, 0.2, 0.3, 0.4, 0.5])
 ax_p.set_yticks([0.6, 0.8, 1.0])
 
 ax_e = f.add_subplot(122, xlabel='Relative level of transmission \n due to lockdown')
@@ -80,7 +80,7 @@ cbar_e = f.colorbar(im_e, ax=ax_e)
 cbar_e.set_ticks([1e4, 2e4, 3e4, 4e4])
 cbar_e.set_ticklabels(['10000', '20000', '30000', '40000'])
 
-ax_e.set_xticks([0.1, 0.2, 0.3, 0.4])
+ax_e.set_xticks([0.1, 0.2, 0.3, 0.4, 0.5])
 ax_e.set_yticks([0.6, 0.8, 1.0])
 
 plt.tight_layout()

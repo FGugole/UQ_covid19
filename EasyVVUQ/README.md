@@ -4,7 +4,7 @@ This repository contains the Python and R codes used for the paper titled:
 
 Authors: Federica Gugole, Luc E. Coffeng, Wouter Edeling, Benjamin Sanderse, Sake J. de Vlas and Daan Crommelin.
 
-federica.gugole@cwi.nl
+federica.gugole@gmail.com
 
 # Requirements
 * Python 3.6+ 
